@@ -1,34 +1,37 @@
-import { HubConnection } from "@microsoft/signalr";
+import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { useEffect, useState } from "react";
 import { createConnection } from "~/libs/message-hub";
 import { GeoInfo } from "~/libs/models";
 import { getRandomNum } from "~/libs/random";
 
 export function MapBox() {
-  const [connection] = useState<HubConnection>(createConnection("/stream/v1/geohub"));
+  const [connection] = useState<HubConnection>(createConnection("https://localhost:7108/stream/v1/geohub"));
   const [geoInfo, setGeoInfo] = useState<GeoInfo>();
 
   useEffect(() => {
     (async () => {
-      if (connection == null) {
+      if (connection == null || connection.state != HubConnectionState.Disconnected) {
         return;
       }
-
       try {
         await connection.start();
       } catch (error) {
         console.error(error);
       }
-      connection.on("messageReceived", ((_user: string, message: string) => {
-        const info: GeoInfo = JSON.parse(message);
-        setGeoInfo(info);        
-      }));
     })();    
   }, [connection]);
 
   useEffect(() => {
-    setInterval(() => {
-      if (connection == null || connection.connectionId == "") {
+    if (connection == null || connection.state != HubConnectionState.Connected) {
+      return;
+    }
+    connection.on("messageReceived", ((_user: string, message: string) => {
+      const info: GeoInfo = JSON.parse(message);
+      setGeoInfo(info);
+    }));
+
+    const id = setInterval(() => {
+      if (connection == null || connection.state != HubConnectionState.Connected) {
         return;
       }
       const info = new GeoInfo();
@@ -37,7 +40,9 @@ export function MapBox() {
       info.coords.latitude = getRandomNum(1, 11);
       connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
     }, 20_000);
-  })
+
+    return () => clearInterval(id);
+  }, [connection]);
 
   return <div>
     <pre>{JSON.stringify(geoInfo, null, 2)}</pre>

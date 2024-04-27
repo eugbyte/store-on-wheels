@@ -15,7 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(dbConnS
 builder.Services.AddCors(options => {
 	options.AddDefaultPolicy(
 		builder => {
-			builder.AllowAnyOrigin()
+			builder.WithOrigins("https://localhost:5173")
 				.AllowAnyHeader()
 				.AllowAnyMethod()
 				.AllowCredentials();
@@ -53,6 +53,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// UseCors must be called before MapHub.
+app.UseCors();
 app.MapHub<GeoHub>("/stream/v1/geohub");
 
 app.MapFallbackToFile("/index.html");

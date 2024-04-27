@@ -11,28 +11,16 @@
       "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\src\\pages\\map-box\\map-box.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.server\\controllers\\geohub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\controllers\\geohub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\src\\libs\\random\\random.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\src\\libs\\random\\random.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.server\\storeonwheels.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\storeonwheels.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.server\\configs\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\configs\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,62 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Program.cs",
-              "RelativeDocumentMoniker": "StoreOnWheels.Server\\Program.cs",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Program.cs",
-              "RelativeToolTip": "StoreOnWheels.Server\\Program.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAABoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-27T09:06:38.878Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "vite.config.ts",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\vite.config.ts",
-              "RelativeDocumentMoniker": "storeonwheels.client\\vite.config.ts",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\vite.config.ts",
-              "RelativeToolTip": "storeonwheels.client\\vite.config.ts",
-              "ViewState": "AQIAADwAAAAAAAAAAAAAADIAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-04-27T09:12:33.486Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "random.ts",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\random\\random.ts",
-              "RelativeDocumentMoniker": "storeonwheels.client\\src\\libs\\random\\random.ts",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\random\\random.ts",
-              "RelativeToolTip": "storeonwheels.client\\src\\libs\\random\\random.ts",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-04-27T12:44:59.262Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "message-hub.ts",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
-              "RelativeDocumentMoniker": "storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts*",
-              "RelativeToolTip": "storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-04-27T12:44:56.711Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -106,48 +40,61 @@
               "RelativeDocumentMoniker": "storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
               "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
               "RelativeToolTip": "storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAABwAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2024-04-27T12:44:54.606Z",
+              "WhenOpened": "2024-04-27T13:59:46.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StoreOnWheels.Server",
+              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\StoreOnWheels.Server.csproj",
+              "RelativeDocumentMoniker": "StoreOnWheels.Server\\StoreOnWheels.Server.csproj",
+              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\StoreOnWheels.Server.csproj",
+              "RelativeToolTip": "StoreOnWheels.Server\\StoreOnWheels.Server.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-27T13:54:26.887Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "message-hub.ts",
+              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
+              "RelativeDocumentMoniker": "storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
+              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
+              "RelativeToolTip": "storeonwheels.client\\src\\libs\\message-hub\\message-hub.ts",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-04-27T13:54:22.278Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "GeoHub.cs",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Controllers\\GeoHub.cs",
-              "RelativeDocumentMoniker": "StoreOnWheels.Server\\Controllers\\GeoHub.cs",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Controllers\\GeoHub.cs",
-              "RelativeToolTip": "StoreOnWheels.Server\\Controllers\\GeoHub.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-27T12:01:13.359Z",
+              "Title": "vite.config.ts",
+              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\vite.config.ts",
+              "RelativeDocumentMoniker": "storeonwheels.client\\vite.config.ts",
+              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\vite.config.ts",
+              "RelativeToolTip": "storeonwheels.client\\vite.config.ts",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-04-27T13:52:34.845Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "StoreOnWheels.Server\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Properties\\launchSettings.json",
-              "RelativeToolTip": "StoreOnWheels.Server\\Properties\\launchSettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-27T11:53:25.563Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Configs\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "StoreOnWheels.Server\\Configs\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Configs\\AppDbContext.cs",
-              "RelativeToolTip": "StoreOnWheels.Server\\Configs\\AppDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Program.cs",
+              "RelativeDocumentMoniker": "StoreOnWheels.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Program.cs",
+              "RelativeToolTip": "StoreOnWheels.Server\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-27T11:53:22.013Z",
+              "WhenOpened": "2024-04-27T13:50:13.874Z",
               "EditorCaption": ""
             },
             {

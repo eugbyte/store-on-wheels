@@ -24,11 +24,11 @@ export default defineConfig({
         changeOrigin: true, // prevents CORs
         secure: false, // ignore lack of SSL Cert
       },
-      "/stream": {
-        target: 'wss://localhost:7108',
-        ws: true,
-        secure: false
-      },
+      //"/stream": {
+      //  target: 'wss://localhost:7108',
+      //  ws: true,
+      //  secure: false
+      //},
     },
     port: 5173,
     https: {
