@@ -37,8 +37,7 @@ public class GeoHub(
 	}
 
 	public override async Task OnConnectedAsync() {
-		Console.WriteLine("Connected");
-		Logger.LogInformation("connected");
+		Logger.LogInformation("connected to {}", Context.ConnectionId);
 		await base.OnConnectedAsync();
 	}
 

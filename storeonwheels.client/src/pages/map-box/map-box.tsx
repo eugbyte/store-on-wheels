@@ -10,7 +10,15 @@ export function MapBox() {
 
   useEffect(() => {
     (async () => {
-      await connection.start();
+      if (connection == null) {
+        return;
+      }
+
+      try {
+        await connection.start();
+      } catch (error) {
+        console.error(error);
+      }
       connection.on("messageReceived", ((_user: string, message: string) => {
         const info: GeoInfo = JSON.parse(message);
         setGeoInfo(info);        
