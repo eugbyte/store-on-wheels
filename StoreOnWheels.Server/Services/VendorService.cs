@@ -4,7 +4,7 @@ using StoreOnWheels.Server.Models;
 
 namespace StoreOnWheels.Server.Services;
 
-public class VendorService(AppDbContext db) {
+public class VendorService(AppDbContext db) : IVendorService {
 	public async Task<Vendor?> Get(string vendorId) => await db.Vendors.FindAsync(vendorId);
 
 	public async Task<Vendor?> GetByName(string displayName) => await db.Vendors.SingleAsync((v) => v.DisplayName == displayName);

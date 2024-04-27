@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StoreOnWheels.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e460fff37d544c1a0947bd129a9952de49377a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("StoreOnWheels.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StoreOnWheels.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

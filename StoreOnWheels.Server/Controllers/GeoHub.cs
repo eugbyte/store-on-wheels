@@ -7,8 +7,10 @@ using StoreOnWheels.Server.Services;
 namespace StoreOnWheels.Server.Controllers;
 
 public class GeoHub(
+	ILogger<GeoHub> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
+
 	// Allow user to broadcast message without first authenticating
 	// js client calls "BroadcastMessageWithoutAuth()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"
@@ -31,10 +33,12 @@ public class GeoHub(
 		geoposition.Vendor = vendorCache.Get(anonymousVendorId);
 
 		message = JsonConvert.SerializeObject(geoposition);
-		await Clients.All.ReceiveMessage(user, message);
+		await Clients.All.MessageReceived(user, message);
 	}
 
 	public override async Task OnConnectedAsync() {
+		Console.WriteLine("Connected");
+		Logger.LogInformation("connected");
 		await base.OnConnectedAsync();
 	}
 

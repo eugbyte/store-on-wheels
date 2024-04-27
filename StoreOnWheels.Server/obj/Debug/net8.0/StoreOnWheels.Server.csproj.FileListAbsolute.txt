@@ -236,3 +236,4 @@ C:\Users\eugen\Codes\personal\StoreOnWheels\StoreOnWheels.Server\bin\Debug\net8.
 C:\Users\eugen\Codes\personal\StoreOnWheels\StoreOnWheels.Server\bin\Debug\net8.0\Caching.dll
 C:\Users\eugen\Codes\personal\StoreOnWheels\StoreOnWheels.Server\bin\Debug\net8.0\Nanoid.dll
 C:\Users\eugen\Codes\personal\StoreOnWheels\StoreOnWheels.Server\bin\Debug\net8.0\StoreOnWheels.Server.staticwebassets.runtime.json
+C:\Users\eugen\Codes\personal\StoreOnWheels\StoreOnWheels.Server\obj\Debug\net8.0\StoreOnWheels.Server.sourcelink.json
