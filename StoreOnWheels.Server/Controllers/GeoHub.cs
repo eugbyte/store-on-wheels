@@ -17,8 +17,10 @@ public class GeoHub(
 	public async Task BroadcastMessageWithoutAuth(string user, string message) {
 		GeolocationPosition? geoposition = JsonConvert.DeserializeObject<GeolocationPosition>(message);
 		if (geoposition is null) {
+			Logger.LogInformation("geoposition is null for {user}", user);
 			return;
 		}
+		Logger.LogInformation(geoposition.ToString());
 
 		string anonymousVendorId = Context.ConnectionId;
 
@@ -42,6 +44,7 @@ public class GeoHub(
 	}
 
 	public override async Task OnDisconnectedAsync(Exception? exception) {
+		Logger.LogInformation("Disconnected from {}", Context.ConnectionId);
 		// in the event the connection is annonymous, immediately free the information
 		string anonymousVendorId = Context.ConnectionId;
 		try {

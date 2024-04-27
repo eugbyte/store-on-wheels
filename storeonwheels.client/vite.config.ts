@@ -25,9 +25,9 @@ export default defineConfig({
         secure: false, // ignore lack of SSL Cert
       },
       //"/stream": {
-      //  target: 'wss://localhost:7108',
-      //  ws: true,
-      //  secure: false
+      //  target: getBackendUrl(),
+      //  changeOrigin: true, // prevents CORs
+      //  secure: false, // ignore lack of SSL Cert    
       //},
     },
     port: 5173,

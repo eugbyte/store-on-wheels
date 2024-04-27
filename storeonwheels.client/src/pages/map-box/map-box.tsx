@@ -28,9 +28,12 @@ export function MapBox() {
     connection.on("messageReceived", ((_user: string, message: string) => {
       const info: GeoInfo = JSON.parse(message);
       setGeoInfo(info);
-    }));
+    }));    
+  }, [connection]);
 
+  useEffect(() => {
     const id = setInterval(() => {
+      console.log({ state: connection?.state });
       if (connection == null || connection.state != HubConnectionState.Connected) {
         return;
       }
@@ -38,8 +41,9 @@ export function MapBox() {
       info.vendorId = connection.connectionId ?? "";
       info.coords.latitude = getRandomNum(1, 11);
       info.coords.latitude = getRandomNum(1, 11);
+      console.log("sending message");
       connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
-    }, 20_000);
+    }, 2000);
 
     return () => clearInterval(id);
   }, [connection]);
