@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875}|StoreOnWheels.Server\\StoreOnWheels.Server.csproj|solutionrelative:storeonwheels.server\\controllers\\geohub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\src\\pages\\map-box\\map-box.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\src\\pages\\map-box\\map-box.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|solutionrelative:storeonwheels.client\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{32078EB4-4472-4634-91BF-550916158A53}|storeonwheels.client\\storeonwheels.client.esproj|c:\\users\\eugen\\codes\\personal\\storeonwheels\\storeonwheels.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -34,7 +34,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "vite.config.ts",
               "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\vite.config.ts",
               "RelativeDocumentMoniker": "storeonwheels.client\\vite.config.ts",
@@ -48,7 +48,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "vite-env.d.ts",
               "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\vite-env.d.ts",
               "RelativeDocumentMoniker": "storeonwheels.client\\src\\vite-env.d.ts",
@@ -62,13 +62,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "map-box.tsx",
               "DocumentMoniker": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
               "RelativeDocumentMoniker": "storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
               "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
               "RelativeToolTip": "storeonwheels.client\\src\\pages\\map-box\\map-box.tsx",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2024-04-27T13:59:46.257Z",
               "IsPinned": true,
@@ -82,7 +82,7 @@
               "RelativeDocumentMoniker": "StoreOnWheels.Server\\Controllers\\GeoHub.cs",
               "ToolTip": "C:\\Users\\eugen\\Codes\\personal\\StoreOnWheels\\StoreOnWheels.Server\\Controllers\\GeoHub.cs",
               "RelativeToolTip": "StoreOnWheels.Server\\Controllers\\GeoHub.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAADMAAAARAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAB4AAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-27T14:39:01.009Z",
               "IsPinned": true,
