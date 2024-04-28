@@ -13,16 +13,22 @@ export default defineConfig({
   plugins: [plugin()],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "~": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
   server: {
+    // prefixes the root url whenever the regex pattern matches
     proxy: {
       "^/api": {
         target: getBackendUrl(),
         changeOrigin: true, // prevents CORs
         secure: false, // ignore lack of SSL Cert
       },
+      //"/stream": {
+      //  target: getBackendUrl(),
+      //  changeOrigin: true, // prevents CORs
+      //  secure: false, // ignore lack of SSL Cert    
+      //},
     },
     port: 5173,
     https: {

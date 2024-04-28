@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StoreOnWheels.Server.Configs;
 using StoreOnWheels.Server.Controllers;
 using StoreOnWheels.Server.Models;
+using StoreOnWheels.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(dbConnS
 builder.Services.AddCors(options => {
 	options.AddDefaultPolicy(
 		builder => {
-			builder.AllowAnyOrigin()
+			builder.WithOrigins("https://localhost:5173")
 				.AllowAnyHeader()
 				.AllowAnyMethod()
 				.AllowCredentials();
@@ -23,6 +24,8 @@ builder.Services.AddCors(options => {
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
 // Add services to the container.
+builder.Services.AddTransient<IVendorService, VendorService>();
+
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,7 +53,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<GeoHub>("/hub");
+
+// UseCors must be called before MapHub.
+app.UseCors();
+app.MapHub<GeoHub>("/stream/v1/geohub");
 
 app.MapFallbackToFile("/index.html");
 

@@ -1,5 +1,5 @@
 ﻿namespace StoreOnWheels.Server.Controllers;
 
 public interface IGeoHubClient {
-	Task ReceiveMessage(string user, string message);
+	Task MessageReceived(string user, string message);
 }

@@ -8,6 +8,9 @@ EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "storeonwheels.client", "storeonwheels.client\storeonwheels.client.esproj", "{32078EB4-4472-4634-91BF-550916158A53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{63255576-0EB7-4423-8E83-5A515A4B13E5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

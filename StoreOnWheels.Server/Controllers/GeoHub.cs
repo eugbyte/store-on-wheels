@@ -7,16 +7,20 @@ using StoreOnWheels.Server.Services;
 namespace StoreOnWheels.Server.Controllers;
 
 public class GeoHub(
+	ILogger<GeoHub> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
+
 	// Allow user to broadcast message without first authenticating
 	// js client calls "BroadcastMessageWithoutAuth()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"
 	public async Task BroadcastMessageWithoutAuth(string user, string message) {
 		GeolocationPosition? geoposition = JsonConvert.DeserializeObject<GeolocationPosition>(message);
 		if (geoposition is null) {
+			Logger.LogInformation("geoposition is null for {user}", user);
 			return;
 		}
+		Logger.LogInformation(geoposition.ToString());
 
 		string anonymousVendorId = Context.ConnectionId;
 
@@ -31,14 +35,16 @@ public class GeoHub(
 		geoposition.Vendor = vendorCache.Get(anonymousVendorId);
 
 		message = JsonConvert.SerializeObject(geoposition);
-		await Clients.All.ReceiveMessage(user, message);
+		await Clients.All.MessageReceived(user, message);
 	}
 
 	public override async Task OnConnectedAsync() {
+		Logger.LogInformation("connected to {}", Context.ConnectionId);
 		await base.OnConnectedAsync();
 	}
 
 	public override async Task OnDisconnectedAsync(Exception? exception) {
+		Logger.LogInformation("Disconnected from {}", Context.ConnectionId);
 		// in the event the connection is annonymous, immediately free the information
 		string anonymousVendorId = Context.ConnectionId;
 		try {
