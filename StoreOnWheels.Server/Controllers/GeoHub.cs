@@ -26,10 +26,10 @@ public class GeoHub(
 
 		// replace the vendor information sent by the client. Disallow users from modifying the profile.
 		if (!vendorCache.Contains(anonymousVendorId)) {
-			Vendor? vendor = await vendorService.Get(anonymousVendorId);
-			if (vendor is not null) {
-				vendorCache.AddReplace(anonymousVendorId, vendor);
-			}
+			// To Do: Throw Exception if vendor not found
+			Vendor vendor = await vendorService.Get(anonymousVendorId)
+				?? new() { DisplayName = "Random", Id = anonymousVendorId };
+			vendorCache.AddReplace(anonymousVendorId, vendor);
 		}
 
 		geoposition.Vendor = vendorCache.Get(anonymousVendorId);
