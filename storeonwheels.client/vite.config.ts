@@ -24,11 +24,6 @@ export default defineConfig({
 				changeOrigin: true, // prevents CORs
 				secure: false // ignore lack of SSL Cert
 			}
-			//"/stream": {
-			//  target: getBackendUrl(),
-			//  changeOrigin: true, // prevents CORs
-			//  secure: false, // ignore lack of SSL Cert
-			//},
 		},
 		port: 5173,
 		https: {
@@ -68,12 +63,11 @@ function generatePem(): PemPair {
 
 	if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 		if (
-			0 !==
 			child_process.spawnSync(
 				"dotnet",
 				["dev-certs", "https", "--export-path", certFilePath, "--format", "Pem", "--no-password"],
 				{ stdio: "inherit" }
-			).status
+			).status !== 0
 		) {
 			throw new Error("Could not create certificate.");
 		}
