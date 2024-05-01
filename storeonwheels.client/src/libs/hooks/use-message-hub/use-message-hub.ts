@@ -10,8 +10,6 @@ export interface IMessageHubResult {
 export function useMessageHub(connection: HubConnection): IMessageHubResult {
 	const [geoInfo, setGeoInfo] = useState<GeoInfo>();
 
-	console.log("re-init hooks");
-
 	useEffect(() => {
 		if (connection == null) {
 			return;
