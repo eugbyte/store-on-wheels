@@ -1,1 +1,2 @@
 C:\Users\eugen\Codes\personal\StoreOnWheels\storeonwheels.client\obj\Debug\storeonwheels.client.esproj.CoreCompileInputs.cache
+C:\Users\eugen\Codes\personal\store-on-wheels\storeonwheels.client\obj\Debug\storeonwheels.client.esproj.CoreCompileInputs.cache

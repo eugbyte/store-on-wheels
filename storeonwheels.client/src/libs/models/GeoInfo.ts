@@ -14,7 +14,7 @@ export class GeoCoordinates {
 }
 
 export class GeoInfo {
-  vendorId = "";
+  vendorId = ""; 
   vendor = new Vendor();
   coords = new GeoCoordinates();
   timestamp = 0;

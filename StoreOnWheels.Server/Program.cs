@@ -23,6 +23,7 @@ builder.Services.AddCors(options => {
 });
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
+builder.Services.AddSingleton(new LRUCache<int, int>(capacity: 200, evictCount: 10));
 // Add services to the container.
 builder.Services.AddTransient<IVendorService, VendorService>();
 
