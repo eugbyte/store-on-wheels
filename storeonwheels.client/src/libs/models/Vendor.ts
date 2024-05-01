@@ -1,5 +1,5 @@
 ﻿export class Vendor {
-  id = "";
-  displayName = "";
-  description = "";
+	id = "";
+	displayName = "";
+	description = "";
 }

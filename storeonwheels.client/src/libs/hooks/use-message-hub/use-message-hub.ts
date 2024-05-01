@@ -4,58 +4,50 @@ import { getRandomNum } from "~/libs/random";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 
 export interface IMessageHubResult {
-  geoInfo?: GeoInfo;
+	geoInfo?: GeoInfo;
 }
 
 export function useMessageHub(connection: HubConnection): IMessageHubResult {
-  const [geoInfo, setGeoInfo] = useState<GeoInfo>();
+	const [geoInfo, setGeoInfo] = useState<GeoInfo>();
 
-  console.log("re-init hooks");
+	console.log("re-init hooks");
 
-  useEffect(() => {
-    if (connection == null) {
-      return;
-    }
-    connection.on("MessageReceived", ((_user: string, message: string) => {
-      console.log("message received ");
-      const info: GeoInfo = JSON.parse(message);
-      setGeoInfo(info);
-    }));
+	useEffect(() => {
+		if (connection == null) {
+			return;
+		}
+		connection.on("MessageReceived", (_user: string, message: string) => {
+			console.log("message received ");
+			const info: GeoInfo = JSON.parse(message);
+			setGeoInfo(info);
+		});
+	}, [connection]);
 
-  }, [connection]);
+	useEffect(() => {
+		(async () => {
+			if (connection == null || connection.state != HubConnectionState.Disconnected) {
+				return;
+			}
+			await connection.start();
+		})();
+	}, [connection]);
 
-  useEffect(() => {
-    (async () => {
-      if (connection == null || connection.state != HubConnectionState.Disconnected) {
-        return;
-      }
+	useEffect(() => {
+		const id = setInterval(() => {
+			if (connection == null || connection.state != HubConnectionState.Connected) {
+				return;
+			}
+			const info = new GeoInfo();
+			info.vendorId = connection.connectionId ?? "";
+			info.coords.latitude = getRandomNum(1, 11);
+			info.coords.longitude = getRandomNum(1, 11);
 
-      try {
-        await connection.start();
-        const connId = connection.connectionId as string;
-        console.log({ connId });
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, [connection]);
+			console.log("sending message");
+			connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
+		}, 5000);
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (connection == null || connection.state != HubConnectionState.Connected) {
-        return;
-      }
-      const info = new GeoInfo();
-      info.vendorId = connection.connectionId ?? "";
-      info.coords.latitude = getRandomNum(1, 11);
-      info.coords.latitude = getRandomNum(1, 11);
+		return () => clearInterval(id);
+	}, [connection]);
 
-      console.log("sending message");
-      connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
-    }, 5000);
-
-    return () => clearInterval(id);
-  }, [connection]);
-
-  return { geoInfo };
+	return { geoInfo };
 }
