@@ -4,26 +4,26 @@ import axios from "axios";
 import { MapBoxPage } from "~/pages/map-box";
 
 function App() {
-	const [message, setMessage] = useState<string>();
+  const [message, setMessage] = useState<string>();
 
-	useEffect(() => {
-		(async () => {
-			try {
-				const response: Record<string, string> = (await axios.get("api/v1/heartbeat")).data;
-				console.log(response);
-				setMessage(response["message"]);
-			} catch (error) {
-				console.log(error);
-			}
-		})();
-	}, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response: Record<string, string> = (await axios.get("api/v1/heartbeat")).data;
+        console.log(response);
+        setMessage(response["message"]);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
-	return (
-		<>
-			<p>{message}</p>
-			<MapBoxPage />
-		</>
-	);
+  return (
+    <>
+      <p>{message}</p>
+      <MapBoxPage />
+    </>
+  );
 }
 
 export default App;

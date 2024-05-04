@@ -3,12 +3,12 @@
  * @returns The geolocation permission state.
  */
 export async function getPermissionState(): Promise<PermissionState> {
-	if (!("geolocation" in window.navigator)) {
-		throw new Error("browser does not supprt geolocation");
-	}
+  if (!("geolocation" in window.navigator)) {
+    throw new Error("browser does not supprt geolocation");
+  }
 
-	const res = await navigator.permissions.query({ name: "geolocation" });
-	return res.state;
+  const res = await navigator.permissions.query({ name: "geolocation" });
+  return res.state;
 }
 
 /**
@@ -17,11 +17,11 @@ export async function getPermissionState(): Promise<PermissionState> {
  * @returns
  */
 export async function geolocate(timeout: number): Promise<GeolocationPosition> {
-	const options: PositionOptions = {
-		enableHighAccuracy: true,
-		timeout
-	};
-	return new Promise((resolve, reject) =>
-		navigator.geolocation.getCurrentPosition(resolve, reject, options)
-	);
+  const options: PositionOptions = {
+    enableHighAccuracy: true,
+    timeout
+  };
+  return new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(resolve, reject, options)
+  );
 }

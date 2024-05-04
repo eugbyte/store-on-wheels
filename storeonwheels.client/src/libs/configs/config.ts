@@ -1,3 +1,3 @@
 export const buildTimeConfig = {
-	mapboxToken: ""
+  mapboxToken: ""
 };
