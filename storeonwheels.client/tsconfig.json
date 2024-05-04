@@ -23,7 +23,8 @@
 		/* Path alias */
 		"baseUrl": "./",
 		"paths": {
-			"~/*": ["./src/*"]
+			"~/*": ["./src/*"],
+			"@turf/helpers": ["./node_modules/@turf/helpers/dist/js/index.d.ts"]
 		}
 	},
 	"include": ["src"],

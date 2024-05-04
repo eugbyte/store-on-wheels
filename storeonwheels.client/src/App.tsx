@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { MapBox } from "~/pages/map-box";
+import { MapBoxPage } from "~/pages/map-box";
 
 function App() {
 	const [message, setMessage] = useState<string>();
@@ -21,7 +21,7 @@ function App() {
 	return (
 		<>
 			<p>{message}</p>
-			<MapBox />
+			<MapBoxPage />
 		</>
 	);
 }

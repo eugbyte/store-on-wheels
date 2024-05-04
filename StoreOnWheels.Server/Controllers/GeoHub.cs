@@ -10,7 +10,6 @@ public class GeoHub(
 	ILogger<GeoHub> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
-
 	// Allow user to broadcast message without first authenticating
 	// js client calls "BroadcastMessageWithoutAuth()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"

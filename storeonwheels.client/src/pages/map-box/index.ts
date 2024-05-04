@@ -1,1 +1,1 @@
-export * from "./map-box";
+export * from "./mapbox-page";
