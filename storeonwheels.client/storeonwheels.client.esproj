@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="src\libs\configs\" />
     <Folder Include="src\libs\geolocator\" />
+    <Folder Include="src\libs\signals\" />
     <Folder Include="src\libs\random\" />
   </ItemGroup>
 </Project>
