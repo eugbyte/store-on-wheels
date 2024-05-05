@@ -1,4 +1,3 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { MapBoxPage } from "~/pages/map-box";
@@ -19,10 +18,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="bg-slate-800 text-white px-2 h-full">
       <p>{message}</p>
       <MapBoxPage />
-    </>
+    </div>
   );
 }
 

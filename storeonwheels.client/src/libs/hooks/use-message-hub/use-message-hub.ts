@@ -40,7 +40,6 @@ export function useMessageHub(connection: HubConnection): IMessageHubResult {
       info.coords.latitude = getRandomNum(1, 11);
       info.coords.longitude = getRandomNum(1, 11);
 
-      console.log("sending message");
       connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
     }, 5000);
 

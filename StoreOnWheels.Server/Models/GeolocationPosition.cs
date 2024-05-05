@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace StoreOnWheels.Server.Models;
 
@@ -8,7 +9,7 @@ public class GeolocationPosition {
 	public GeolocationCoordinate Coords { get; set; } = new();
 	public long Timestamp { get; set; }
 
-	public override string ToString() {
-		return JsonConvert.SerializeObject(this);
+	public string ToJson() {
+		return JsonConvert.SerializeObject(this, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
 	}
 }

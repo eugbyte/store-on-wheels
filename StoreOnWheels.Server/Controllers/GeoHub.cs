@@ -19,7 +19,7 @@ public class GeoHub(
 			Logger.LogInformation("geoposition is null for {user}", user);
 			return;
 		}
-		Logger.LogInformation(geoposition.ToString());
+		Logger.LogInformation(geoposition.ToJson());
 
 		string anonymousVendorId = Context.ConnectionId;
 
@@ -33,7 +33,7 @@ public class GeoHub(
 
 		geoposition.Vendor = vendorCache.Get(anonymousVendorId);
 
-		message = JsonConvert.SerializeObject(geoposition);
+		message = geoposition.ToJson();
 		await Clients.All.MessageReceived(user, message);
 	}
 
