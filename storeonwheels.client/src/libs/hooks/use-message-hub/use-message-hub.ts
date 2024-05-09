@@ -18,7 +18,7 @@ export function useMessageHub(connection: HubConnection): IMessageHubResult {
       console.log("message received ");
       const info: GeoInfo = JSON.parse(message);
       setGeoInfo(info);
-    });
+    });    
   }, [connection]);
 
   useEffect(() => {
@@ -28,6 +28,9 @@ export function useMessageHub(connection: HubConnection): IMessageHubResult {
       }
       await connection.start();
     })();
+    //return () => {
+    //  connection.stop();
+    //}
   }, [connection]);
 
   useEffect(() => {
