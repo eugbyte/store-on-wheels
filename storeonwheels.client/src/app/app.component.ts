@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { HUB_CONNECTION_TOKEN, hubConnection } from './libs/services/message-hub/create-connection';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -9,8 +10,7 @@ import { HUB_CONNECTION_TOKEN, hubConnection } from './libs/services/message-hub
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   standalone: true,
-  imports: [HttpClientModule],
-  providers: [{ provide: HUB_CONNECTION_TOKEN, useValue: hubConnection }]
+  imports: [HttpClientModule, RouterModule],
 })
 export class AppComponent implements OnInit {
   public message = "";
