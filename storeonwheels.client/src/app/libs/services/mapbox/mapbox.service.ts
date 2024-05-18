@@ -3,9 +3,6 @@ import mapboxgl, { GeolocateControl, LngLat, Marker, NavigationControl } from "m
 import * as turf from "@turf/turf";
 import { animate } from './animate';
 
-@Injectable({
-  providedIn: 'root'
-})
 /**
  * Create a MapBox with zoom control, rotation control, and geolocation control.
  * 
@@ -37,7 +34,7 @@ export class MapboxService {
    * @param zoom default zoom
    */
   constructor(
-    mapboxToken: string,
+    mapboxToken: string = "",
     public containerID: string,
     private lng: number,
     private lat: number,
