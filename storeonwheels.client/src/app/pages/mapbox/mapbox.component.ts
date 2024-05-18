@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HUB_CONNECTION_TOKEN, MessageHubService, hubConnection } from '~/app/libs/services';
+import { GeoInfo } from '../../libs/models';
 
 @Component({
   selector: 'app-mapbox',
@@ -13,8 +14,17 @@ import { HUB_CONNECTION_TOKEN, MessageHubService, hubConnection } from '~/app/li
     MessageHubService,
   ]
 })
-export class MapboxComponent {
+export class MapboxComponent implements OnInit {
+  public geoInfo = new GeoInfo();
+
   constructor(private messageHub: MessageHubService) {
-    
+    this.messageHub.start();
+}
+
+  ngOnInit() {
+    this.messageHub.geoInfo$.subscribe((info) => {
+      this.geoInfo = info;
+    });
+    this.messageHub.periodicSendMock();
   }
 }

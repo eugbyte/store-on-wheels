@@ -10,18 +10,23 @@ import { HUB_CONNECTION_TOKEN } from './create-connection';
   providedIn: null,
 })
 export class MessageHubService {
-  private geoInfo$ = new Subject<GeoInfo>();
+  private _geoInfo$ = new Subject<GeoInfo>();
   private intervalId = 0;
 
   constructor(
     private mathService: MathService,
     @Inject(HUB_CONNECTION_TOKEN) private connection: HubConnection,
   ) {
+    console.log(connection.baseUrl);
     connection.on("MessageReceived", (_user: string, message: string) => {
       console.log("message received");
       const info: GeoInfo = JSON.parse(message);
-      this.geoInfo$.next(info);
+      this._geoInfo$.next(info);
     });
+  }
+
+  public get geoInfo$() {
+    return this._geoInfo$;
   }
 
   async start() {
