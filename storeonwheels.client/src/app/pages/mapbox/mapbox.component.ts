@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HUB_CONNECTION_TOKEN, MessageHubService, hubConnection } from '~/app/libs/services';
-import { GeoInfo } from '../../libs/models';
+import { GeoInfo } from '~/app/libs/models';
 
 @Component({
   selector: 'app-mapbox',

@@ -2,7 +2,7 @@ import { Component, Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { GeoInfo } from '~/app/libs/models';
 import { Subject } from 'rxjs';
-import { MathService } from '../math/math.service';
+import { MathService } from '~/app/libs/services';
 import { HUB_CONNECTION_TOKEN } from './create-connection';
 
 @Injectable({
