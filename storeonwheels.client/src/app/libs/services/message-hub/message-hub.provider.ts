@@ -1,9 +1,17 @@
-import { MessageHubService } from "./message-hub.service";
-import { Provider } from "@angular/core";
-import { hubConnection } from "./create-connection";
-import { MathService } from "~/app/libs/services/math/math.service";
+import { InjectionToken } from "@angular/core";
+import * as signalR from "@microsoft/signalr";
+import { HubConnection } from "@microsoft/signalr";
 
-export const messageHubProvider: Provider = {
-  provide: MessageHubService,
-  useFactory: () => new MessageHubService(new MathService(), hubConnection),
-};
+export function createConnection(url: string): HubConnection {
+  return new signalR.HubConnectionBuilder()
+    .withUrl(url)
+    .configureLogging(signalR.LogLevel.Information)
+    .withAutomaticReconnect() // https://tinyurl.com/eh7bfrjp
+    .build();
+}
+
+export const hubConnection = createConnection(
+  "https://localhost:7108/stream/v1/geohub"
+);
+
+export const HUB_CONNECTION = new InjectionToken<string>("HUB_CONNECTION");

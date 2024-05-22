@@ -1,10 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import {
+  HUB_CONNECTION,
+  MAPBOX_TOKEN,
   MapboxService,
   MessageHubService,
-  mapboxProvider,
-  messageHubProvider,
+  hubConnection,
+  mapboxToken,
 } from "~/app/libs/services";
 import { GeoInfo } from "~/app/libs/models";
 
@@ -14,22 +16,32 @@ import { GeoInfo } from "~/app/libs/models";
   imports: [CommonModule],
   templateUrl: "./mapbox.component.html",
   styleUrl: "./mapbox.component.css",
-  providers: [messageHubProvider, mapboxProvider],
+  providers: [
+    MessageHubService,
+    MapboxService,
+    { provide: MAPBOX_TOKEN, useValue: mapboxToken },
+    { provide: HUB_CONNECTION, useValue: hubConnection },
+  ],
 })
-export class MapboxComponent implements OnInit {
+export class MapboxComponent implements OnInit, AfterViewInit {
   public geoInfo = new GeoInfo();
+  public containerId = "foodtruck-mapbox";
 
   constructor(
     private messageHub: MessageHubService,
     private mapboxService: MapboxService
   ) {
     this.messageHub.start();
+    this.messageHub.sendMockPeriodically();
   }
 
   ngOnInit() {
     this.messageHub.geoInfo$.subscribe((info) => {
       this.geoInfo = info;
     });
-    this.messageHub.periodicSendMock();
+  }
+
+  ngAfterViewInit() {
+    this.mapboxService.draw(this.containerId, 103.851959, 1.29027, 9);
   }
 }

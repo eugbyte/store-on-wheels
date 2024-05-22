@@ -6,7 +6,8 @@ import mapboxgl, {
 } from "mapbox-gl";
 import * as turf from "@turf/turf";
 import { animate } from "./animate";
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { MAPBOX_TOKEN } from "./mapbox.service.provider";
 
 /**
  * Create a MapBox with zoom control, rotation control, and geolocation control.
@@ -41,7 +42,7 @@ export class MapboxService {
    * @param lat default longitude
    * @param zoom default zoom
    */
-  constructor(mapboxToken: string) {
+  constructor(@Inject(MAPBOX_TOKEN) mapboxToken: string) {
     mapboxgl.accessToken = mapboxToken;
 
     // 1. Create zoom and rotation controls.
