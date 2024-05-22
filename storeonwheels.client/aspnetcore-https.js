@@ -10,7 +10,7 @@ function generatePem() {
       : `${process.env.HOME}/.aspnet/https`;
 
   const certificateArg = process.argv
-    .map(arg => arg.match(/--name=(?<value>.+)/i))
+    .map((arg) => arg.match(/--name=(?<value>.+)/i))
     .filter(Boolean)[0];
   const certificateName = certificateArg
     ? certificateArg.groups.value
@@ -39,7 +39,7 @@ function generatePem() {
         "--no-password",
       ],
       { stdio: "inherit" }
-    ).on("exit", code => process.exit(code));
+    ).on("exit", (code) => process.exit(code));
   }
 
   // for debugging purpose

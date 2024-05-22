@@ -78,7 +78,7 @@ export function animate({
     return;
   }
 
-  const id = requestAnimationFrame(timestamp =>
+  const id = requestAnimationFrame((timestamp) =>
     animate({
       marker,
       speed,

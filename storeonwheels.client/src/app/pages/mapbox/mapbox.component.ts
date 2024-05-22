@@ -27,7 +27,7 @@ export class MapboxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.messageHub.geoInfo$.subscribe(info => {
+    this.messageHub.geoInfo$.subscribe((info) => {
       this.geoInfo = info;
     });
     this.messageHub.periodicSendMock();
