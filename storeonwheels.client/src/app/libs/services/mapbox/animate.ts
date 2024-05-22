@@ -52,7 +52,7 @@ export function animate({
   startTime,
   animationDuration,
   timestamp,
-  frameID
+  frameID,
 }: AnimateProps): void {
   const runtime = timestamp - startTime;
 
@@ -61,9 +61,14 @@ export function animate({
   }
 
   const from = turf.point([originlng, originlat]);
-  const newPoint = turf.rhumbDestination(from, speed * (runtime / 1000), bearing, {
-    units: "meters"
-  });
+  const newPoint = turf.rhumbDestination(
+    from,
+    speed * (runtime / 1000),
+    bearing,
+    {
+      units: "meters",
+    }
+  );
   const [newLng, newLat] = newPoint.geometry.coordinates;
 
   try {
@@ -83,7 +88,7 @@ export function animate({
       startTime,
       timestamp,
       animationDuration,
-      frameID
+      frameID,
     })
   );
   frameID[0] = id;
