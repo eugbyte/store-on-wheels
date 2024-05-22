@@ -10,7 +10,7 @@
     "prestart": "node aspnetcore-https",
     "start:windows": "ng serve --ssl --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\"",
     "start:default": "ng serve --ssl --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\"",
-    "fmt": "ng lint --fix"
+    "fmt": "ng lint --fix && prettier . --write"
   },
   "private": true,
   "dependencies": {

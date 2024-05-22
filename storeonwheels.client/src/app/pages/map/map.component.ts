@@ -11,11 +11,11 @@ import {
 import { GeoInfo } from "~/app/libs/models";
 
 @Component({
-  selector: "app-mapbox",
+  selector: "app-map",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: "./mapbox.component.html",
-  styleUrl: "./mapbox.component.css",
+  templateUrl: "./map.component.html",
+  styleUrl: "./map.component.css",
   providers: [
     MessageHubService,
     MapboxService,
@@ -23,7 +23,7 @@ import { GeoInfo } from "~/app/libs/models";
     { provide: HUB_CONNECTION, useValue: hubConnection },
   ],
 })
-export class MapboxComponent implements OnInit, AfterViewInit {
+export class MapPageComponent implements OnInit, AfterViewInit {
   public geoInfo = new GeoInfo();
   public containerId = "foodtruck-mapbox";
 
@@ -42,6 +42,6 @@ export class MapboxComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mapboxService.draw(this.containerId, 103.851959, 1.29027, 9);
+    this.mapboxService.draw(this.containerId, 103.851959, 1.29027, 12);
   }
 }

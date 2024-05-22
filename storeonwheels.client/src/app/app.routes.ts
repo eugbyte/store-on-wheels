@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
-import { MapboxComponent } from "./pages/mapbox/mapbox.component";
+import { MapPageComponent as MapPage } from "./pages/map/map.component";
 
 export const routes: Routes = [
-  { path: "map", component: MapboxComponent, title: "Mapbox" },
+  { path: "map", component: MapPage, title: "Mapbox" },
 ];
