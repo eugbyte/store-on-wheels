@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MapboxService, MessageHubService, mapboxProvider, messageHubProvider } from '~/app/libs/services';
 import { GeoInfo } from '~/app/libs/models';
 
-const 
-
 @Component({
   selector: 'app-mapbox',
   standalone: true,
