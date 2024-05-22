@@ -11,11 +11,11 @@ import {
 import { GeoInfo } from "~/app/libs/models";
 
 @Component({
-  selector: "app-map",
+  selector: "app-map-page",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: "./map.component.html",
-  styleUrl: "./map.component.css",
+  templateUrl: "./map-page.component.html",
+  styleUrl: "./map-page.component.css",
   providers: [
     MessageHubService,
     MapboxService,
