@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import mapboxgl, { GeolocateControl, LngLat, Marker, NavigationControl } from "mapbox-gl";
 import * as turf from "@turf/turf";
 import { animate } from './animate';
+import { Injectable } from "@angular/core";
 
 /**
  * Create a MapBox with zoom control, rotation control, and geolocation control.
@@ -13,6 +13,9 @@ import { animate } from './animate';
   const { map, navControl, geolocater } = mb;	// access the mapboxgl.Map, NavigationControl, GeolocateControl here.
  * ```
  */
+@Injectable({
+  providedIn: null,
+})
 export class MapboxService {
   private _map?: mapboxgl.Map;
   /**
@@ -34,11 +37,7 @@ export class MapboxService {
    * @param zoom default zoom
    */
   constructor(
-    mapboxToken: string = "",
-    public containerID: string,
-    private lng: number,
-    private lat: number,
-    private zoom: number
+    mapboxToken: string,
   ) {
     mapboxgl.accessToken = mapboxToken;
 
@@ -57,9 +56,17 @@ export class MapboxService {
 
   /**
    * As a side effect, render the Map to the HTML.
-   */
-  draw() {
-    const { containerID, lng, lat, navControl, geolocater, zoom } = this;
+  * Note that there is no side effects. The map will only be rendered to the HTML after calling render().
+  * @param containerID The HTML ID of the container element for the MapBox to attach itself to
+  * @param lng default lattitude
+  * @param lat default longitude
+  * @param zoom default zoom
+  */
+  draw(containerID: string,
+    lng: number,
+    lat: number,
+    zoom: number) {
+    const { navControl, geolocater } = this;
     const map = new mapboxgl.Map({
       container: containerID,
       style: "mapbox://styles/mapbox/streets-v12", // style URL

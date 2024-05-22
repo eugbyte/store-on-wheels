@@ -1,12 +1,10 @@
-import { Component, Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { GeoInfo } from '~/app/libs/models';
 import { Subject } from 'rxjs';
 import { MathService } from '~/app/libs/services';
-import { HUB_CONNECTION_TOKEN } from './create-connection';
 
 @Injectable({
-  // service needs to be transient since we are injecting the connection
   providedIn: null,
 })
 export class MessageHubService {
@@ -15,9 +13,8 @@ export class MessageHubService {
 
   constructor(
     private mathService: MathService,
-    @Inject(HUB_CONNECTION_TOKEN) private connection: HubConnection,
+    private connection: HubConnection,
   ) {
-    console.log(connection.baseUrl);
     connection.on("MessageReceived", (_user: string, message: string) => {
       console.log("message received");
       const info: GeoInfo = JSON.parse(message);

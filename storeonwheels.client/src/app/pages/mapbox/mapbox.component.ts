@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { HUB_CONNECTION_TOKEN, MessageHubService, hubConnection } from '~/app/libs/services';
+import { MapboxService, MessageHubService, mapboxProvider, messageHubProvider } from '~/app/libs/services';
 import { GeoInfo } from '~/app/libs/models';
+
+const 
 
 @Component({
   selector: 'app-mapbox',
@@ -10,14 +12,14 @@ import { GeoInfo } from '~/app/libs/models';
   templateUrl: './mapbox.component.html',
   styleUrl: './mapbox.component.css',
   providers: [
-    { provide: HUB_CONNECTION_TOKEN, useValue: hubConnection },
-    MessageHubService,
+    messageHubProvider,
+    mapboxProvider,
   ]
 })
 export class MapboxComponent implements OnInit {
   public geoInfo = new GeoInfo();
 
-  constructor(private messageHub: MessageHubService) {
+  constructor(private messageHub: MessageHubService, private mapboxService: MapboxService) {
     this.messageHub.start();
 }
 

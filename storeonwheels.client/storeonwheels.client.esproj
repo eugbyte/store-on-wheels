@@ -8,6 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\storeonwheels.client\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\components\" />
+    <None Remove="src\app\components\**" />
+    <TypeScriptConfiguration Remove="src\app\components\**" />
   </ItemGroup>
 </Project>
