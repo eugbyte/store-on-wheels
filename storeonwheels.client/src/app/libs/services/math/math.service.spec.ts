@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { MathService } from './math.service';
+import { MathService } from "./math.service";
 
-describe('RandomService', () => {
+describe("RandomService", () => {
   let service: MathService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('RandomService', () => {
     service = TestBed.inject(MathService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

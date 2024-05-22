@@ -9,4 +9,6 @@ export function createConnection(url: string): HubConnection {
     .build();
 }
 
-export const hubConnection = createConnection("https://localhost:7108/stream/v1/geohub");
+export const hubConnection = createConnection(
+  "https://localhost:7108/stream/v1/geohub"
+);

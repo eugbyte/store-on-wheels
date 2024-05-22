@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { MapboxService } from './mapbox.service';
+import { MapboxService } from "./mapbox.service";
 
-describe('MapboxService', () => {
+describe("MapboxService", () => {
   let service: MapboxService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('MapboxService', () => {
     service = TestBed.inject(MapboxService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

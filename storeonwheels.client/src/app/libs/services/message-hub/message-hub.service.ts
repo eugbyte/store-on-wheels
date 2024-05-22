@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionState } from '@microsoft/signalr';
-import { GeoInfo } from '~/app/libs/models';
-import { Subject } from 'rxjs';
-import { MathService } from '~/app/libs/services';
+import { Injectable } from "@angular/core";
+import { HubConnection, HubConnectionState } from "@microsoft/signalr";
+import { GeoInfo } from "~/app/libs/models";
+import { Subject } from "rxjs";
+import { MathService } from "~/app/libs/services";
 
 @Injectable({
   providedIn: null,
@@ -13,7 +13,7 @@ export class MessageHubService {
 
   constructor(
     private mathService: MathService,
-    private connection: HubConnection,
+    private connection: HubConnection
   ) {
     connection.on("MessageReceived", (_user: string, message: string) => {
       console.log("message received");
@@ -28,7 +28,10 @@ export class MessageHubService {
 
   async start() {
     const { connection } = this;
-    if (connection == null || connection.state != HubConnectionState.Disconnected) {
+    if (
+      connection == null ||
+      connection.state != HubConnectionState.Disconnected
+    ) {
       return;
     }
     await connection.start();
@@ -38,7 +41,10 @@ export class MessageHubService {
     const { connection, mathService } = this;
 
     this.intervalId = window.setInterval(() => {
-      if (connection == null || connection.state != HubConnectionState.Connected) {
+      if (
+        connection == null ||
+        connection.state != HubConnectionState.Connected
+      ) {
         return;
       }
       const info = new GeoInfo();
@@ -47,7 +53,11 @@ export class MessageHubService {
       info.coords.longitude = mathService.getRandomNum(1, 11);
 
       console.log("sending message");
-      connection.send("broadcastMessageWithoutAuth", "random_user", JSON.stringify(info));
+      connection.send(
+        "broadcastMessageWithoutAuth",
+        "random_user",
+        JSON.stringify(info)
+      );
     }, 5000);
   }
 
@@ -55,6 +65,4 @@ export class MessageHubService {
     clearInterval(this.intervalId);
     await this.connection.stop();
   }
-
-  
 }

@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { GeolocateService } from './geolocate.service';
+import { GeolocateService } from "./geolocate.service";
 
-describe('GeolocateService', () => {
+describe("GeolocateService", () => {
   let service: GeolocateService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('GeolocateService', () => {
     service = TestBed.inject(GeolocateService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

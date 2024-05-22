@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class GeolocateService {
   /**
@@ -17,7 +17,7 @@ export class GeolocateService {
     return res.state;
   }
 
-   /**
+  /**
    * Get the user's geolocation
    * @param timeout timeout in miliseconds
    * @returns
@@ -25,7 +25,7 @@ export class GeolocateService {
   async geolocate(timeout: number): Promise<GeolocationPosition> {
     const options: PositionOptions = {
       enableHighAccuracy: true,
-      timeout
+      timeout,
     };
     return new Promise((resolve, reject) =>
       navigator.geolocation.getCurrentPosition(resolve, reject, options)

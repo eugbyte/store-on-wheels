@@ -1,6 +1,11 @@
-import mapboxgl, { GeolocateControl, LngLat, Marker, NavigationControl } from "mapbox-gl";
+import mapboxgl, {
+  GeolocateControl,
+  LngLat,
+  Marker,
+  NavigationControl,
+} from "mapbox-gl";
 import * as turf from "@turf/turf";
-import { animate } from './animate';
+import { animate } from "./animate";
 import { Injectable } from "@angular/core";
 
 /**
@@ -36,9 +41,7 @@ export class MapboxService {
    * @param lat default longitude
    * @param zoom default zoom
    */
-  constructor(
-    mapboxToken: string,
-  ) {
+  constructor(mapboxToken: string) {
     mapboxgl.accessToken = mapboxToken;
 
     // 1. Create zoom and rotation controls.
@@ -47,31 +50,28 @@ export class MapboxService {
     // 2. Create geolocation controls.
     this.geolocater = new GeolocateControl({
       positionOptions: {
-        enableHighAccuracy: true
+        enableHighAccuracy: true,
       },
       // Draw an arrow next to the location dot to indicate which direction the device is heading.
-      showUserHeading: true
+      showUserHeading: true,
     });
   }
 
   /**
    * As a side effect, render the Map to the HTML.
-  * Note that there is no side effects. The map will only be rendered to the HTML after calling render().
-  * @param containerID The HTML ID of the container element for the MapBox to attach itself to
-  * @param lng default lattitude
-  * @param lat default longitude
-  * @param zoom default zoom
-  */
-  draw(containerID: string,
-    lng: number,
-    lat: number,
-    zoom: number) {
+   * Note that there is no side effects. The map will only be rendered to the HTML after calling render().
+   * @param containerID The HTML ID of the container element for the MapBox to attach itself to
+   * @param lng default lattitude
+   * @param lat default longitude
+   * @param zoom default zoom
+   */
+  draw(containerID: string, lng: number, lat: number, zoom: number) {
     const { navControl, geolocater } = this;
     const map = new mapboxgl.Map({
       container: containerID,
       style: "mapbox://styles/mapbox/streets-v12", // style URL
       zoom,
-      center: [lng, lat]
+      center: [lng, lat],
     });
     this._map = map;
     // 2. Attach zoom and rotation controls to the rendered map.
@@ -86,20 +86,22 @@ export class MapboxService {
    */
   get map(): mapboxgl.Map {
     if (this._map == null) {
-      throw new Error("map is null. Remember to call render() to initialize the map.");
+      throw new Error(
+        "map is null. Remember to call render() to initialize the map."
+      );
     }
     return this._map;
   }
 
   /**
- * Animate the marker moving from its original coordinates to the destination.
- * Mapbox already uses [Web Workers under the hood](https://docs.mapbox.com/mapbox-gl-js/guides/install/#loading-and-transpiling-the-web-worker-separately)
- * to draw the canvas, so there is no need to implement a web worker.
- * @param marker The MapBox marker object
- * @param geoInfo Geo info of the vendor
- * @param frameID The animation frame ID, single element array to store reference to the current animation frame
- * @param animationDuration How long the animation should run in millisecond
- */
+   * Animate the marker moving from its original coordinates to the destination.
+   * Mapbox already uses [Web Workers under the hood](https://docs.mapbox.com/mapbox-gl-js/guides/install/#loading-and-transpiling-the-web-worker-separately)
+   * to draw the canvas, so there is no need to implement a web worker.
+   * @param marker The MapBox marker object
+   * @param geoInfo Geo info of the vendor
+   * @param frameID The animation frame ID, single element array to store reference to the current animation frame
+   * @param animationDuration How long the animation should run in millisecond
+   */
   animateMarker(
     marker: Marker,
     destination: LngLat,
@@ -127,9 +129,8 @@ export class MapboxService {
         originlat: lat,
         startTime: window.performance.now(),
         timestamp: window.performance.now(),
-        frameID
+        frameID,
       });
     }
-}
-
+  }
 }
