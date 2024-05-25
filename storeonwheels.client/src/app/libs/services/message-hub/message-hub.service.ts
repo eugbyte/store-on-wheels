@@ -47,8 +47,8 @@ export class MessageHubService {
       }
       const info = new GeoInfo();
       info.vendorId = connection.connectionId ?? "";
-      info.coords.latitude = mathService.getRandomNum(1, 11);
-      info.coords.longitude = mathService.getRandomNum(1, 11);
+      info.coords.latitude = 1.3 + mathService.getRandomInt(1, 9) / 100;
+      info.coords.longitude = 103.8 + mathService.getRandomInt(1, 9) / 100;
 
       console.log("sending message");
       connection.send(
