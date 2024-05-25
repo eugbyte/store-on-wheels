@@ -4,4 +4,3 @@ export * from "./math/math.service";
 export * from "./geolocate/geolocate.service";
 export * from "./mapbox/mapbox.service";
 export * from "./mapbox/mapbox.service.provider";
-export * from "./mapbox/mapbox.service.provider";

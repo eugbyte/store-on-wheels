@@ -17,8 +17,8 @@ import { GeoInfo } from "~/app/libs/models";
   templateUrl: "./map-page.component.html",
   styleUrl: "./map-page.component.css",
   providers: [
-    MessageHubService,
     MapboxService,
+    MessageHubService,
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
     { provide: HUB_CONNECTION, useValue: hubConnection },
   ],
