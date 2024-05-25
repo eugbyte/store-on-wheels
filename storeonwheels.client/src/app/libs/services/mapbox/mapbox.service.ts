@@ -19,9 +19,7 @@ import { MAPBOX_TOKEN } from "./mapbox.service.provider";
   const { map, navControl, geolocater } = mb;	// access the mapboxgl.Map, NavigationControl, GeolocateControl here.
  * ```
  */
-@Injectable({
-  providedIn: null,
-})
+@Injectable()
 export class MapboxService {
   private _map?: mapboxgl.Map;
   /**
@@ -92,6 +90,13 @@ export class MapboxService {
       );
     }
     return this._map;
+  }
+
+  removeCopyrightText(): void {
+    const copyright = document.querySelector(".mapboxgl-ctrl-attrib-inner");
+    if (copyright != null) {
+      copyright.remove();
+    }
   }
 
   /**

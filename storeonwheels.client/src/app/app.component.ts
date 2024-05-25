@@ -1,4 +1,3 @@
-import { HttpClientModule } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import axios from "axios";
 import { RouterModule } from "@angular/router";
@@ -8,7 +7,8 @@ import { RouterModule } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
   standalone: true,
-  imports: [HttpClientModule, RouterModule],
+  imports: [RouterModule],
+  providers: [],
 })
 export class AppComponent implements OnInit {
   public message = "";

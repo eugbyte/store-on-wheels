@@ -4,9 +4,7 @@ import { GeoInfo } from "~/app/libs/models";
 import { Subject } from "rxjs";
 import { HUB_CONNECTION, MathService } from "~/app/libs/services";
 
-@Injectable({
-  providedIn: null,
-})
+@Injectable()
 export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
   private intervalId = 0;
