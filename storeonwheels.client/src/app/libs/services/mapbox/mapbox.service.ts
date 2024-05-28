@@ -105,14 +105,14 @@ export class MapboxService {
    * to draw the canvas, so there is no need to implement a web worker.
    * @param marker The MapBox marker object
    * @param geoInfo Geo info of the vendor
-   * @param frameID The animation frame ID, single element array to store reference to the current animation frame
    * @param animationDuration How long the animation should run in millisecond
+   * @param frameID The animation frame ID, single element array to store reference to the current animation frame
    */
   animateMarker(
     marker: Marker,
     destination: LngLat,
-    frameID: [number],
-    animationDuration: number
+    animationDuration: number,
+    frameID: [number] = [0],
   ): void {
     // code for animation here
     const { lng, lat } = marker.getLngLat();
@@ -123,20 +123,22 @@ export class MapboxService {
 
     const bearing = turf.rhumbBearing(from, to);
     const distance = turf.distance(from, to, { units: "meters" });
-    const speed = distance / (animationDuration / 1000); // m/s
 
-    if (speed > 0) {
-      animate({
-        marker,
-        speed,
-        animationDuration,
-        bearing,
-        originlng: lng,
-        originlat: lat,
-        startTime: window.performance.now(),
-        timestamp: window.performance.now(),
-        frameID,
-      });
+    console.log({ distance, animationDuration });
+    if (animationDuration == 0) {
+      return;
     }
+    const speed = distance / (animationDuration / 1000); // m/s
+    animate({
+      marker,
+      speed,
+      animationDuration,
+      bearing,
+      originlng: lng,
+      originlat: lat,
+      startTime: window.performance.now(),
+      timestamp: window.performance.now(),
+      frameID,
+    });
   }
 }
