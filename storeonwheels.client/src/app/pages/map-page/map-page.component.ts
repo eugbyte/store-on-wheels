@@ -10,8 +10,8 @@ import {
 } from "~/app/libs/services";
 import { GeoInfo } from "~/app/libs/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
-import { Lru } from 'toad-cache';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { Lru } from "toad-cache";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 @Component({
   selector: "app-map-page",
@@ -54,7 +54,8 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       const { vendorId, vendor, coords, timestamp } = info;
       const { latitude: lat, longitude: lng } = coords;
 
-      const oldTimeStamp: number = geoInfos.get(vendorId)?.timestamp ?? timestamp;
+      const oldTimeStamp: number =
+        geoInfos.get(vendorId)?.timestamp ?? timestamp;
       console.log({ oldTimeStamp, timestamp });
 
       if (markers.get(vendorId) == null) {
@@ -64,8 +65,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       }
 
       const marker = markers.get(vendorId) as Marker;
-      const popup = new Popup({ offset: 25 })
-        .setHTML(`
+      const popup = new Popup({ offset: 25 }).setHTML(`
           <div>
             <h1>${vendor.displayName}</h1>
             <p>${vendor.description}</p>
@@ -87,6 +87,6 @@ export class MapPageComponent implements OnInit, AfterViewInit {
 
     mapboxService.draw(containerId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
-    mapboxService.map.resize();    
+    mapboxService.map.resize();
   }
 }

@@ -112,7 +112,7 @@ export class MapboxService {
     marker: Marker,
     destination: LngLat,
     animationDuration: number,
-    frameID: [number] = [0],
+    frameID: [number] = [0]
   ): void {
     // code for animation here
     const { lng, lat } = marker.getLngLat();
@@ -124,7 +124,6 @@ export class MapboxService {
     const bearing = turf.rhumbBearing(from, to);
     const distance = turf.distance(from, to, { units: "meters" });
 
-    console.log({ distance, animationDuration });
     if (animationDuration == 0) {
       return;
     }
