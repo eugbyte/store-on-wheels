@@ -49,6 +49,7 @@ export class MessageHubService {
       info.vendorId = connection.connectionId ?? "";
       info.coords.latitude = 1.3 + mathService.getRandomInt(1, 9) / 1000;
       info.coords.longitude = 103.8 + mathService.getRandomInt(1, 9) / 1000;
+      info.coords.heading = mathService.getRandomInt(0, 360);
       info.timestamp = Date.now();
       info.vendor.displayName = "Vendor1";
       info.vendor.description = "Random Vendor";

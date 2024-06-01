@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import axios from "axios";
+import { Component } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 @Component({
@@ -10,17 +9,6 @@ import { RouterModule } from "@angular/router";
   imports: [RouterModule],
   providers: [],
 })
-export class AppComponent implements OnInit {
-  public message = "";
-
+export class AppComponent {
   constructor() {}
-
-  async ngOnInit() {
-    const response: Record<string, string> = (
-      await axios.get("api/v1/heartbeat")
-    ).data;
-    this.message = response["message"];
-  }
-
-  title = "storeonwheels.client";
 }

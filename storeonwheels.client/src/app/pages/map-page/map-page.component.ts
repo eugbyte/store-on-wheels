@@ -36,30 +36,36 @@ export class MapPageComponent implements OnInit, AfterViewInit {
     private messageHub: MessageHubService,
     private mapboxService: MapboxService
   ) {
-    this.messageHub.start();
-    this.messageHub.sendMockPeriodically();
+    messageHub.start();
+    messageHub.sendMockPeriodically();
   }
 
   ngOnInit() {
     const { markers, messageHub, geoInfos, mapboxService } = this;
+    const { searchBox } = mapboxService;
+
+    searchBox.addEventListener("retrieve", (event) => {
+      const feature = event.detail;
+      console.log(feature); // geojson object representing the selected item
+    });
 
     messageHub.geoInfo$.subscribe((info: GeoInfo) => {
       if (mapboxService.map == null) {
         return;
       }
 
+      const { map } = mapboxService;
       this.geoInfo = info;
 
-      const { map } = mapboxService;
       const { vendorId, vendor, coords, timestamp } = info;
-      const { latitude: lat, longitude: lng } = coords;
+      const { latitude: lat, longitude: lng, heading } = coords;
 
       const oldTimeStamp: number =
         geoInfos.get(vendorId)?.timestamp ?? timestamp;
       console.log({ oldTimeStamp, timestamp });
 
       if (markers.get(vendorId) == null) {
-        const marker = new Marker().setLngLat([lng, lat]);
+        const marker: Marker = this.customMarker.setLngLat([lng, lat]);
         markers.set(vendorId, marker);
         marker.addTo(map);
       }
@@ -73,6 +79,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
         `);
 
       marker.setPopup(popup);
+      marker.setRotation(heading);
       geoInfos.set(vendorId, info);
 
       const duration = timestamp - oldTimeStamp;
@@ -88,5 +95,17 @@ export class MapPageComponent implements OnInit, AfterViewInit {
     mapboxService.draw(containerId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
     mapboxService.map.resize();
+  }
+
+  private get customMarker(): Marker {
+    const width = 20;
+    const height = 20;
+    const el = document.createElement("div");
+    el.className = "marker";
+    el.style.width = `${width}px`;
+    el.style.height = `${height}px`;
+    el.style.backgroundSize = "100%";
+    el.style.backgroundImage = `url(/assets/navigation.png)`;
+    return new Marker(el);
   }
 }

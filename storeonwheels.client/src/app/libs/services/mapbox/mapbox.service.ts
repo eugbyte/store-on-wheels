@@ -8,9 +8,10 @@ import * as turf from "@turf/turf";
 import { animate } from "./animate";
 import { Inject, Injectable } from "@angular/core";
 import { MAPBOX_TOKEN } from "./mapbox.service.provider";
+import { MapboxSearchBox } from "@mapbox/search-js-web";
 
 /**
- * Create a MapBox with zoom control, rotation control, and geolocation control.
+ * Create a MapBox with zoom control, rotation control, geolocation control and a search box.
  * 
  * Use it like so:
  * ```
@@ -22,14 +23,9 @@ import { MAPBOX_TOKEN } from "./mapbox.service.provider";
 @Injectable()
 export class MapboxService {
   private _map?: mapboxgl.Map;
-  /**
-   * mapboxgl.NavigationControl
-   */
   navControl: NavigationControl;
-  /**
-   * mapboxgl.GeolocateControl
-   */
   geolocater: GeolocateControl;
+  searchBox: MapboxSearchBox;
 
   /**
    * Instantiate the mapbox object.
@@ -54,6 +50,14 @@ export class MapboxService {
       // Draw an arrow next to the location dot to indicate which direction the device is heading.
       showUserHeading: true,
     });
+
+    // 3. Create the searchbox control
+    this.searchBox = new MapboxSearchBox();
+    this.searchBox.accessToken = mapboxToken;
+    this.searchBox.options = {
+      language: "en",
+      country: "SG",
+    };
   }
 
   /**
@@ -65,7 +69,8 @@ export class MapboxService {
    * @param zoom default zoom
    */
   draw(containerID: string, lng: number, lat: number, zoom: number) {
-    const { navControl, geolocater } = this;
+    const { navControl, geolocater, searchBox } = this;
+
     const map = new mapboxgl.Map({
       container: containerID,
       style: "mapbox://styles/mapbox/streets-v12", // style URL
@@ -77,6 +82,15 @@ export class MapboxService {
     map.addControl(navControl);
     // 3. Attach geolocation to the rendered map.
     map.addControl(geolocater);
+
+    // set the mapboxgl library to use for markers and disable the marker functionality
+    searchBox.mapboxgl = mapboxgl;
+    searchBox.marker = false;
+    // bind the search box instance to the map instance
+    searchBox.bindMap(map);
+    searchBox.style.border = "";
+    // add the search box instance to the DOM
+    document.getElementById(containerID)?.appendChild(searchBox as HTMLElement);
   }
 
   /**
@@ -86,7 +100,7 @@ export class MapboxService {
   get map(): mapboxgl.Map {
     if (this._map == null) {
       throw new Error(
-        "map is null. Remember to call render() to initialize the map."
+        "map is null. Remember to call draw() to initialize the map."
       );
     }
     return this._map;
