@@ -88,7 +88,6 @@ export class MapboxService {
     searchBox.marker = false;
     // bind the search box instance to the map instance
     searchBox.bindMap(map);
-    searchBox.style.border = "";
     // add the search box instance to the DOM
     document.getElementById(containerID)?.appendChild(searchBox as HTMLElement);
   }
