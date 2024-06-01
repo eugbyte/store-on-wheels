@@ -53,8 +53,9 @@ export class MapboxService {
 
     // 3. Create the searchbox control
     this.searchBox = new MapboxSearchBox();
-    this.searchBox.accessToken = mapboxToken;
-    this.searchBox.options = {
+    const { searchBox } = this;
+    searchBox.accessToken = mapboxToken;
+    searchBox.options = {
       language: "en",
       country: "SG",
     };
