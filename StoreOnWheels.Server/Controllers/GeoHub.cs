@@ -27,7 +27,7 @@ public class GeoHub(
 		if (!vendorCache.Contains(anonymousVendorId)) {
 			// To Do: Throw Exception if vendor not found
 			Vendor vendor = await vendorService.Get(anonymousVendorId)
-				?? new() { DisplayName = "Random", Id = anonymousVendorId };
+				?? geoposition.Vendor;
 			vendorCache.AddReplace(anonymousVendorId, vendor);
 		}
 

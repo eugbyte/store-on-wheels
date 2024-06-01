@@ -6,10 +6,12 @@ import mapboxgl, {
 } from "mapbox-gl";
 import * as turf from "@turf/turf";
 import { animate } from "./animate";
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { MAPBOX_TOKEN } from "./mapbox.service.provider";
+import { MapboxSearchBox } from "@mapbox/search-js-web";
 
 /**
- * Create a MapBox with zoom control, rotation control, and geolocation control.
+ * Create a MapBox with zoom control, rotation control, geolocation control and a search box.
  * 
  * Use it like so:
  * ```
@@ -18,19 +20,12 @@ import { Injectable } from "@angular/core";
   const { map, navControl, geolocater } = mb;	// access the mapboxgl.Map, NavigationControl, GeolocateControl here.
  * ```
  */
-@Injectable({
-  providedIn: null,
-})
+@Injectable()
 export class MapboxService {
   private _map?: mapboxgl.Map;
-  /**
-   * mapboxgl.NavigationControl
-   */
   navControl: NavigationControl;
-  /**
-   * mapboxgl.GeolocateControl
-   */
   geolocater: GeolocateControl;
+  searchBox: MapboxSearchBox;
 
   /**
    * Instantiate the mapbox object.
@@ -41,7 +36,7 @@ export class MapboxService {
    * @param lat default longitude
    * @param zoom default zoom
    */
-  constructor(mapboxToken: string) {
+  constructor(@Inject(MAPBOX_TOKEN) mapboxToken: string) {
     mapboxgl.accessToken = mapboxToken;
 
     // 1. Create zoom and rotation controls.
@@ -55,6 +50,15 @@ export class MapboxService {
       // Draw an arrow next to the location dot to indicate which direction the device is heading.
       showUserHeading: true,
     });
+
+    // 3. Create the searchbox control
+    this.searchBox = new MapboxSearchBox();
+    const { searchBox } = this;
+    searchBox.accessToken = mapboxToken;
+    searchBox.options = {
+      language: "en",
+      country: "SG",
+    };
   }
 
   /**
@@ -66,7 +70,8 @@ export class MapboxService {
    * @param zoom default zoom
    */
   draw(containerID: string, lng: number, lat: number, zoom: number) {
-    const { navControl, geolocater } = this;
+    const { navControl, geolocater, searchBox } = this;
+
     const map = new mapboxgl.Map({
       container: containerID,
       style: "mapbox://styles/mapbox/streets-v12", // style URL
@@ -78,6 +83,14 @@ export class MapboxService {
     map.addControl(navControl);
     // 3. Attach geolocation to the rendered map.
     map.addControl(geolocater);
+
+    // set the mapboxgl library to use for markers and disable the marker functionality
+    searchBox.mapboxgl = mapboxgl;
+    searchBox.marker = false;
+    // bind the search box instance to the map instance
+    searchBox.bindMap(map);
+    // add the search box instance to the DOM
+    document.getElementById(containerID)?.appendChild(searchBox as HTMLElement);
   }
 
   /**
@@ -87,10 +100,17 @@ export class MapboxService {
   get map(): mapboxgl.Map {
     if (this._map == null) {
       throw new Error(
-        "map is null. Remember to call render() to initialize the map."
+        "map is null. Remember to call draw() to initialize the map."
       );
     }
     return this._map;
+  }
+
+  removeCopyrightText(): void {
+    const copyright = document.querySelector(".mapboxgl-ctrl-attrib-inner");
+    if (copyright != null) {
+      copyright.remove();
+    }
   }
 
   /**
@@ -99,14 +119,14 @@ export class MapboxService {
    * to draw the canvas, so there is no need to implement a web worker.
    * @param marker The MapBox marker object
    * @param geoInfo Geo info of the vendor
-   * @param frameID The animation frame ID, single element array to store reference to the current animation frame
    * @param animationDuration How long the animation should run in millisecond
+   * @param frameID The animation frame ID, single element array to store reference to the current animation frame
    */
   animateMarker(
     marker: Marker,
     destination: LngLat,
-    frameID: [number],
-    animationDuration: number
+    animationDuration: number,
+    frameID: [number] = [0]
   ): void {
     // code for animation here
     const { lng, lat } = marker.getLngLat();
@@ -117,20 +137,21 @@ export class MapboxService {
 
     const bearing = turf.rhumbBearing(from, to);
     const distance = turf.distance(from, to, { units: "meters" });
-    const speed = distance / (animationDuration / 1000); // m/s
 
-    if (speed > 0) {
-      animate({
-        marker,
-        speed,
-        animationDuration,
-        bearing,
-        originlng: lng,
-        originlat: lat,
-        startTime: window.performance.now(),
-        timestamp: window.performance.now(),
-        frameID,
-      });
+    if (animationDuration == 0) {
+      return;
     }
+    const speed = distance / (animationDuration / 1000); // m/s
+    animate({
+      marker,
+      speed,
+      animationDuration,
+      bearing,
+      originlng: lng,
+      originlat: lat,
+      startTime: window.performance.now(),
+      timestamp: window.performance.now(),
+      frameID,
+    });
   }
 }

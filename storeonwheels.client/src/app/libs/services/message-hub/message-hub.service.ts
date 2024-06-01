@@ -1,19 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { GeoInfo } from "~/app/libs/models";
 import { Subject } from "rxjs";
-import { MathService } from "~/app/libs/services";
+import { HUB_CONNECTION, MathService } from "~/app/libs/services";
 
-@Injectable({
-  providedIn: null,
-})
+@Injectable()
 export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
   private intervalId = 0;
 
   constructor(
     private mathService: MathService,
-    private connection: HubConnection
+    @Inject(HUB_CONNECTION) private connection: HubConnection
   ) {
     connection.on("MessageReceived", (_user: string, message: string) => {
       console.log("message received");
@@ -37,7 +35,7 @@ export class MessageHubService {
     await connection.start();
   }
 
-  periodicSendMock() {
+  sendMockPeriodically() {
     const { connection, mathService } = this;
 
     this.intervalId = window.setInterval(() => {
@@ -49,8 +47,12 @@ export class MessageHubService {
       }
       const info = new GeoInfo();
       info.vendorId = connection.connectionId ?? "";
-      info.coords.latitude = mathService.getRandomNum(1, 11);
-      info.coords.longitude = mathService.getRandomNum(1, 11);
+      info.coords.latitude = 1.3 + mathService.getRandomInt(1, 9) / 1000;
+      info.coords.longitude = 103.8 + mathService.getRandomInt(1, 9) / 1000;
+      info.coords.heading = mathService.getRandomInt(0, 360);
+      info.timestamp = Date.now();
+      info.vendor.displayName = "Vendor1";
+      info.vendor.description = "Random Vendor";
 
       console.log("sending message");
       connection.send(
