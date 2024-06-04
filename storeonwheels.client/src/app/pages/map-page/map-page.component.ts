@@ -12,11 +12,12 @@ import { GeoInfo } from "~/app/libs/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import { Lru } from "toad-cache";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: "app-map-page",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTabsModule],
   templateUrl: "./map-page.component.html",
   styleUrl: "./map-page.component.css",
   providers: [
@@ -28,6 +29,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 })
 export class MapPageComponent implements OnInit, AfterViewInit {
   public geoInfo = new GeoInfo();
+  public searchboxId = "searchbox"
   public containerId = "foodtruck-mapbox";
   private markers = new Lru<Marker>();
   private geoInfos = new Lru<GeoInfo>();
@@ -41,7 +43,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    const { markers, messageHub, geoInfos, mapboxService } = this;
+    const { markers, messageHub, geoInfos, mapboxService, customMarker } = this;
     const { searchBox } = mapboxService;
 
     searchBox.addEventListener("retrieve", (event) => {
@@ -65,14 +67,14 @@ export class MapPageComponent implements OnInit, AfterViewInit {
       console.log({ oldTimeStamp, timestamp });
 
       if (markers.get(vendorId) == null) {
-        const marker: Marker = this.customMarker.setLngLat([lng, lat]);
+        const marker: Marker = customMarker.setLngLat([lng, lat]);
         markers.set(vendorId, marker);
         marker.addTo(map);
       }
 
       const marker = markers.get(vendorId) as Marker;
       const popup = new Popup({ offset: 25 }).setHTML(`
-          <div>
+          <div class="text-black">
             <h1>${vendor.displayName}</h1>
             <p>${vendor.description}</p>
           </div>
@@ -91,9 +93,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const { mapboxService, containerId } = this;
-    const { searchBox } = mapboxService;
 
-    searchBox.style.border = "solid 0.5px black";
     mapboxService.draw(containerId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
     mapboxService.map.resize();
@@ -102,7 +102,7 @@ export class MapPageComponent implements OnInit, AfterViewInit {
   private get customMarker(): Marker {
     const width = 20;
     const height = 20;
-    const el = document.createElement("div");
+    const el: HTMLDivElement = document.createElement("div");
     el.className = "marker";
     el.style.width = `${width}px`;
     el.style.height = `${height}px`;

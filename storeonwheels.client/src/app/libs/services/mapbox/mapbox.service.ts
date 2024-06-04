@@ -79,18 +79,20 @@ export class MapboxService {
       center: [lng, lat],
     });
     this._map = map;
-    // 2. Attach zoom and rotation controls to the rendered map.
-    map.addControl(navControl);
-    // 3. Attach geolocation to the rendered map.
-    map.addControl(geolocater);
-
+    
+    // 1. Attach the search box control
     // set the mapboxgl library to use for markers and disable the marker functionality
     searchBox.mapboxgl = mapboxgl;
     searchBox.marker = false;
     // bind the search box instance to the map instance
     searchBox.bindMap(map);
     // add the search box instance to the DOM
-    document.getElementById(containerID)?.appendChild(searchBox as HTMLElement);
+    document.getElementById("searchbox")?.appendChild(searchBox as HTMLElement);
+
+    // 2. Attach zoom and rotation controls to the rendered map.
+    map.addControl(navControl);
+    // 3. Attach geolocation to the rendered map.
+    map.addControl(geolocater);
   }
 
   /**
