@@ -12,12 +12,11 @@ import { GeoInfo } from "~/app/libs/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import { Lru } from "toad-cache";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: "app-map-page",
   standalone: true,
-  imports: [CommonModule, MatTabsModule],
+  imports: [CommonModule],
   templateUrl: "./map-page.component.html",
   styleUrl: "./map-page.component.css",
   providers: [
