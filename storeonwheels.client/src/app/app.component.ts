@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { FooterNavComponent } from "./libs/components";
 import { RouterModule } from "@angular/router";
 
 @Component({
@@ -6,9 +7,9 @@ import { RouterModule } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
   standalone: true,
-  imports: [RouterModule],
+  imports: [FooterNavComponent, RouterModule],
   providers: [],
 })
 export class AppComponent {
-  constructor() {}
+  ngOnInit() { }
 }

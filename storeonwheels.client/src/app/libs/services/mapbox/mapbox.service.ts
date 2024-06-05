@@ -64,33 +64,36 @@ export class MapboxService {
   /**
    * As a side effect, render the Map to the HTML.
    * Note that there is no side effects. The map will only be rendered to the HTML after calling render().
-   * @param containerID The HTML ID of the container element for the MapBox to attach itself to
+   * @param containerId The HTML ID of the container element for the MapBox to attach itself to
+   * @param searchboxId The HTML ID of the container element for the SearchBox to attach itself to
    * @param lng default lattitude
    * @param lat default longitude
    * @param zoom default zoom
    */
-  draw(containerID: string, lng: number, lat: number, zoom: number) {
+  draw(containerId: string, searchboxId: string, lng: number, lat: number, zoom: number) {
     const { navControl, geolocater, searchBox } = this;
 
     const map = new mapboxgl.Map({
-      container: containerID,
+      container: containerId,
       style: "mapbox://styles/mapbox/streets-v12", // style URL
       zoom,
       center: [lng, lat],
     });
     this._map = map;
-    // 2. Attach zoom and rotation controls to the rendered map.
-    map.addControl(navControl);
-    // 3. Attach geolocation to the rendered map.
-    map.addControl(geolocater);
-
+    
+    // 1. Attach the search box control
     // set the mapboxgl library to use for markers and disable the marker functionality
     searchBox.mapboxgl = mapboxgl;
     searchBox.marker = false;
     // bind the search box instance to the map instance
     searchBox.bindMap(map);
     // add the search box instance to the DOM
-    document.getElementById(containerID)?.appendChild(searchBox as HTMLElement);
+    document.getElementById(searchboxId)?.appendChild(searchBox as HTMLElement);
+
+    // 2. Attach zoom and rotation controls to the rendered map.
+    map.addControl(navControl);
+    // 3. Attach geolocation to the rendered map.
+    map.addControl(geolocater);
   }
 
   /**
