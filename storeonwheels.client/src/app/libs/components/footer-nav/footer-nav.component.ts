@@ -4,14 +4,13 @@ import { ThemePalette } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TitleCasePipe } from "@angular/common";
 import { NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-footer-nav',
   standalone: true,
   imports: [MatTabsModule, TitleCasePipe, RouterModule],
   templateUrl: './footer-nav.component.html',
-  styleUrl: './footer-nav.component.css'
 })
 export class FooterNavComponent implements OnInit {
   links = ['map', 'healthcheck'];
@@ -22,7 +21,14 @@ export class FooterNavComponent implements OnInit {
 
   ngOnInit() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => this.activeLink = (event as NavigationEnd).url.slice(1));
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+      )
+      .subscribe((event) => {
+        let { url, urlAfterRedirects } = event as NavigationEnd;
+        url = url.slice(1);
+        urlAfterRedirects = urlAfterRedirects.slice(1);
+        this.activeLink = urlAfterRedirects.length > 0 ? urlAfterRedirects : url;
+      });
   }
 }

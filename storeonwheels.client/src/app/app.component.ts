@@ -11,4 +11,5 @@ import { RouterModule } from "@angular/router";
   providers: [],
 })
 export class AppComponent {
+  ngOnInit() { }
 }

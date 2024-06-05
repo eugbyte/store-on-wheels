@@ -91,9 +91,9 @@ export class MapPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const { mapboxService, containerId } = this;
+    const { mapboxService, containerId, searchboxId } = this;
 
-    mapboxService.draw(containerId, 103.851959, 1.29027, 12);
+    mapboxService.draw(containerId, searchboxId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
     mapboxService.map.resize();
   }
