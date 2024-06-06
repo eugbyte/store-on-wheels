@@ -1,10 +1,13 @@
 import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { GeoInfo } from "~/app/libs/models";
+import { GeoInfo } from "~/app/libs/map-page/models";
 import { Subject } from "rxjs";
-import { HUB_CONNECTION, MathService } from "~/app/libs/services";
+import { MathService } from "~/app/libs/shared/services";
+import { HUB_CONNECTION } from "./message-hub.provider";
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
   private intervalId = 0;
