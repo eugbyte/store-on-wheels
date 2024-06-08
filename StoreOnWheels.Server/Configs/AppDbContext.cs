@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Models;
+using StoreOnWheels.Server.Libs.Shared.Models;
 
 namespace StoreOnWheels.Server.Configs;
 

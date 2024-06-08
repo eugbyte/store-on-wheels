@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace StoreOnWheels.Server.Models;
+namespace StoreOnWheels.Server.Libs.Shared.Models;
 
 [Index(nameof(DisplayName), IsUnique = true)]
 public class Vendor {

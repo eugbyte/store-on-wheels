@@ -1,9 +1,9 @@
 using Caching;
 using Microsoft.EntityFrameworkCore;
 using StoreOnWheels.Server.Configs;
-using StoreOnWheels.Server.Controllers;
-using StoreOnWheels.Server.Models;
-using StoreOnWheels.Server.Services;
+using StoreOnWheels.Server.Controllers.Geohubs;
+using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Libs.Vendors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,7 +57,7 @@ app.MapControllers();
 
 // UseCors must be called before MapHub.
 app.UseCors();
-app.MapHub<GeoHub>("/stream/v1/geohub");
+app.MapHub<GeohubsClient>("/stream/v1/geohub");
 
 app.MapFallbackToFile("/index.html");
 

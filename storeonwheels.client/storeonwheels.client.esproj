@@ -12,6 +12,6 @@
     <TypeScriptConfiguration Remove="src\app\components\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\app\libs\components\" />
+    <Folder Include="src\app\libs\shared\components\" />
   </ItemGroup>
 </Project>

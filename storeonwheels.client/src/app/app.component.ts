@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { FooterNavComponent } from "./libs/components";
+import { FooterNavComponent } from "./libs/shared/components";
 import { RouterModule } from "@angular/router";
 
 @Component({

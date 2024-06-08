@@ -1,4 +1,4 @@
-﻿namespace StoreOnWheels.Server.Controllers;
+﻿namespace StoreOnWheels.Server.Controllers.Geohubs;
 
 public interface IGeoHubClient {
 	Task MessageReceived(string user, string message);
