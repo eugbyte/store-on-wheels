@@ -1,10 +1,10 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.Mvc;
 using NanoidDotNet;
-using StoreOnWheels.Server.Models;
-using StoreOnWheels.Server.Services;
+using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Libs.Vendors;
 
-namespace StoreOnWheels.Server.Controllers;
+namespace StoreOnWheels.Server.Controllers.Vendors;
 
 [Route("api/v1/[controller]")]
 [ApiController]
