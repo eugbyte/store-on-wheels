@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
@@ -8,10 +8,11 @@ import {
   hubConnection,
   mapboxToken,
 } from "~/app/libs/map-page/services";
-import { GeoInfo } from "~/app/libs/map-page/models";
+import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import { Lru } from "toad-cache";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-map',
@@ -32,19 +33,15 @@ export class MapComponent implements OnInit, AfterViewInit {
   public containerId = "foodtruck-mapbox";
   private markers = new Lru<Marker>();
   private geoInfos = new Lru<GeoInfo>();
+  @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
 
-  constructor(
-    private messageHub: MessageHubService,
-    private mapboxService: MapboxService
-  ) {
-    messageHub.start();
-    messageHub.sendMockPeriodically();
-  }
+
+  constructor(private mapboxService: MapboxService) { }
 
   ngOnInit() {
-    const { markers, messageHub, geoInfos, mapboxService, customMarker } = this;
+    const { markers, geoInfos, mapboxService, customMarker, geoInfo$ } = this;
 
-    messageHub.geoInfo$.subscribe((info: GeoInfo) => {
+    geoInfo$.subscribe((info: GeoInfo) => {
       if (mapboxService.map == null) {
         return;
       }
@@ -68,7 +65,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       const marker = markers.get(vendorId) as Marker;
       const popup = new Popup({ offset: 25 }).setHTML(`
           <div class="text-black">
-            <h1>${vendor.displayName}</h1>
+            <h5>${vendor.displayName}</h5>
             <p>${vendor.description}</p>
           </div>
         `);

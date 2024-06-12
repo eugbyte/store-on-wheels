@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { GeoInfo } from "~/app/libs/map-page/models";
+import { GeoInfo } from "~/app/libs/shared/models";
 import { Subject } from "rxjs";
 import { MathService } from "~/app/libs/shared/services";
 import { HUB_CONNECTION } from "./message-hub.provider";
@@ -54,6 +54,7 @@ export class MessageHubService {
       info.coords.longitude = 103.8 + mathService.getRandomInt(1, 9) / 1000;
       info.coords.heading = mathService.getRandomInt(0, 360);
       info.timestamp = Date.now();
+      info.vendor.id = connection.connectionId ?? "";
       info.vendor.displayName = "Vendor1";
       info.vendor.description = "Random Vendor";
 

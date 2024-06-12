@@ -24,11 +24,14 @@ builder.Services.AddCors(options => {
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
 builder.Services.AddSingleton(new LRUCache<int, int>(capacity: 200, evictCount: 10));
+builder.Services.AddSingleton(new PeriodicTimer(TimeSpan.FromSeconds(5)));
 // Add services to the container.
 builder.Services.AddTransient<IVendorService, VendorService>();
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+// Add Background Worker to periodically send mock data to ws clients
+builder.Services.AddHostedService<MockPositionEmitter>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -15,7 +15,7 @@ import { filter, tap } from 'rxjs';
 export class FooterNavComponent implements OnInit {
   links = ['map', 'healthcheck'];
   activeLink = this.links[0];
-  background: ThemePalette = 'primary';
+  background: ThemePalette = undefined;
 
   constructor(private router: Router) {}
 

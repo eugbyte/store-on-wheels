@@ -7,7 +7,7 @@ using StoreOnWheels.Server.Libs.Vendors;
 namespace StoreOnWheels.Server.Controllers.Geohubs;
 
 public class GeohubsClient(
-	ILogger<GeohubsClient> Logger,
+	ILogger<GeohubsClient> Logger, 
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
 	// Allow user to broadcast message without first authenticating
@@ -38,8 +38,8 @@ public class GeohubsClient(
 	}
 
 	public override async Task OnConnectedAsync() {
-		Logger.LogInformation("connected to {}", Context.ConnectionId);
 		await base.OnConnectedAsync();
+		Logger.LogInformation("connected to {}", Context.ConnectionId);
 	}
 
 	public override async Task OnDisconnectedAsync(Exception? exception) {

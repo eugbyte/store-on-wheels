@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using NanoidDotNet;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace StoreOnWheels.Server.Libs.Shared.Models;
