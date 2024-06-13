@@ -4,12 +4,12 @@ using StoreOnWheels.Server.Libs.Shared.Models;
 namespace StoreOnWheels.Server.Controllers.Geohubs;
 
 public class MockPositionEmitter(
-	ILogger<MockPositionEmitter> Logger,
 	IHubContext<GeohubsClient> hubContext) : BackgroundService {
+	private readonly Random rnd = new();
+
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
 		PeriodicTimer timer = new(TimeSpan.FromSeconds(5));
 		while (await timer.WaitForNextTickAsync(stoppingToken)) {
-			Logger.LogInformation("Ticked");
 			for (int i = 1; i <= 2; i++) {
 				GeolocationPosition info = MockPosition(i);
 				await hubContext.Clients.All.SendAsync("MessageReceived", info.VendorId, info.ToJson(), stoppingToken);
@@ -18,22 +18,20 @@ public class MockPositionEmitter(
 	}
 
 	private GeolocationPosition MockPosition(int index) {
-		int i = index;
-		Random rnd = new();
-		string vendorId = $"vendor{i}";
+		string vendorId = $"vendor_{index}";
 
 		return new() {
 			VendorId = vendorId,
 			Coords = new GeolocationCoordinate() {
-				Latitude = (float)(1.3 + rnd.Next(1, 9) / 1000),
-				Longitude = (float)(103.8 + rnd.Next(1, 9) / 1000),
+				Latitude = (float)(1.3 + rnd.Next(1, 100) / 1000.0),
+				Longitude = (float)(103.8 + rnd.Next(1, 100) / 1000.0),
 				Heading = rnd.Next(0, 360)
 			},
-			Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+			Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
 			Vendor = new Vendor() {
 				Id = vendorId,
-				DisplayName = $"Vendor {i}",
-				Description = "Random Vendor",
+				DisplayName = $"Vendor {index}",
+				Description = $"Random Vendor {index}",
 			}
 		};
 	}

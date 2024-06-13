@@ -11,6 +11,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-bold"></tr>
-    <tr mat-row *matRowDef="let vendor; columns: displayedColumns;" [id]="vendor.id" class="font-bold"></tr>
+    <tr mat-row *matRowDef="let vendor; columns: displayedColumns;" [id]="vendor.id" class="font-bold" (click)="onRowClick(vendor.id)"></tr>
   </table>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Signal, WritableSignal, computed, effect, signal } from '@angular/core';
+import { Component, Inject, Input, OnInit, Signal, WritableSignal, computed, effect, signal } from '@angular/core';
 import { Lru } from "toad-cache";
 import { GeoInfo, Vendor } from '~/app/libs/shared/models';
 import {
@@ -7,8 +7,9 @@ import {
   hubConnection,
 } from "~/app/libs/map-page/services";
 import { CommonModule } from '@angular/common';
-import { Subject, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
+import { CLICK_SUBJECT, clickSubject as _clickSubject } from '../../../shared/services';
 
 @Component({
   selector: 'app-vendor-table',
@@ -17,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
   providers: [
     MessageHubService,
     { provide: HUB_CONNECTION, useValue: hubConnection },
+    { provide: CLICK_SUBJECT, useValue: _clickSubject },
   ],
 
   templateUrl: './vendor-table.component.html',
@@ -30,7 +32,7 @@ export class VendorTableComponent implements OnInit {
   private vendorMap: WritableSignal<Record<string, Vendor>> = signal({});
   vendors: Signal<Vendor[]> = computed(() => Object.values(this.vendorMap()));
 
-  constructor() {
+  constructor(@Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<string>) {
     effect(() => console.log({ vendors: this.vendors() }));
   }
 
@@ -48,7 +50,11 @@ export class VendorTableComponent implements OnInit {
         return copy;
       });
     });
+  }
 
+  onRowClick(vendorId: string) {
+    console.log({ vendorIdCicked: vendorId });
+    // this.clickSubject.next(vendorId);
   }
 
 }
