@@ -46,7 +46,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       if (mapboxService.map == null) {
         return;
       }
-
       const { map } = mapboxService;
       const { vendorId, vendor, coords, timestamp } = info;
       const { latitude: lat, longitude: lng, heading } = coords;
@@ -86,6 +85,23 @@ export class MapComponent implements OnInit, AfterViewInit {
         mapboxService.animateMarker(marker, new LngLat(lng, lat), duration);
       }
 
+    });
+
+    clickSubject.subscribe((vendorId) => {
+      if (!(geoInfos.has(vendorId) && markers.has(vendorId))) {
+        return;
+      }
+      if (mapboxService.map == null) {
+        return;
+      }
+
+      const { map } = mapboxService;
+      const marker = markers.get(vendorId);
+
+      if (marker != null && marker.getPopup() != null) {
+        map.flyTo({ center: marker.getLngLat() });
+        // marker.getPopup().getElement().click();
+      }
     });
   }
 
