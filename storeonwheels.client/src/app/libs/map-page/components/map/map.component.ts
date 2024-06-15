@@ -53,7 +53,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       const { map } = mapboxService;
       const { vendorId, vendor, coords, timestamp } = info;
       const { latitude: lat, longitude: lng, heading } = coords;
-      console.log({ lat, lng });
 
       const oldTimeStamp: number =
         geoInfos.get(vendorId)?.timestamp ?? timestamp;
@@ -103,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       if (marker != null && marker.getPopup() != null) {
         map.flyTo({ center: marker.getLngLat() });
-        // marker.getPopup().getElement().click();
+        marker.getElement().click();
       }
     });
   }
