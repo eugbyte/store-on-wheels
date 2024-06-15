@@ -1,6 +1,5 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting.Internal;
 using Newtonsoft.Json;
 using StoreOnWheels.Server.Libs.Shared.Models;
 using StoreOnWheels.Server.Libs.Vendors;
@@ -8,7 +7,7 @@ using StoreOnWheels.Server.Libs.Vendors;
 namespace StoreOnWheels.Server.Controllers.Geohubs;
 
 public class GeohubsClient(
-	ILogger<GeohubsClient> Logger, 
+	ILogger<GeohubsClient> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
 	// Allow user to broadcast message without first authenticating
