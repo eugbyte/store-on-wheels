@@ -1,1 +1,24 @@
-<p>vendor-table works!</p>
+<div class="mx-5 mt-5">
+  <table mat-table [dataSource]="vendors()" class="mat-elevation-z8">
+    <ng-container matColumnDef="displayName">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let vendor">{{ vendor.displayName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let vendor">{{ vendor.description }}</td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+      class="font-bold"></tr>
+    <tr
+      mat-row
+      *matRowDef="let vendor; columns: displayedColumns"
+      [id]="vendor.id"
+      class="font-bold"
+      (click)="onRowClick(vendor.id)"></tr>
+  </table>
+</div>

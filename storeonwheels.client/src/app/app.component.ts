@@ -10,6 +10,4 @@ import { RouterModule } from "@angular/router";
   imports: [FooterNavComponent, RouterModule],
   providers: [],
 })
-export class AppComponent {
-  ngOnInit() { }
-}
+export class AppComponent {}

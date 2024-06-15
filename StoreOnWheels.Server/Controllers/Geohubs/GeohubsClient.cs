@@ -11,9 +11,9 @@ public class GeohubsClient(
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
 	// Allow user to broadcast message without first authenticating
-	// js client calls "BroadcastMessageWithoutAuth()"
+	// js client calls "BroadcastVendorPosition()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"
-	public async Task BroadcastMessageWithoutAuth(string user, string message) {
+	public async Task BroadcastVendorPosition(string user, string message) {
 		GeolocationPosition? geoposition = JsonConvert.DeserializeObject<GeolocationPosition>(message);
 		if (geoposition is null) {
 			Logger.LogInformation("geoposition is null for {user}", user);
@@ -38,8 +38,8 @@ public class GeohubsClient(
 	}
 
 	public override async Task OnConnectedAsync() {
-		Logger.LogInformation("connected to {}", Context.ConnectionId);
 		await base.OnConnectedAsync();
+		Logger.LogInformation("connected to {}", Context.ConnectionId);
 	}
 
 	public override async Task OnDisconnectedAsync(Exception? exception) {
