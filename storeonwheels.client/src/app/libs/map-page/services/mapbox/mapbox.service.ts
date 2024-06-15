@@ -70,7 +70,13 @@ export class MapboxService {
    * @param lat default longitude
    * @param zoom default zoom
    */
-  draw(containerId: string, searchboxId: string, lng: number, lat: number, zoom: number) {
+  draw(
+    containerId: string,
+    searchboxId: string,
+    lng: number,
+    lat: number,
+    zoom: number
+  ) {
     const { navControl, geolocater, searchBox } = this;
 
     const map = new mapboxgl.Map({
@@ -80,7 +86,7 @@ export class MapboxService {
       center: [lng, lat],
     });
     this._map = map;
-    
+
     // 1. Attach the search box control
     // set the mapboxgl library to use for markers and disable the marker functionality
     searchBox.mapboxgl = mapboxgl;

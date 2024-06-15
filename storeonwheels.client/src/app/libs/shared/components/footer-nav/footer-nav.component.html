@@ -2,10 +2,13 @@
   <div class="fixed bottom-0 w-full mb-2">
     <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
       @for (link of links; track link) {
-      <a mat-tab-link
-         (click)="activeLink = link"
-         [routerLink]="link"
-         [active]="activeLink == link"> {{link | titlecase}} </a>
+        <a
+          mat-tab-link
+          (click)="activeLink = link"
+          [routerLink]="link"
+          [active]="activeLink === link">
+          {{ link | titlecase }}
+        </a>
       }
     </nav>
   </div>

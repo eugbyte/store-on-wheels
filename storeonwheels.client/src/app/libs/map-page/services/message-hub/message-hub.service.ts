@@ -11,9 +11,7 @@ export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
   private intervalId = 0;
 
-  constructor(
-    @Inject(HUB_CONNECTION) private connection: HubConnection
-  ) {
+  constructor(@Inject(HUB_CONNECTION) private connection: HubConnection) {
     connection.on("MessageReceived", (_user: string, message: string) => {
       console.log("message received");
       const info: GeoInfo = JSON.parse(message);

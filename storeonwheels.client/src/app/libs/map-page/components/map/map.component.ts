@@ -12,10 +12,13 @@ import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { BehaviorSubject, Subject } from "rxjs";
-import { CLICK_SUBJECT, clickSubject as _clickSubject } from "~/app/libs/shared/services";
+import {
+  CLICK_SUBJECT,
+  clickSubject as _clickSubject,
+} from "~/app/libs/shared/services";
 
 @Component({
-  selector: 'app-map',
+  selector: "app-map",
   standalone: true,
   imports: [CommonModule],
   providers: [
@@ -25,11 +28,11 @@ import { CLICK_SUBJECT, clickSubject as _clickSubject } from "~/app/libs/shared/
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
   ],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  templateUrl: "./map.component.html",
+  styleUrl: "./map.component.css",
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  public searchboxId = "searchbox"
+  public searchboxId = "searchbox";
   public containerId = "foodtruck-mapbox";
   private markers = new Map<string, Marker>();
   private geoInfos = new Map<string, GeoInfo>();
@@ -37,7 +40,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapboxService: MapboxService,
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<string>) { }
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<string>
+  ) {}
 
   ngOnInit() {
     const { markers, geoInfos, mapboxService, geoInfo$, clickSubject } = this;
@@ -84,7 +88,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       if (duration > 0) {
         mapboxService.animateMarker(marker, new LngLat(lng, lat), duration);
       }
-
     });
 
     clickSubject.subscribe((vendorId) => {
