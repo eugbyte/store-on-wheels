@@ -14,6 +14,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { BehaviorSubject, Subject } from "rxjs";
 import {
   CLICK_SUBJECT,
+  ClickProps,
   clickSubject as _clickSubject,
 } from "~/app/libs/shared/services";
 
@@ -40,7 +41,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapboxService: MapboxService,
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<string>
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>
   ) {}
 
   ngOnInit() {
@@ -70,11 +71,10 @@ export class MapComponent implements OnInit, AfterViewInit {
             <p>${vendor.description}</p>
           </div>
         `);
+
         marker.setPopup(popup);
-        marker.getElement().addEventListener("click", (e) => {
-          console.log("marker clicked", vendorId);
-          console.log(e);
-          clickSubject.next(vendorId);
+        marker.getElement().addEventListener("click", () => {
+          clickSubject.next({ vendorId, source: "MapComponent" });
         });
       }
 
@@ -89,7 +89,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
     });
 
-    clickSubject.subscribe((vendorId) => {
+    clickSubject.subscribe(({ vendorId, source }) => {
       if (!(geoInfos.has(vendorId) && markers.has(vendorId))) {
         return;
       }
@@ -100,9 +100,19 @@ export class MapComponent implements OnInit, AfterViewInit {
       const { map } = mapboxService;
       const marker = markers.get(vendorId);
 
-      if (marker != null && marker.getPopup() != null) {
+      if (
+        marker != null &&
+        marker.getPopup() != null &&
+        source != "MapComponent"
+      ) {
         map.flyTo({ center: marker.getLngLat() });
-        marker.getElement().click();
+
+        // cannot do marker.getElement().click() as this will cause an infinite loop via the clickSubject
+        for (const marker of markers.values()) {
+          marker.getPopup().remove();
+        }
+        // display popup
+        marker.getPopup().addTo(map);
       }
     });
   }

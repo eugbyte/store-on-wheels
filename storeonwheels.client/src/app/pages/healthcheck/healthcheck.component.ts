@@ -13,7 +13,7 @@ export class HealthcheckComponent implements OnInit {
 
   async ngOnInit() {
     const response: Record<string, string> = (
-      await axios.get("api/v1/heartbeat")
+      await axios.get("api/v1/heartbeats")
     ).data;
     this.message = response["message"];
   }
