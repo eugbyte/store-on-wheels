@@ -24,6 +24,7 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { MatRow, MatTableModule } from "@angular/material/table";
 import {
   CLICK_SUBJECT,
+  ClickProps,
   clickSubject as _clickSubject,
 } from "~/app/libs/shared/services";
 
@@ -55,7 +56,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit {
   vendors: Signal<Vendor[]> = computed(() => Object.values(this.vendorMap()));
 
   constructor(
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<string>
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>
   ) {}
 
   ngOnInit() {
@@ -76,23 +77,23 @@ export class VendorTableComponent implements OnInit, AfterViewInit {
 
   onRowClick(vendorId: string) {
     console.log({ vendorIdCicked: vendorId });
-    this.clickSubject.next(vendorId);
+    this.clickSubject.next({ vendorId, source: "VendorTableComponent" });
   }
 
   ngAfterViewInit() {
     console.log("rerender");
 
-    this.clickSubject.subscribe((vendorId) => {
+    this.clickSubject.subscribe(({ vendorId, source }) => {
       const { tableRows } = this;
       const rows: HTMLTableRowElement[] = tableRows
         .toArray()
         .map((ref) => ref.nativeElement);
-      console.log({ rows });
+      console.log({ vendorId, source });
 
       const row: HTMLTableRowElement | undefined = rows.find(
         (r) => r.id == vendorId
       );
-      if (row != null) {
+      if (row != null && source != "VendorTableComponent") {
         row.scrollIntoView();
       }
     });

@@ -1,4 +1,4 @@
-<div class="mx-5 mt-5">
+<div class="overflow-auto max-h-96 p-2">
   <table mat-table [dataSource]="vendors()" class="mat-elevation-z8">
     <ng-container matColumnDef="displayName">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -16,9 +16,9 @@
       class="font-bold"></tr>
     <tr
       mat-row
+      class="font-bold"
       *matRowDef="let vendor; columns: displayedColumns"
       [id]="vendor.id"
-      class="font-bold"
       (click)="onRowClick(vendor.id)"></tr>
   </table>
 </div>

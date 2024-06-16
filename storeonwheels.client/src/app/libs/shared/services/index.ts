@@ -1,2 +1,2 @@
 export * from "./math/math.service";
-export * from "./click-subject";
+export * from "./click-event-subject/click-subject";
