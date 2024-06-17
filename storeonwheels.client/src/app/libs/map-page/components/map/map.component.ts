@@ -26,7 +26,8 @@ import {
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    TimeoutCache,
+    { provide: "TimeoutCache1", useClass: TimeoutCache<string, Marker> },
+    { provide: "TimeoutCache2", useClass: TimeoutCache< string, GeoInfo> },
   ],
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
@@ -40,11 +41,13 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapboxService: MapboxService,
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
+    @Inject("TimeoutCache1") private cache1: TimeoutCache<string, Marker>,
+    @Inject("TimeoutCache2") private cache2: TimeoutCache<string, GeoInfo>,
   ) {}
 
   ngOnInit() {
-    const { markers, geoInfos, mapboxService, geoInfo$, clickSubject } = this;
+    const { markers, geoInfos, mapboxService, geoInfo$, clickSubject, cache1, cache2 } = this;
 
     geoInfo$.subscribe((info: GeoInfo) => {
       if (mapboxService.map == null) {
