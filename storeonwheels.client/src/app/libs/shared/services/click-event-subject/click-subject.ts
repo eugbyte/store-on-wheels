@@ -6,11 +6,7 @@ export interface ClickProps {
   source: string;
 }
 
-<<<<<<< HEAD
 export const CLICK_SUBJECT = new InjectionToken<BehaviorSubject<ClickProps>>(
-=======
-export const CLICK_SUBJECT = new InjectionToken<BehaviorSubject<string>>(
->>>>>>> 0f53a82 (chore: cache with timeout)
   "click.event"
 );
 
