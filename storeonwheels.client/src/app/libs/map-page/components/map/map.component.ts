@@ -10,7 +10,6 @@ import {
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { BehaviorSubject, Subject } from "rxjs";
 import {
   CLICK_SUBJECT,
