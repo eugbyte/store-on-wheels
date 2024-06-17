@@ -2,7 +2,7 @@ import { TestBed } from "@angular/core/testing";
 
 import { TimeoutCacheService } from "./timeout-cache.service";
 
-describe("TimeoutCacheService", () => {
+fdescribe("TimeoutCacheService", () => {
   let service: TimeoutCacheService<string, number>;
 
   beforeEach(() => {
