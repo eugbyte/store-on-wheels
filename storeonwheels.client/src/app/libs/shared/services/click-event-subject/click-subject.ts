@@ -7,7 +7,7 @@ export interface ClickProps {
 }
 
 export const CLICK_SUBJECT = new InjectionToken<BehaviorSubject<ClickProps>>(
-  "click.event description"
+  "click.event"
 );
 
 export const clickSubject = new BehaviorSubject<ClickProps>({

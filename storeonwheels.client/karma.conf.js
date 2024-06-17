@@ -1,9 +1,10 @@
-﻿module.exports = function (config) {
+module.exports = function (config) {
   config.set({
     basePath: "",
     frameworks: ["jasmine", "@angular-devkit/build-angular"],
     plugins: [
       require("karma-jasmine"),
+      require("karma-firefox-launcher"),
       require("karma-chrome-launcher"),
       require("karma-jasmine-html-reporter"),
       require("karma-coverage"),
@@ -31,7 +32,7 @@
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ["Chrome"],
+    browsers: ["Chrome", "Firefox"],
     singleRun: false,
     restartOnFileChange: true,
     listenAddress: "localhost",

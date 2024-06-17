@@ -4,13 +4,12 @@ import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
-  MessageHubService,
+  TimeoutCacheService as TimeoutCache,
   hubConnection,
   mapboxToken,
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { BehaviorSubject, Subject } from "rxjs";
 import {
   CLICK_SUBJECT,
@@ -24,10 +23,10 @@ import {
   imports: [CommonModule],
   providers: [
     MapboxService,
-    MessageHubService,
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
+    TimeoutCache,
   ],
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
@@ -83,7 +82,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       geoInfos.set(vendorId, info);
 
       const duration = timestamp - oldTimeStamp;
-      console.log({ duration });
       if (duration > 0) {
         mapboxService.animateMarker(marker, new LngLat(lng, lat), duration);
       }
