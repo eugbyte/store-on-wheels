@@ -14,7 +14,7 @@ interface TimeoutInfo<K> {
 
 // https://tinyurl.com/3vcu8xsb
 @Injectable({
-  providedIn: "root",
+  providedIn: null,
 })
 export class TimeoutCacheService<K, V> extends Map<K, V> {
   private id: ReturnType<typeof setTimeout >;

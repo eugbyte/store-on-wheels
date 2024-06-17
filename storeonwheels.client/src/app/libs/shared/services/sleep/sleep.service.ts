@@ -7,7 +7,7 @@ export class SleepService {
 
   constructor() { }
 
-  sleep(): Promise<any> {
-    return new Promise((resolve) => setTimeout(resolve, 1000));
+  sleep(ms: number): Promise<any> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

@@ -4,7 +4,7 @@ import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
-  MessageHubService,
+  TimeoutCacheService as TimeoutCache,
   hubConnection,
   mapboxToken,
 } from "~/app/libs/map-page/services";
@@ -23,10 +23,10 @@ import {
   imports: [CommonModule],
   providers: [
     MapboxService,
-    MessageHubService,
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
+    TimeoutCache,
   ],
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
@@ -40,7 +40,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapboxService: MapboxService,
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
   ) {}
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       if (!markers.has(vendorId)) {
         const marker: Marker = this.customMarker().setLngLat([lng, lat]);
-        markers.set(vendorId, marker);
+        markers.set(vendorId, marker);        
         marker.addTo(map);
 
         const popup = new Popup({ offset: 25 }).setHTML(`
