@@ -40,7 +40,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapboxService: MapboxService,
-    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
+    @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>
   ) {}
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       if (!markers.has(vendorId)) {
         const marker: Marker = this.customMarker().setLngLat([lng, lat]);
-        markers.set(vendorId, marker);        
+        markers.set(vendorId, marker);
         marker.addTo(map);
 
         const popup = new Popup({ offset: 25 }).setHTML(`

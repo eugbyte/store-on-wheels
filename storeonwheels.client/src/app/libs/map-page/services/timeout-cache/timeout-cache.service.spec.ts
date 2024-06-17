@@ -31,7 +31,7 @@ describe("TimeoutCacheService", () => {
     expect(value).toBeUndefined();
   });
 
-  it("item should be evicted after timeout", async() => {
+  it("item should be evicted after timeout", async () => {
     service.set("one", 1);
     service.setTimeout({ key: "one", expiry: Date.now() + 1000 });
     expect(service.has("one")).toBeTruthy();
@@ -45,10 +45,12 @@ describe("TimeoutCacheService", () => {
     let msg = "";
     service.set("one", 1);
     service.setTimeout({
-      key: "one", expiry: Date.now() + 1000, callback: () => {
-          msg = "evicted";
-        }
-      });
+      key: "one",
+      expiry: Date.now() + 1000,
+      callback: () => {
+        msg = "evicted";
+      },
+    });
 
     const sleepService = new SleepService();
     await sleepService.sleep(3000);

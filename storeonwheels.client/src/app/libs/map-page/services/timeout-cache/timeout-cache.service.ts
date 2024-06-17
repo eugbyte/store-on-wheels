@@ -17,7 +17,7 @@ interface TimeoutInfo<K> {
   providedIn: null,
 })
 export class TimeoutCacheService<K, V> extends Map<K, V> {
-  private id: ReturnType<typeof setTimeout >;
+  private id: ReturnType<typeof setTimeout>;
   private timeouts = new MaxPriorityQueue<TimeoutInfo<K>>(
     (info) => info.expiry
   );
