@@ -82,7 +82,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       geoInfos.set(vendorId, info);
 
       const duration = timestamp - oldTimeStamp;
-      console.log({ duration });
       if (duration > 0) {
         mapboxService.animateMarker(marker, new LngLat(lng, lat), duration);
       }
