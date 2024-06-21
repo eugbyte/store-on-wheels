@@ -1,16 +1,6 @@
 import { Injectable } from "@angular/core";
-import { MaxPriorityQueue } from "@datastructures-js/priority-queue";
-
-/**
- * Info for priority queue
- */
-interface TimeoutInfo<K> {
-  // the key in the cache which will be evicted on expiry
-  key: K;
-  // expiry timestamp in ms
-  expiry: number;
-  callback?: () => void | Promise<void>;
-}
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
+import { TimeoutInfo } from "./timeout-info";
 
 // https://tinyurl.com/3vcu8xsb
 @Injectable({
@@ -18,24 +8,42 @@ interface TimeoutInfo<K> {
 })
 export class TimeoutCacheService<K, V> extends Map<K, V> {
   private id: ReturnType<typeof setTimeout>;
-  private timeouts = new MaxPriorityQueue<TimeoutInfo<K>>(
-    (info) => info.expiry
+  private timeouts = new Map<K, TimeoutInfo>();
+  private minQ = new MinPriorityQueue<K>(
+    (key) => this.timeouts.get(key)?.expiry ?? 0
   );
+  private queue = new MinPriorityQueue<TimeoutInfo>();
 
   constructor() {
     super();
-    const { timeouts } = this;
-    // eslint-disable-next-line
-    const data: Map<K, V> = this;
+    const { minQ, timeouts } = this;
 
     this.id = setInterval(async () => {
-      console.log("one sec passed");
-      while (!timeouts.isEmpty() && Date.now() >= timeouts.front().expiry) {
-        const item = timeouts.pop() as TimeoutInfo<K>;
-        if (item.callback != null) {
-          await item.callback();
+      // either expiry date has passed, or that the this.delete() was called before setInterval runs
+      while (!minQ.isEmpty()) {        
+        const key: K = minQ.dequeue();
+        const timeout = timeouts.get(key);
+
+        if (timeout == null) {
+          // this.delete() was called before interval callback was executed
+          continue;
+        } else if (Date.now() < timeouts.get(key)!.expiry) {
+          minQ.enqueue(key);
+          break;
         }
-        data.delete(item.key);
+
+        // cache key has expired
+        try {
+          if (timeout.callback != null) {
+            await timeout.callback();
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          // execute the delete last in case callback references the hashmap
+          super.delete(key);
+          timeouts.delete(key);
+        }
       }
     }, 1000);
   }
@@ -44,11 +52,47 @@ export class TimeoutCacheService<K, V> extends Map<K, V> {
     clearInterval(this.id);
   }
 
-  setTimeout(info: TimeoutInfo<K>) {
-    this.timeouts.enqueue(info);
+  setTimeout(key: K, ttl: number, callback?: () => void | Promise<void>) {
+    const { minQ, timeouts } = this;
+    minQ.enqueue(key);
+    timeouts.set(key, { ttl, expiry: Date.now() + ttl, callback });
   }
 
-  getTimeouts(): TimeoutInfo<K>[] {
-    return this.timeouts.toArray();
+  override get(key: K): V | undefined {
+    const { timeouts } = this;
+    const timeout = timeouts.get(key);
+    if (timeout != null) {
+      timeouts.set(key, { ...timeout, expiry: timeout.ttl + Date.now() });
+    }
+    return super.get(key);
+  }
+
+  override has(key: K): boolean {
+    const { timeouts } = this;
+    const timeout = timeouts.get(key);
+    if (timeout != null) {
+      timeouts.set(key, { ...timeout, expiry: timeout.ttl + Date.now() });
+    }
+    return super.has(key);
+  }
+
+  override set(key: K, value: V): this {
+    const { timeouts } = this;
+    const timeout = timeouts.get(key);
+    if (timeout != null) {
+      timeouts.set(key, { ...timeout, expiry: timeout.ttl + Date.now() });
+    }
+
+    return super.set(key, value);
+  }
+
+  override delete(key: K): boolean {
+    const { timeouts } = this;
+    timeouts.delete(key);
+    return super.delete(key);
+  }
+
+  getTimeouts(): TimeoutInfo[] {
+    return Array.from(this.timeouts.values());
   }
 }

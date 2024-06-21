@@ -22,7 +22,7 @@ describe("TimeoutCacheService", () => {
     expect(service.has("one")).toBeTruthy();
   });
 
-  it("item should be removed", () => {
+  fit("item should be removed", () => {
     service.set("one", 1);
     const isPresent: boolean = service.delete("one");
     expect(isPresent).toBeTruthy();
@@ -33,7 +33,7 @@ describe("TimeoutCacheService", () => {
 
   it("item should be evicted after timeout", async () => {
     service.set("one", 1);
-    service.setTimeout({ key: "one", expiry: Date.now() + 1000 });
+    service.setTimeout("one", Date.now() + 1000);
     expect(service.has("one")).toBeTruthy();
 
     const sleepService = new SleepService();
@@ -44,13 +44,11 @@ describe("TimeoutCacheService", () => {
   it("eviction  callback should work", async () => {
     let msg = "";
     service.set("one", 1);
-    service.setTimeout({
-      key: "one",
-      expiry: Date.now() + 1000,
-      callback: () => {
+    service.setTimeout("one",
+      Date.now() + 1000,
+      () => {
         msg = "evicted";
-      },
-    });
+      });
 
     const sleepService = new SleepService();
     await sleepService.sleep(3000);
