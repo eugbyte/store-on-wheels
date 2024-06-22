@@ -50,6 +50,9 @@ export class TimeoutCacheService<K, V> extends Map<K, V> {
     }, 1000);
   }
 
+  /**
+  * Remember to call cleanUp before unMounting the component, as TimeoutCache uses setInterval internally
+  */
   cleanUp() {
     clearInterval(this.id);
   }
