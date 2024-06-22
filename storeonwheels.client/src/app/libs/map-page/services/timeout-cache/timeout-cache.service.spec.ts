@@ -5,10 +5,14 @@ import { SleepService } from "~/app/libs/shared/services";
 
 describe("TimeoutCacheService", () => {
   let service: TimeoutCacheService<string, number>;
+  let sleep: SleepService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [TimeoutCacheService, SleepService],
+    });
     service = TestBed.inject(TimeoutCacheService);
+    sleep = TestBed.inject(SleepService);
   });
 
   it("should be created", () => {
@@ -33,27 +37,22 @@ describe("TimeoutCacheService", () => {
 
   it("item should be evicted after timeout", async () => {
     service.set("one", 1);
-    service.setTimeout({ key: "one", expiry: Date.now() + 1000 });
+    service.setExpiry("one", Date.now() + 1000);
     expect(service.has("one")).toBeTruthy();
 
-    const sleepService = new SleepService();
-    await sleepService.sleep(3000);
+    await sleep.sleep(3000);
     expect(service.has("one")).toBeFalsy();
   });
 
   it("eviction  callback should work", async () => {
     let msg = "";
     service.set("one", 1);
-    service.setTimeout({
-      key: "one",
-      expiry: Date.now() + 1000,
-      callback: () => {
-        msg = "evicted";
-      },
+    service.setExpiry("one", Date.now() + 1000, () => {
+      msg = "evicted";
+      console.log({ msg });
     });
 
-    const sleepService = new SleepService();
-    await sleepService.sleep(3000);
+    await sleep.sleep(3000);
     expect(msg).toBe("evicted");
   });
 });
