@@ -29,7 +29,7 @@ export class TimeoutCacheService<K, V> extends Map<K, V> {
           // this.delete() was called before interval callback was executed
           continue;
         } else if (Date.now() < timeout.expiry) {
-          console.log("requeuing...");
+          console.log("re-enqueing...");
           minQ.enqueue(key);
           break;
         }
@@ -51,9 +51,9 @@ export class TimeoutCacheService<K, V> extends Map<K, V> {
   }
 
   /**
-  * Remember to call cleanUp before unMounting the component, as TimeoutCache uses setInterval internally
-  */
-  cleanUp() {
+   * Remember to call `dispose()` before unMounting the component, as TimeoutCache uses setInterval internally
+   */
+  dispose() {
     clearInterval(this.id);
   }
 

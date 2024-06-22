@@ -1,5 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, Component, Inject, Input, OnInit } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
@@ -32,7 +39,7 @@ import {
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchboxId = "searchbox";
   public containerId = "foodtruck-mapbox";
   @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
@@ -59,6 +66,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     mapboxService.draw(containerId, searchboxId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
     mapboxService.map.resize();
+  }
+
+  ngOnDestroy() {
+    const { markers, geoInfos } = this;
+    markers.dispose();
+    geoInfos.dispose();
   }
 
   private updateMarkers(info: GeoInfo) {
@@ -105,8 +118,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     markers.setExpiry(vendorId, Date.now() + 5000, () => {
       marker.remove();
+      markers.delete(vendorId);
     });
-    geoInfos.setExpiry(vendorId, Date.now() + 5000);
+    geoInfos.setExpiry(vendorId, Date.now() + 5000, () => {
+      geoInfos.delete(vendorId);
+    });
   }
 
   private updatePopup({ vendorId, source }: ClickProps) {
