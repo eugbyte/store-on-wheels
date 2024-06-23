@@ -11,7 +11,7 @@ import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
-  TimeoutCacheService as TimeoutCache,
+  TimeoutCache as TimeoutCache,
   hubConnection,
   mapboxToken,
 } from "~/app/libs/map-page/services";
@@ -116,11 +116,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       mapboxService.animateMarker(marker, new LngLat(lng, lat), duration);
     }
 
-    markers.setExpiry(vendorId, Date.now() + 5000, () => {
+    markers.setTimer(vendorId, Date.now() + 5000, () => {
       marker.remove();
       markers.delete(vendorId);
     });
-    geoInfos.setExpiry(vendorId, Date.now() + 5000, () => {
+    geoInfos.setTimer(vendorId, Date.now() + 5000, () => {
       geoInfos.delete(vendorId);
     });
   }

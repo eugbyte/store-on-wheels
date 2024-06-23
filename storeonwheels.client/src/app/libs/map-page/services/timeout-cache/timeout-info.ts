@@ -3,15 +3,15 @@
  */
 export interface TimeoutInfo {
   /**
-   * Expiry duration
+   * Duration in ms between the time setTimer is called and timestamp
    */
   ttl: number;
   /**
-   * Expiry Unix timestamp in ms
+   * The Unix timestamp in ms which to execute the callback
    */
-  expiry: number;
+  timestamp: number;
   /**
    * callback that is executed upon expiry
    */
-  callback?: () => void | Promise<void>;
+  callback: () => void | Promise<void>;
 }
