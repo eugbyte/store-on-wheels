@@ -15,3 +15,8 @@ export interface TimeoutInfo {
    */
   callback: () => void | Promise<void>;
 }
+
+export interface QueueInfo<K> {
+  item: K;
+  priority: number;
+}

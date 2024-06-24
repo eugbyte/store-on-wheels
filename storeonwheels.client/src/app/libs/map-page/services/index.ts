@@ -4,3 +4,4 @@ export * from "./geolocate/geolocate.service";
 export * from "./mapbox/mapbox.service";
 export * from "./mapbox/mapbox.service.provider";
 export * from "./timeout-cache/timeout-cache.service";
+export { type TimeoutInfo } from "./timeout-cache/timeout-info";

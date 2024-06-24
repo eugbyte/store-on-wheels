@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MinPriorityQueue } from "@datastructures-js/priority-queue";
-import { TimeoutInfo } from "./timeout-info";
+import { TimeoutInfo, QueueInfo } from "./timeout-info";
 import cloneDeep from "lodash.clonedeep";
-import { timeout } from "rxjs";
 
 // https://tinyurl.com/3vcu8xsb
 @Injectable({
@@ -11,8 +10,8 @@ import { timeout } from "rxjs";
 export class TimeoutCache<K, V> extends Map<K, V> {
   private id: ReturnType<typeof setTimeout>;
   private timeouts = new Map<K, TimeoutInfo>();
-  private minQ = new MinPriorityQueue<K>(
-    (key) => this.timeouts.get(key)?.timestamp ?? 0
+  private minQ = new MinPriorityQueue<QueueInfo<K>>(
+    (item) => item.priority
   );
 
   constructor() {
@@ -21,21 +20,21 @@ export class TimeoutCache<K, V> extends Map<K, V> {
 
     this.id = setInterval(async () => {
       while (!minQ.isEmpty()) {
-        const key: K = minQ.front();
-        // timeout may be null if delete() was called before the setInterval runs
+        const earliest: QueueInfo<K> = minQ.dequeue();
+        const key: K = earliest.item;
+
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
-
-        if (timeout != null && Date.now() < timeout.timestamp) {
-          // the items in the minQ are strictly increasing,
-          // so if the current item has yet to expire, the other items in the queue definitely has not expired
+        if (timeout == null) {
+          // this.delete() was called before interval callback was executed
+          continue;
+        } else if (Date.now() < timeout.timestamp) {
+          console.log("requeuing");
+          minQ.enqueue({ item: key, priority: timeout.timestamp });
           break;
-        }
+        }              
 
-        minQ.dequeue();
-
-        // cache key has expired
         try {
-          await timeout?.callback();
+          await timeout.callback();
         } catch (err) {
           console.error(err);
         }
@@ -66,16 +65,15 @@ export class TimeoutCache<K, V> extends Map<K, V> {
 
     const prev: TimeoutInfo | undefined = timeouts.get(key);
     if (prev != null && timestamp < prev.timestamp) {
-      minQ.remove((k) => k === key);
+      minQ.remove((element) => element.item == key);
     }
 
-    minQ.enqueue(key);
+    minQ.enqueue({ item: key, priority: timestamp });
     timeouts.set(key, { ttl, timestamp, callback });
   }
 
   override delete(key: K): boolean {
-    const { timeouts } = this;
-    timeouts.delete(key);
+    this.timeouts.delete(key);
     return super.delete(key);
   }
 
