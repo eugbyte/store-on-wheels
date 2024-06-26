@@ -24,6 +24,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
         console.log({
           id: key,
+          current: new Date(),
           old: new Date(earliest.priority),
           new: timeout?.timestamp != null ? new Date(timeout?.timestamp) : null,
           count: minQ.size(),

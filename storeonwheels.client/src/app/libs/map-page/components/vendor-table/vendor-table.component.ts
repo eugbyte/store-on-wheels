@@ -65,6 +65,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit {
 
       vendorMap.set(vendor.id, vendor);
       vendorMap.setTimer(vendor.id, Date.now() + 5000, () => {
+        vendorMap.delete(vendor.id);
         vendors.set([...vendorMap.values()]);
       });
 
