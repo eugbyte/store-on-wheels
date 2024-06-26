@@ -10,9 +10,7 @@ import cloneDeep from "lodash.clonedeep";
 export class TimeoutCache<K, V> extends Map<K, V> {
   private id: ReturnType<typeof setTimeout>;
   private timeouts = new Map<K, TimeoutInfo>();
-  private minQ = new MinPriorityQueue<QueueInfo<K>>(
-    (item) => item.priority
-  );
+  private minQ = new MinPriorityQueue<QueueInfo<K>>((item) => item.priority);
 
   constructor() {
     super();
@@ -24,14 +22,20 @@ export class TimeoutCache<K, V> extends Map<K, V> {
         const key: K = earliest.item;
 
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
+        console.log({
+          id: key,
+          old: new Date(earliest.priority),
+          new: timeout?.timestamp != null ? new Date(timeout?.timestamp) : null,
+          count: minQ.size(),
+        });
+
         if (timeout == null) {
           // this.delete() was called before interval callback was executed
           continue;
-        } else if (Date.now() < timeout.timestamp) {
-          console.log("requeuing");
+        } else if (Date.now() <= timeout.timestamp) {
           minQ.enqueue({ item: key, priority: timeout.timestamp });
           break;
-        }              
+        }
 
         try {
           await timeout.callback();
@@ -66,9 +70,10 @@ export class TimeoutCache<K, V> extends Map<K, V> {
     const prev: TimeoutInfo | undefined = timeouts.get(key);
     if (prev != null && timestamp < prev.timestamp) {
       minQ.remove((element) => element.item == key);
+    } else if (prev == null) {
+      minQ.enqueue({ item: key, priority: timestamp });
     }
 
-    minQ.enqueue({ item: key, priority: timestamp });
     timeouts.set(key, { ttl, timestamp, callback });
   }
 
