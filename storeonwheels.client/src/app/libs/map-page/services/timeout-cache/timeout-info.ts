@@ -20,3 +20,5 @@ export interface QueueInfo<K> {
   item: K;
   priority: number;
 }
+
+export type TimeoutId = ReturnType<typeof setTimeout>;

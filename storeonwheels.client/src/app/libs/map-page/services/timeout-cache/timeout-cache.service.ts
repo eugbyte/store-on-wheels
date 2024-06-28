@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MinPriorityQueue } from "@datastructures-js/priority-queue";
-import { TimeoutInfo, QueueInfo } from "./timeout-info";
+import { TimeoutInfo, QueueInfo, TimeoutId } from "./timeout-info";
 import cloneDeep from "lodash.clonedeep";
 
 // https://tinyurl.com/3vcu8xsb
@@ -8,7 +8,7 @@ import cloneDeep from "lodash.clonedeep";
   providedIn: null,
 })
 export class TimeoutCache<K, V> extends Map<K, V> {
-  private id: ReturnType<typeof setTimeout>;
+  private id: TimeoutId;
   private timeouts = new Map<K, TimeoutInfo>();
   private minQ = new MinPriorityQueue<QueueInfo<K>>((item) => item.priority);
 
