@@ -85,12 +85,15 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
     vendorMap.dispose();
   }
 
+  onRowClick(vendorId: string) {
+    this.clickSubject.next({ vendorId, source: "VendorTableComponent" });
+  }
+
   private scrollRowIntoView(vendorId: string, source: string) {
     const { tableRows } = this;
     const rows: HTMLTableRowElement[] = tableRows
       .toArray()
       .map((ref) => ref.nativeElement);
-    console.log({ vendorId, source });
 
     const row: HTMLTableRowElement | undefined = rows.find(
       (r) => r.id == vendorId
@@ -98,9 +101,5 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
     if (row != null && source != "VendorTableComponent") {
       row.scrollIntoView();
     }
-  }
-
-  onRowClick(vendorId: string) {
-    this.clickSubject.next({ vendorId, source: "VendorTableComponent" });
   }
 }
