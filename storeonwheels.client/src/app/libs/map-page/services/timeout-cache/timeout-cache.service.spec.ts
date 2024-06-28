@@ -1,58 +1,59 @@
 import { TestBed } from "@angular/core/testing";
 
-import { TimeoutCacheService } from "./timeout-cache.service";
+import { TimeoutCache } from "./timeout-cache.service";
 import { SleepService } from "~/app/libs/shared/services";
 
 describe("TimeoutCacheService", () => {
-  let service: TimeoutCacheService<string, number>;
-  let sleep: SleepService;
+  let cache: TimeoutCache<string, number>;
+  let sleeper: SleepService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TimeoutCacheService, SleepService],
+      providers: [TimeoutCache, SleepService],
     });
-    service = TestBed.inject(TimeoutCacheService);
-    sleep = TestBed.inject(SleepService);
+    cache = TestBed.inject(TimeoutCache);
+    sleeper = TestBed.inject(SleepService);
   });
 
   it("should be created", () => {
-    expect(service).toBeTruthy();
+    expect(cache).toBeTruthy();
   });
 
   it("item should be accessible", () => {
-    service.set("one", 1);
-    const value: number | undefined = service.get("one");
+    cache.set("one", 1);
+    const value: number | undefined = cache.get("one");
     expect(value).toBe(1);
-    expect(service.has("one")).toBeTruthy();
+    expect(cache.has("one")).toBeTruthy();
   });
 
   it("item should be removed", () => {
-    service.set("one", 1);
-    const isPresent: boolean = service.delete("one");
+    cache.set("one", 1);
+    const isPresent: boolean = cache.delete("one");
     expect(isPresent).toBeTruthy();
 
-    const value: number | undefined = service.get("one");
+    const value: number | undefined = cache.get("one");
     expect(value).toBeUndefined();
   });
 
   it("item should be evicted after timeout", async () => {
-    service.set("one", 1);
-    service.setExpiry("one", Date.now() + 1000);
-    expect(service.has("one")).toBeTruthy();
+    cache.set("one", 1);
+    cache.setTimer("one", Date.now() + 1000, () => {
+      cache.delete("one");
+    });
+    expect(cache.has("one")).toBeTruthy();
 
-    await sleep.sleep(3000);
-    expect(service.has("one")).toBeFalsy();
+    await sleeper.sleep(3000);
+    expect(cache.has("one")).toBeFalsy();
   });
 
-  it("eviction  callback should work", async () => {
+  it("callback should work", async () => {
     let msg = "";
-    service.set("one", 1);
-    service.setExpiry("one", Date.now() + 1000, () => {
-      msg = "evicted";
-      console.log({ msg });
+    cache.set("one", 1);
+    cache.setTimer("one", Date.now() + 1000, () => {
+      msg = "callback executed";
     });
 
-    await sleep.sleep(3000);
-    expect(msg).toBe("evicted");
+    await sleeper.sleep(3000);
+    expect(msg).toBe("callback executed");
   });
 });
