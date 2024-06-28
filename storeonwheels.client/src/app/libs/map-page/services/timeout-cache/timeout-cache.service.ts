@@ -44,7 +44,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
           console.error(err);
         }
       }
-    }, 1000);
+    }, 500);
   }
 
   /**
