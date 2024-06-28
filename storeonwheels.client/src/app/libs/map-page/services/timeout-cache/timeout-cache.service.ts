@@ -23,8 +23,8 @@ export class TimeoutCache<K, V> extends Map<K, V> {
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
         //console.log({
         //  id: key,
-        //  current: new Date(),
         //  old: new Date(earliest.priority),
+        //  current: new Date(),
         //  new: timeout?.timestamp != null ? new Date(timeout?.timestamp) : null,
         //  count: minQ.size(),
         //});
@@ -34,6 +34,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
           continue;
         } else if (Date.now() <= timeout.timestamp) {
           minQ.enqueue({ item: key, priority: timeout.timestamp });
+          //console.log("re-queuing and break");
           break;
         }
 

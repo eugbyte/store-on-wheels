@@ -79,6 +79,11 @@ export class VendorTableComponent implements OnInit, AfterViewInit {
     );
   }
 
+  ngOnDestroy() {
+    const { vendorMap } = this;
+    vendorMap.dispose();
+  }
+
   private scrollRowIntoView(vendorId: string, source: string) {
     const { tableRows } = this;
     const rows: HTMLTableRowElement[] = tableRows
