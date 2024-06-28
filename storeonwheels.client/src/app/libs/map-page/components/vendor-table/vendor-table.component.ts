@@ -4,6 +4,7 @@ import {
   ElementRef,
   Inject,
   Input,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
@@ -40,7 +41,7 @@ import {
   templateUrl: "./vendor-table.component.html",
   styleUrl: "./vendor-table.component.css",
 })
-export class VendorTableComponent implements OnInit, AfterViewInit {
+export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
   // The `{ read: ElementRef }` params is required, since MatRow is a Directive, and by default, a Directive will be returned.
   // https://github.com/angular/components/issues/17816#issue-528942343
