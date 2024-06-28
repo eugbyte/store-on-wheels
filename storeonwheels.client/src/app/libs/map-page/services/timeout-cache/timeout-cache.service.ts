@@ -20,15 +20,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
       while (!minQ.isEmpty()) {
         const earliest: QueueInfo<K> = minQ.dequeue();
         const key: K = earliest.item;
-
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
-        console.log({
-          id: key,
-          current: new Date(),
-          old: new Date(earliest.priority),
-          new: timeout?.timestamp != null ? new Date(timeout?.timestamp) : null,
-          count: minQ.size(),
-        });
 
         if (timeout == null) {
           // this.delete() was called before interval callback was executed
