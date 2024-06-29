@@ -114,7 +114,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     const marker = markers.get(vendorId) as Marker;
-    marker.setRotation(heading);
+    marker.setRotation(heading ?? 0);
     geoInfos.set(vendorId, info);
 
     const duration = timestamp - oldTimeStamp;

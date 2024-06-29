@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   MapComponent,
   VendorTableComponent,
@@ -23,7 +23,7 @@ import { Observable } from "rxjs";
     { provide: HUB_CONNECTION, useValue: hubConnection },
   ],
 })
-export class MapPageComponent implements OnInit, OnDestroy {
+export class MapPageComponent implements OnInit {
   public geoInfo$: Observable<GeoInfo>;
 
   constructor(private messageHub: MessageHubService) {
@@ -34,7 +34,7 @@ export class MapPageComponent implements OnInit, OnDestroy {
     this.messageHub.start();
   }
 
-  async ngOnDestroy() {
-    await this.messageHub.dispose();
-  }
+  //async ngOnDestroy() {
+  //  await this.messageHub.dispose();
+  //}
 }
