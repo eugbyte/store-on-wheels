@@ -14,15 +14,13 @@ import {
   TimeoutCache as TimeoutCache,
   hubConnection,
   mapboxToken,
-} from "~/app/libs/map-page/services";
-import { GeoInfo } from "~/app/libs/shared/models";
-import { LngLat, Marker, Popup } from "mapbox-gl";
-import { BehaviorSubject, Subject } from "rxjs";
-import {
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
-} from "~/app/libs/shared/services";
+} from "~/app/libs/map-page/services";
+import { GeoInfo } from "~/app/libs/shared/models";
+import { LngLat, Marker, Popup } from "mapbox-gl";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-map",
@@ -42,7 +40,10 @@ import {
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchboxId = "searchbox";
   public containerId = "foodtruck-mapbox";
-  @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
+
+  @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
+  private geoSub: Subscription = new Subscription();
+  private clickSub: Subscription = new Subscription();
 
   constructor(
     private mapboxService: MapboxService,
@@ -54,8 +55,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const { geoInfo$, clickSubject } = this;
 
-    geoInfo$.subscribe((info: GeoInfo) => this.updateMarkers(info));
-    clickSubject.subscribe((clickEvent: ClickProps) =>
+    this.geoSub = geoInfo$.subscribe((info: GeoInfo) =>
+      this.updateMarkers(info)
+    );
+    this.clickSub = clickSubject.subscribe((clickEvent: ClickProps) =>
       this.updatePopup(clickEvent)
     );
   }
@@ -72,6 +75,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const { markers, geoInfos } = this;
     markers.dispose();
     geoInfos.dispose();
+
+    this.geoSub.unsubscribe();
+    this.clickSub.unsubscribe();
   }
 
   private updateMarkers(info: GeoInfo) {

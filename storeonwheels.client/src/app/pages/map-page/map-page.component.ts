@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   MapComponent,
   VendorTableComponent,
@@ -10,7 +10,7 @@ import {
   hubConnection,
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
-import { Subject } from "rxjs";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-map-page",
@@ -23,16 +23,18 @@ import { Subject } from "rxjs";
     { provide: HUB_CONNECTION, useValue: hubConnection },
   ],
 })
-export class MapPageComponent implements OnInit {
-  public geoInfo$: Subject<GeoInfo>;
+export class MapPageComponent implements OnInit, OnDestroy {
+  public geoInfo$: Observable<GeoInfo>;
 
   constructor(private messageHub: MessageHubService) {
     this.geoInfo$ = messageHub.geoInfo$;
   }
 
   ngOnInit() {
-    const { messageHub } = this;
-    messageHub.start();
-    // messageHub.sendMockPeriodically();
+    this.messageHub.start();
+  }
+
+  async ngOnDestroy() {
+    await this.messageHub.dispose();
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +19,7 @@ export class GeolocateService {
   }
 
   /**
-   * Get the user's geolocation
+   * Get the user's geolocation. Requests for permission if permission has not been granted.
    * @param timeout timeout in miliseconds
    * @returns
    */
@@ -30,5 +31,25 @@ export class GeolocateService {
     return new Promise((resolve, reject) =>
       navigator.geolocation.getCurrentPosition(resolve, reject, options)
     );
+  }
+
+  watchPosition(timeout: number): Observable<GeolocationPosition> {
+    const options: PositionOptions = {
+      enableHighAccuracy: true,
+      timeout,
+    };
+
+    const position$ = new Subject<GeolocationPosition>();
+    const id = navigator.geolocation.watchPosition(
+      (position) => {
+        position$.next(position);
+      },
+      (err) => position$.error(err),
+      options
+    );
+
+    navigator.geolocation.clearWatch(id);
+
+    return position$.asObservable();
   }
 }

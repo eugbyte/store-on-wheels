@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { HealthcheckComponent } from "./healthcheck.component";
+import { HealthcheckComponent } from "./healthcheck-page.component";
 
 describe("HealthcheckComponent", () => {
   let component: HealthcheckComponent;
