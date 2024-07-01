@@ -13,7 +13,7 @@ import { filter } from "rxjs";
   templateUrl: "./footer-nav.component.html",
 })
 export class FooterNavComponent implements OnInit {
-  links = ["map", "healthcheck"];
+  links = ["map", "broadcast"];
   activeLink = this.links[0];
   background: ThemePalette = undefined;
 

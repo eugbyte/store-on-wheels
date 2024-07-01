@@ -48,7 +48,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
   }
 
   /**
-   * Remember to call `dispose()` before unMounting the component, as TimeoutCache uses setInterval internally
+   * Remember to call `dispose()` before unmounting the component, as TimeoutCache uses setInterval internally
    */
   dispose() {
     clearInterval(this.id);

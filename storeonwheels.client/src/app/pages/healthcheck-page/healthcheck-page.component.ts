@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import axios from "axios";
 
 @Component({
-  selector: "app-healthcheck",
+  selector: "app-healthcheck-page",
   standalone: true,
   imports: [],
-  templateUrl: "./healthcheck.component.html",
-  styleUrl: "./healthcheck.component.css",
+  templateUrl: "./healthcheck-page.component.html",
+  styleUrl: "./healthcheck-page.component.css",
 })
 export class HealthcheckComponent implements OnInit {
   public message = "";

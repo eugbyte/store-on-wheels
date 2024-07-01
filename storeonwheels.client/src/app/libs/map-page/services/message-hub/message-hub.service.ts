@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { GeoInfo } from "~/app/libs/shared/models";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { HUB_CONNECTION } from "./message-hub.provider";
 
 @Injectable({
@@ -19,8 +19,8 @@ export class MessageHubService {
     });
   }
 
-  public get geoInfo$() {
-    return this._geoInfo$;
+  public get geoInfo$(): Observable<GeoInfo> {
+    return this._geoInfo$.asObservable();
   }
 
   async start() {
@@ -34,18 +34,19 @@ export class MessageHubService {
     await connection.start();
   }
 
-  async sendVendor(info: GeoInfo) {
+  async sendGeoInfo(userId: string, info: GeoInfo) {
     const { connection } = this;
 
     await connection.send(
-      "broadcastVendorPosition",
-      "random_user",
+      "broadcastVendorPositionAnonymously",
+      userId,
       JSON.stringify(info)
     );
   }
 
-  async cleanUp() {
+  async dispose() {
     clearInterval(this.intervalId);
     await this.connection.stop();
+    this._geoInfo$.complete();
   }
 }
