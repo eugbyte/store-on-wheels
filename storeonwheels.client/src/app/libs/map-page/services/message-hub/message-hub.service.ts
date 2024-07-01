@@ -34,13 +34,12 @@ export class MessageHubService {
     await connection.start();
   }
 
-  async sendGeoInfo(info: GeoInfo) {
+  async sendGeoInfo(userId: string, info: GeoInfo) {
     const { connection } = this;
-    const { vendorId } = info;
 
     await connection.send(
-      "broadcastVendorPosition",
-      vendorId,
+      "broadcastVendorPositionAnonymously",
+      userId,
       JSON.stringify(info)
     );
   }

@@ -70,12 +70,12 @@ export class GeolocateService {
     });
   }
 
-  stop(): void {
+  stopWatch(): void {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
   dispose(): void {
-    this.stop();
+    this.stopWatch();
     this._position$.complete();
   }
 }
