@@ -22,7 +22,7 @@ import {
   clickSubject as _clickSubject,
 } from "~/app/libs/map-page/services";
 import { CommonModule } from "@angular/common";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { MatRow, MatTableModule } from "@angular/material/table";
 
 @Component({
@@ -41,8 +41,6 @@ import { MatRow, MatTableModule } from "@angular/material/table";
 })
 export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
-  private geoSub: Subscription = new Subscription();
-  private clickSub: Subscription = new Subscription();
 
   // The `{ read: ElementRef }` params is required, since MatRow is a Directive, and by default, a Directive will be returned.
   // https://github.com/angular/components/issues/17816#issue-528942343
@@ -62,7 +60,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const { geoInfo$, vendorMap, vendors } = this;
 
-    this.geoSub = geoInfo$.subscribe((info) => {
+    geoInfo$.subscribe((info) => {
       const { vendor } = info;
 
       vendorMap.set(vendor.id, vendor);
@@ -76,7 +74,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.clickSub = this.clickSubject.subscribe(({ vendorId, source }) =>
+    this.clickSubject.subscribe(({ vendorId, source }) =>
       this.scrollRowIntoView(vendorId, source)
     );
   }
@@ -84,8 +82,6 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     const { vendorMap } = this;
     vendorMap.dispose();
-    this.geoSub.unsubscribe();
-    this.clickSub.unsubscribe();
   }
 
   onRowClick(vendorId: string) {

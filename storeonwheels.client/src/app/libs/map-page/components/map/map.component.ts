@@ -20,7 +20,7 @@ import {
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Component({
   selector: "app-map",
@@ -42,8 +42,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   public containerId = "foodtruck-mapbox";
 
   @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
-  private geoSub: Subscription = new Subscription();
-  private clickSub: Subscription = new Subscription();
 
   constructor(
     private mapboxService: MapboxService,
@@ -55,10 +53,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const { geoInfo$, clickSubject } = this;
 
-    this.geoSub = geoInfo$.subscribe((info: GeoInfo) =>
-      this.updateMarkers(info)
-    );
-    this.clickSub = clickSubject.subscribe((clickEvent: ClickProps) =>
+    geoInfo$.subscribe((info: GeoInfo) => this.updateMarkers(info));
+    clickSubject.subscribe((clickEvent: ClickProps) =>
       this.updatePopup(clickEvent)
     );
   }
@@ -75,9 +71,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const { markers, geoInfos } = this;
     markers.dispose();
     geoInfos.dispose();
-
-    this.geoSub.unsubscribe();
-    this.clickSub.unsubscribe();
   }
 
   private updateMarkers(info: GeoInfo) {
