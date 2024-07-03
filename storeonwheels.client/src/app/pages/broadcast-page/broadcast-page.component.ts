@@ -5,13 +5,19 @@ import {
   MessageHubService,
   hubConnection,
 } from "~/app/libs/map-page/services";
-import { GeoInfo, Vendor } from "~/app/libs/shared/models";
+import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
 import { Observable } from "rxjs";
 import { VendorService } from "~/app/libs/broadcast-page/services";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
 
 @Component({
   selector: "app-broadcast-page",
@@ -21,6 +27,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
+    VendorFormComponent,
   ],
   providers: [
     MessageHubService,
@@ -34,13 +41,14 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
   private position$: Observable<GeolocationPosition> = new Observable();
   steps: boolean[] = [false, false];
 
-  vendorForm = new FormGroup({
-    id: new FormControl(hubConnection.connectionId ?? ""),
-    displayName: new FormControl(""),
-    description: new FormControl(""),
+  vendorForm: FormGroup<VendorForm> = this.formBuilder.nonNullable.group({
+    id: ["", Validators.required],
+    displayName: ["", Validators.required],
+    description: ["", Validators.required],
   });
 
   constructor(
+    private formBuilder: FormBuilder,
     private geoService: GeolocateService,
     private messageHub: MessageHubService,
     private vendorService: VendorService
@@ -50,6 +58,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.messageHub.start();
+    this.vendorForm.patchValue({ id: hubConnection.connectionId ?? "" });
 
     this.position$.subscribe((position: GeolocationPosition) => {
       if (!this.canBroadcast) {
@@ -75,8 +84,9 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  async createVendor() {
-    // await this.vendorService.createVendor();
+  async onSubmit(vendor: Vendor) {
+    console.log("parent");
+    console.log(vendor);
   }
 
   ngOnDestroy() {

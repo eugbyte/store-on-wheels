@@ -1,11 +1,5 @@
-<form [formGroup]="vendorForm">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="displayName" />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <input matInput formControlName="description" />
-  </mat-form-field>
-</form>
+<div class="w-full flex flex-col justify-center items-center mt-10">
+  <app-vendor-form
+    [vendorForm]="vendorForm"
+    (submitEvent)="onSubmit($event)"></app-vendor-form>
+</div>

@@ -26,7 +26,7 @@ export class TickerCache<K, V> extends Map<K, V> implements TimedMap<K, V> {
           continue;
         } else if (Date.now() <= timeout.timestamp) {
           minQ.enqueue({ item: key, priority: timeout.timestamp });
-          //console.log("re-queuing and break");
+          // other items in the queue are in strictly inreasing order, so just break
           break;
         }
 
