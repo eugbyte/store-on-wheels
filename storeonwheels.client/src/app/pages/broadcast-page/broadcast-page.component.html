@@ -1,1 +1,9 @@
-<p>broadcast-page works!</p>
+<mat-form-field [formGroup]="vendorForm">
+  <mat-label>Name</mat-label>
+  <input matInput formControlName="displayName" />
+</mat-form-field>
+
+<mat-form-field [formGroup]="vendorForm">
+  <mat-label>Description</mat-label>
+  <input matInput formControlName="description" />
+</mat-form-field>

@@ -15,11 +15,13 @@ import { GeoInfo, Vendor } from "~/app/libs/shared/models";
 import {
   HUB_CONNECTION,
   MessageHubService,
-  TimeoutCache,
+  TimedMap,
   hubConnection,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
+  timedMapFactory,
+  Strategy,
 } from "~/app/libs/map-page/services";
 import { CommonModule } from "@angular/common";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -33,7 +35,7 @@ import { MatRow, MatTableModule } from "@angular/material/table";
     MessageHubService,
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    { provide: TimeoutCache, useClass: TimeoutCache<string, Vendor> },
+    { provide: "TimedMap", useFactory: timedMapFactory, deps: [Strategy.HEAP] },
   ],
 
   templateUrl: "./vendor-table.component.html",
@@ -54,7 +56,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
-    @Inject(TimeoutCache) private vendorMap: TimeoutCache<string, Vendor>
+    @Inject("TimedMap") private vendorMap: TimedMap<string, Vendor>
   ) {}
 
   ngOnInit() {

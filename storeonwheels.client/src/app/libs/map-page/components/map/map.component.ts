@@ -11,12 +11,14 @@ import {
   HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
-  TimeoutCache as TimeoutCache,
+  TimedMap,
   hubConnection,
   mapboxToken,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
+  timedMapFactory,
+  Strategy,
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
@@ -31,8 +33,16 @@ import { BehaviorSubject, Observable } from "rxjs";
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    { provide: "TimeoutCache1", useClass: TimeoutCache<string, Marker> },
-    { provide: "TimeoutCache2", useClass: TimeoutCache<string, GeoInfo> },
+    {
+      provide: "TimedMap1",
+      useFactory: timedMapFactory,
+      deps: [Strategy.HEAP],
+    },
+    {
+      provide: "TimedMap2",
+      useFactory: timedMapFactory,
+      deps: [Strategy.HEAP],
+    },
   ],
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
@@ -46,8 +56,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private mapboxService: MapboxService,
     @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
-    @Inject("TimeoutCache1") private markers: TimeoutCache<string, Marker>,
-    @Inject("TimeoutCache2") private geoInfos: TimeoutCache<string, GeoInfo>
+    @Inject("TimedMap1") private markers: TimedMap<string, Marker>,
+    @Inject("TimedMap2") private geoInfos: TimedMap<string, GeoInfo>
   ) {}
 
   ngOnInit() {
