@@ -1,5 +1,5 @@
-import { TimeoutCache } from "./timed-cache-2.service";
-import { TickerCache } from "./timed-cache.service";
+import { TickerCache } from "./ticker-cache.service";
+import { TimeoutCache } from "./timeout-cache.service";
 import { TimedMap } from "./timeout-info";
 
 export enum Strategy {
