@@ -18,7 +18,6 @@ import {
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-  Strategy,
 } from "~/app/libs/map-page/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
@@ -36,12 +35,10 @@ import { BehaviorSubject, Observable } from "rxjs";
     {
       provide: "TimedMap1",
       useFactory: timedMapFactory,
-      deps: [Strategy.HEAP],
     },
     {
       provide: "TimedMap2",
       useFactory: timedMapFactory,
-      deps: [Strategy.HEAP],
     },
   ],
   templateUrl: "./map.component.html",

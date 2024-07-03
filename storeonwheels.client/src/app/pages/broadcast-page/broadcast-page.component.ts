@@ -8,7 +8,7 @@ import {
 import { GeoInfo, Vendor } from "~/app/libs/shared/models";
 import { Observable } from "rxjs";
 import { VendorService } from "~/app/libs/broadcast-page/services";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -16,7 +16,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 @Component({
   selector: "app-broadcast-page",
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     MessageHubService,
     { provide: HUB_CONNECTION, useValue: hubConnection },

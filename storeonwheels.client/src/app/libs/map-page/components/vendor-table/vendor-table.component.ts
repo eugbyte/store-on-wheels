@@ -21,7 +21,6 @@ import {
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-  Strategy,
 } from "~/app/libs/map-page/services";
 import { CommonModule } from "@angular/common";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -35,9 +34,8 @@ import { MatRow, MatTableModule } from "@angular/material/table";
     MessageHubService,
     { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    { provide: "TimedMap", useFactory: timedMapFactory, deps: [Strategy.HEAP] },
+    { provide: "TimedMap", useFactory: timedMapFactory },
   ],
-
   templateUrl: "./vendor-table.component.html",
   styleUrl: "./vendor-table.component.css",
 })
