@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from "@angular/core";
 import { GeolocateService } from "~/app/libs/broadcast-page/services";
 import {
   HUB_CONNECTION,
@@ -11,6 +11,7 @@ import { VendorService } from "~/app/libs/broadcast-page/services";
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
@@ -18,6 +19,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: "app-broadcast-page",
@@ -26,8 +29,11 @@ import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,
     VendorFormComponent,
+    MatStepperModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     MessageHubService,
@@ -37,9 +43,11 @@ import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
   styleUrl: "./broadcast-page.component.css",
 })
 export class BroadcastPageComponent implements OnInit, OnDestroy {
+  @ViewChild("stepper", { read: MatStepper }) matStep?: MatStepper;
+  isLinear = true;
+
   private canBroadcast = false;
   private position$: Observable<GeolocationPosition> = new Observable();
-  steps: boolean[] = [false, false];
 
   vendorForm: FormGroup<VendorForm> = this.formBuilder.nonNullable.group({
     id: ["", Validators.required],
@@ -82,6 +90,11 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
     } else {
       this.geoService.watchPosition(5000);
     }
+  }
+
+  reset() {
+    this.matStep?.reset();
+    console.log(this.vendorForm.value);
   }
 
   async onSubmit(vendor: Vendor) {

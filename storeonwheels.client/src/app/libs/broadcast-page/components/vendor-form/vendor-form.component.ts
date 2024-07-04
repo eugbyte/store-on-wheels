@@ -7,6 +7,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { MatStepperModule } from "@angular/material/stepper";
 
 @Component({
   selector: "app-vendor-form",
@@ -19,6 +20,7 @@ import { MatIconModule } from "@angular/material/icon";
     CommonModule,
     MatIconModule,
     MatButtonModule,
+    MatStepperModule,
   ],
   templateUrl: "./vendor-form.component.html",
   styleUrl: "./vendor-form.component.css",

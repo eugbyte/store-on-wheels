@@ -1,7 +1,7 @@
 const { env } = require("process");
 
 function getBackendUrl() {
-  let target = "https://localhost:7121";
+  let target = "https://localhost:7108";
   if (env.ASPNETCORE_HTTPS_PORT) {
     target = `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`;
   } else if (env.ASPNETCORE_URLS) {
