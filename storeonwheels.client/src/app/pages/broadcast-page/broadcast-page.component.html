@@ -1,10 +1,12 @@
-<div class="w-full flex flex-col justify-center items-center border border-white">
+<div
+  class="w-full flex flex-col justify-center items-center border border-white">
   <mat-stepper [linear]="isLinear" #stepper class="mt-10 w-full sm:w-1/2">
-    <mat-step [stepControl]="vendorForm" [editable]=false>
+    <mat-step [stepControl]="vendorForm" [editable]="false">
       <div>
         <ng-template matStepLabel>Create Vendor</ng-template>
-        <app-vendor-form [vendorForm]="vendorForm"
-                         (submitEvent)="onSubmit($event)"></app-vendor-form>
+        <app-vendor-form
+          [vendorForm]="vendorForm"
+          (submitEvent)="onSubmit($event)"></app-vendor-form>
         <button mat-flat-button matStepperNext>Next</button>
       </div>
     </mat-step>
@@ -16,7 +18,4 @@
       </div>
     </mat-step>
   </mat-stepper>
-  
 </div>
-
-

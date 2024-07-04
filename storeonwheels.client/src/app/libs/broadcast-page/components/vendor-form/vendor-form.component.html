@@ -1,13 +1,13 @@
 @if (vendorForm) {
-<form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" class="flex flex-col">
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="displayName" />
-  </mat-form-field>
+  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" class="flex flex-col">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="displayName" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <input matInput formControlName="description" />
-  </mat-form-field>
-</form>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" />
+    </mat-form-field>
+  </form>
 }

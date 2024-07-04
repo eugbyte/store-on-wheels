@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  TemplateRef,
+} from "@angular/core";
 import { GeolocateService } from "~/app/libs/broadcast-page/services";
 import {
   HUB_CONNECTION,
@@ -19,7 +25,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
