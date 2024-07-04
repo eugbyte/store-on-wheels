@@ -13,6 +13,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "externalDependencies": ["http", "https", "url", "util", "net"],
+            "allowedCommonJsDependencies": [
+              "tough-cookie",
+              "node-fetch",
+              "fetch-cookie",
+              "abort-controller",
+              "ws",
+              "eventsource"
+            ],
             "outputPath": "dist/storeonwheels.client",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -31,8 +40,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
