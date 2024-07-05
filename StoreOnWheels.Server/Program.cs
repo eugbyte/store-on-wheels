@@ -59,7 +59,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 // UseCors must be called before MapHub.
-app.UseCors();
+app.UseCors(builder => {
+	builder.WithOrigins("https://localhost:4200")
+		.AllowAnyHeader()
+		.AllowAnyMethod()
+		.AllowCredentials();
+});
 app.MapHub<GeohubsClient>("/stream/v1/geohub");
 
 app.MapFallbackToFile("/index.html");
