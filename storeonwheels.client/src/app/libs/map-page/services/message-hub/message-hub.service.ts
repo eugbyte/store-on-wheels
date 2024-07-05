@@ -19,8 +19,12 @@ export class MessageHubService {
     });
   }
 
-  public get geoInfo$(): Observable<GeoInfo> {
+  get geoInfo$(): Observable<GeoInfo> {
     return this._geoInfo$.asObservable();
+  }
+
+  get state(): HubConnectionState {
+    return this.connection.state;
   }
 
   async start() {

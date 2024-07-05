@@ -61,6 +61,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.js",
+            "host": "localhost"
+          },
           "configurations": {
             "production": {
               "buildTarget": "storeonwheels.client:build:production"
@@ -69,11 +73,7 @@
               "buildTarget": "storeonwheels.client:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "src/proxy.conf.js",
-            "host": "localhost"
-          }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

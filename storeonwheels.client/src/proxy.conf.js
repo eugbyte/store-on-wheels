@@ -7,17 +7,22 @@ function getBackendUrl() {
   } else if (env.ASPNETCORE_URLS) {
     target = env.ASPNETCORE_URLS.split(";")[0];
   }
-  console.log({ target });
+  console.log({
+    target,
+    ASPNETCORE_HTTPS_PORT: env.ASPNETCORE_HTTPS_PORT,
+    ASPNETCORE_URLS: env.ASPNETCORE_URLS,
+  });
   return target;
 }
 
 const PROXY_CONFIG = [
   {
-    context: ["^/api"],
+    context: ["^/api", "^/stream"],
     target: getBackendUrl(),
     secure: false, // ignore lack of SSL cert
-    changeOrigin: true, // prevents CORs
+    // changeOrigin: true, // prevents CORs
     logLevel: "debug",
+    ws: true,
   },
 ];
 

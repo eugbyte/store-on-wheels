@@ -11,7 +11,7 @@ export function createConnection(url: string): HubConnection {
 }
 
 export const hubConnection = createConnection(
-  "https://localhost:7108/stream/v1/geohub"
+  "stream/v1/geohub"
 );
 
 export const HUB_CONNECTION = new InjectionToken<string>("HUB_CONNECTION");
