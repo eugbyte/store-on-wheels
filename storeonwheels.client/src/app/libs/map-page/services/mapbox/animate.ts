@@ -61,15 +61,10 @@ export function animate({
   }
 
   const from = turf.point([originlng, originlat]);
-  const newPoint = turf.rhumbDestination(
-    from,
-    speed * (runtime / 1000),
-    bearing,
-    {
-      units: "meters",
-    }
-  );
-  const [newLng, newLat] = newPoint.geometry.coordinates;
+  const to = turf.rhumbDestination(from, speed * (runtime / 1000), bearing, {
+    units: "meters",
+  });
+  const [newLng, newLat] = to.geometry.coordinates;
 
   try {
     marker.setLngLat([newLng, newLat]);

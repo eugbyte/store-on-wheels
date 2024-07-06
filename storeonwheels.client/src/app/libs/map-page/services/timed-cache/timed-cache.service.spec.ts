@@ -1,17 +1,17 @@
 import { TestBed } from "@angular/core/testing";
 
-import { TimeoutCache } from "./timeout-cache.service";
+import { TickerCache } from "./ticker-cache.service";
 import { SleepService } from "~/app/libs/shared/services";
 
 describe("TimeoutCacheService", () => {
-  let cache: TimeoutCache<string, number>;
+  let cache: TickerCache<string, number>;
   let sleeper: SleepService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TimeoutCache, SleepService],
+      providers: [TickerCache, SleepService],
     });
-    cache = TestBed.inject(TimeoutCache);
+    cache = TestBed.inject(TickerCache);
     sleeper = TestBed.inject(SleepService);
   });
 

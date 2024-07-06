@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { MinPriorityQueue } from "@datastructures-js/priority-queue";
-import { TimeoutInfo, QueueInfo, TimeoutId } from "./timeout-info";
-import cloneDeep from "lodash.clonedeep";
+import { TimeoutInfo, QueueInfo, TimeoutId, TimedMap } from "./timeout-info";
+import { cloneDeep } from "lodash";
 
-// https://tinyurl.com/3vcu8xsb
 @Injectable({
   providedIn: null,
 })
-export class TimeoutCache<K, V> extends Map<K, V> {
+export class TickerCache<K, V> extends Map<K, V> implements TimedMap<K, V> {
   private id: TimeoutId;
   private timeouts = new Map<K, TimeoutInfo>();
   private minQ = new MinPriorityQueue<QueueInfo<K>>((item) => item.priority);
@@ -21,20 +20,13 @@ export class TimeoutCache<K, V> extends Map<K, V> {
         const earliest: QueueInfo<K> = minQ.dequeue();
         const key: K = earliest.item;
         const timeout: TimeoutInfo | undefined = timeouts.get(key);
-        //console.log({
-        //  id: key,
-        //  old: new Date(earliest.priority),
-        //  current: new Date(),
-        //  new: timeout?.timestamp != null ? new Date(timeout?.timestamp) : null,
-        //  count: minQ.size(),
-        //});
 
         if (timeout == null) {
           // this.delete() was called before interval callback was executed
           continue;
         } else if (Date.now() <= timeout.timestamp) {
           minQ.enqueue({ item: key, priority: timeout.timestamp });
-          //console.log("re-queuing and break");
+          // other items in the queue are in strictly inreasing order, so just break
           break;
         }
 
@@ -44,11 +36,11 @@ export class TimeoutCache<K, V> extends Map<K, V> {
           console.error(err);
         }
       }
-    }, 500);
+    }, 1000);
   }
 
   /**
-   * Remember to call `dispose()` before unMounting the component, as TimeoutCache uses setInterval internally
+   * Remember to call `dispose()` before unmounting the component, as TimeoutCache uses setInterval internally
    */
   dispose() {
     clearInterval(this.id);
@@ -87,7 +79,7 @@ export class TimeoutCache<K, V> extends Map<K, V> {
     return this.timeouts.get(key);
   }
 
-  getTimeouts(): Map<K, TimeoutInfo> {
+  getTimeouts() {
     return cloneDeep(this.timeouts);
   }
 }

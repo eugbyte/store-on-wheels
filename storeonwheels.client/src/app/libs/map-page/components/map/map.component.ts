@@ -8,21 +8,18 @@ import {
   OnInit,
 } from "@angular/core";
 import {
-  HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
-  TimeoutCache as TimeoutCache,
-  hubConnection,
+  TimedMap,
   mapboxToken,
-} from "~/app/libs/map-page/services";
-import { GeoInfo } from "~/app/libs/shared/models";
-import { LngLat, Marker, Popup } from "mapbox-gl";
-import { BehaviorSubject, Subject } from "rxjs";
-import {
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
-} from "~/app/libs/shared/services";
+  timedMapFactory,
+} from "~/app/libs/map-page/services";
+import { GeoInfo } from "~/app/libs/shared/models";
+import { LngLat, Marker, Popup } from "mapbox-gl";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Component({
   selector: "app-map",
@@ -31,10 +28,15 @@ import {
   providers: [
     MapboxService,
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
-    { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    { provide: "TimeoutCache1", useClass: TimeoutCache<string, Marker> },
-    { provide: "TimeoutCache2", useClass: TimeoutCache<string, GeoInfo> },
+    {
+      provide: "TimedMap1",
+      useFactory: timedMapFactory,
+    },
+    {
+      provide: "TimedMap2",
+      useFactory: timedMapFactory,
+    },
   ],
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.css",
@@ -42,13 +44,14 @@ import {
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchboxId = "searchbox";
   public containerId = "foodtruck-mapbox";
-  @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
+
+  @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
 
   constructor(
     private mapboxService: MapboxService,
     @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
-    @Inject("TimeoutCache1") private markers: TimeoutCache<string, Marker>,
-    @Inject("TimeoutCache2") private geoInfos: TimeoutCache<string, GeoInfo>
+    @Inject("TimedMap1") private markers: TimedMap<string, Marker>,
+    @Inject("TimedMap2") private geoInfos: TimedMap<string, GeoInfo>
   ) {}
 
   ngOnInit() {
@@ -108,7 +111,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     const marker = markers.get(vendorId) as Marker;
-    marker.setRotation(heading);
+    marker.setRotation(heading ?? 0);
     geoInfos.set(vendorId, info);
 
     const duration = timestamp - oldTimeStamp;

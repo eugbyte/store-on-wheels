@@ -13,36 +13,30 @@ import {
 } from "@angular/core";
 import { GeoInfo, Vendor } from "~/app/libs/shared/models";
 import {
-  HUB_CONNECTION,
-  MessageHubService,
-  TimeoutCache,
-  hubConnection,
-} from "~/app/libs/map-page/services";
-import { CommonModule } from "@angular/common";
-import { BehaviorSubject, Subject } from "rxjs";
-import { MatRow, MatTableModule } from "@angular/material/table";
-import {
+  TimedMap,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
-} from "~/app/libs/shared/services";
+  timedMapFactory,
+} from "~/app/libs/map-page/services";
+import { CommonModule } from "@angular/common";
+import { BehaviorSubject, Observable } from "rxjs";
+import { MatRow, MatTableModule } from "@angular/material/table";
 
 @Component({
   selector: "app-vendor-table",
   standalone: true,
   imports: [CommonModule, MatTableModule],
   providers: [
-    MessageHubService,
-    { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
-    { provide: TimeoutCache, useClass: TimeoutCache<string, Vendor> },
+    { provide: "TimedMap", useFactory: timedMapFactory },
   ],
-
   templateUrl: "./vendor-table.component.html",
   styleUrl: "./vendor-table.component.css",
 })
 export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input({ required: true }) geoInfo$: Subject<GeoInfo> = new Subject();
+  @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
+
   // The `{ read: ElementRef }` params is required, since MatRow is a Directive, and by default, a Directive will be returned.
   // https://github.com/angular/components/issues/17816#issue-528942343
   // https://tinyurl.com/4dxj78nk
@@ -55,7 +49,7 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(CLICK_SUBJECT) private clickSubject: BehaviorSubject<ClickProps>,
-    @Inject(TimeoutCache) private vendorMap: TimeoutCache<string, Vendor>
+    @Inject("TimedMap") private vendorMap: TimedMap<string, Vendor>
   ) {}
 
   ngOnInit() {

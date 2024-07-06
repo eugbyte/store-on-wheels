@@ -10,45 +10,48 @@ public class GeohubsClient(
 	ILogger<GeohubsClient> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
+	private string _vendorId = "";
 	// Allow user to broadcast message without first authenticating
-	// js client calls "BroadcastVendorPosition()"
+	// js client calls "BroadcastVendorPositionAnonymously()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"
-	public async Task BroadcastVendorPosition(string user, string message) {
+	public async Task BroadcastVendorPositionAnonymously(string vendorId, string message) {
+		// for annonymous broadcast, the vendor id is set to the connection id
+		if (vendorId != Context.ConnectionId) {
+			throw new Exception("For annonymous broadcast, vendor id is set to ws connection id");
+		}
+		_vendorId = vendorId;
+
 		GeolocationPosition? geoposition = JsonConvert.DeserializeObject<GeolocationPosition>(message);
 		if (geoposition is null) {
-			Logger.LogInformation("geoposition is null for {user}", user);
+			Logger.LogInformation("geoposition is null for {vendorId}", vendorId);
 			return;
 		}
-		Logger.LogInformation(geoposition.ToJson());
-
-		string anonymousVendorId = Context.ConnectionId;
 
 		// replace the vendor information sent by the client. Disallow users from modifying the profile.
-		if (!vendorCache.Contains(anonymousVendorId)) {
+		if (!vendorCache.Contains(vendorId)) {
 			// To Do: Throw Exception if vendor not found
-			Vendor vendor = await vendorService.Get(anonymousVendorId)
-				?? geoposition.Vendor;
-			vendorCache.AddReplace(anonymousVendorId, vendor);
+			Vendor vendor = await vendorService.Get(vendorId) 
+				?? throw new Exception("vendor not found");
+			vendorCache.AddReplace(vendorId, vendor);
 		}
 
-		geoposition.Vendor = vendorCache.Get(anonymousVendorId);
-
-		message = geoposition.ToJson();
-		await Clients.All.MessageReceived(user, message);
+		geoposition.Vendor = vendorCache.Get(vendorId);
+		geoposition.VendorId = vendorId;
+		await Clients.All.MessageReceived(vendorId, geoposition.ToJson());
 	}
 
 	public override async Task OnConnectedAsync() {
-		await base.OnConnectedAsync();
 		Logger.LogInformation("connected to {}", Context.ConnectionId);
+		await base.OnConnectedAsync();
 	}
 
 	public override async Task OnDisconnectedAsync(Exception? exception) {
 		Logger.LogInformation("Disconnected from {}", Context.ConnectionId);
-		// in the event the connection is annonymous, immediately free the information
-		string anonymousVendorId = Context.ConnectionId;
+
+		// in the event the connection is annonymous, immediately free the information		
 		try {
-			vendorCache.Remove(anonymousVendorId);
-			await vendorService.Delete(anonymousVendorId);
+			vendorCache.Remove(_vendorId);
+			await vendorService.Delete(_vendorId);
 		} catch (Exception) {
 			// Most likely, the user was not annonymous
 			// let the LRU cache remove the user naturally when the cache size is hit
