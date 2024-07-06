@@ -9,14 +9,16 @@ import { HUB_CONNECTION } from "./message-hub.provider";
 })
 export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
+  private _state$ = new Subject<HubConnectionState>();
   private intervalId = 0;
 
   constructor(@Inject(HUB_CONNECTION) private connection: HubConnection) {
-    connection.on("MessageReceived", (_user: string, message: string) => {
-      console.log("message received");
+    this.connection.on("MessageReceived", (_user: string, message: string) => {
       const info: GeoInfo = JSON.parse(message);
       this._geoInfo$.next(info);
     });
+
+    this._state$.next(connection.state);
   }
 
   get geoInfo$(): Observable<GeoInfo> {
@@ -27,15 +29,24 @@ export class MessageHubService {
     return this.connection.state;
   }
 
+  get state$(): Observable<HubConnectionState> {
+    return this._state$.asObservable();
+  }
+
   async start() {
     const { connection } = this;
+    this._state$.next(connection.state);
+
     if (
       connection == null ||
       connection.state != HubConnectionState.Disconnected
     ) {
+      console.log(`connection already ${connection.state}`);
       return;
     }
+
     await connection.start();
+    this._state$.next(connection.state);
   }
 
   async sendGeoInfo(userId: string, info: GeoInfo) {
@@ -52,5 +63,6 @@ export class MessageHubService {
     clearInterval(this.intervalId);
     await this.connection.stop();
     this._geoInfo$.complete();
+    this._state$.complete();
   }
 }

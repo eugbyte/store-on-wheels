@@ -10,8 +10,6 @@ export function createConnection(url: string): HubConnection {
     .build();
 }
 
-export const hubConnection = createConnection(
-  "stream/v1/geohub"
-);
+export const hubConnection = createConnection("stream/v1/geohub");
 
 export const HUB_CONNECTION = new InjectionToken<string>("HUB_CONNECTION");

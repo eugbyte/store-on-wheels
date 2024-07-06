@@ -13,10 +13,7 @@ import {
 } from "@angular/core";
 import { GeoInfo, Vendor } from "~/app/libs/shared/models";
 import {
-  HUB_CONNECTION,
-  MessageHubService,
   TimedMap,
-  hubConnection,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
@@ -31,8 +28,6 @@ import { MatRow, MatTableModule } from "@angular/material/table";
   standalone: true,
   imports: [CommonModule, MatTableModule],
   providers: [
-    MessageHubService,
-    { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
     { provide: "TimedMap", useFactory: timedMapFactory },
   ],

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject, firstValueFrom } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: null,
 })
 export class GeolocateService {
   private _position$ = new Subject<GeolocationPosition>();

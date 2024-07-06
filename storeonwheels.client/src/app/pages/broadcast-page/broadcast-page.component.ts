@@ -1,10 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GeolocateService } from "~/app/libs/broadcast-page/services";
-import {
-  HUB_CONNECTION,
-  MessageHubService,
-  hubConnection,
-} from "~/app/libs/map-page/services";
+import { MessageHubService, hubConnection } from "~/app/libs/map-page/services";
 import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
 import { Observable } from "rxjs";
 import { VendorService } from "~/app/libs/broadcast-page/services";
@@ -28,10 +24,6 @@ import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
     MatSelectModule,
     ReactiveFormsModule,
     VendorFormComponent,
-  ],
-  providers: [
-    MessageHubService,
-    { provide: HUB_CONNECTION, useValue: hubConnection },
   ],
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",

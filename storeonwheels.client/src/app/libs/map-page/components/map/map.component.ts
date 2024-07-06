@@ -8,11 +8,9 @@ import {
   OnInit,
 } from "@angular/core";
 import {
-  HUB_CONNECTION,
   MAPBOX_TOKEN,
   MapboxService,
   TimedMap,
-  hubConnection,
   mapboxToken,
   CLICK_SUBJECT,
   ClickProps,
@@ -30,7 +28,6 @@ import { BehaviorSubject, Observable } from "rxjs";
   providers: [
     MapboxService,
     { provide: MAPBOX_TOKEN, useValue: mapboxToken },
-    { provide: HUB_CONNECTION, useValue: hubConnection },
     { provide: CLICK_SUBJECT, useValue: _clickSubject },
     {
       provide: "TimedMap1",
