@@ -6,6 +6,7 @@ import {
   MessageHubService,
   hubConnection,
 } from "./libs/map-page/services";
+import { GeolocateService } from "./libs/broadcast-page/services";
 
 @Component({
   selector: "app-root",
@@ -19,7 +20,7 @@ import {
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(private messageHub: MessageHubService) {}
+  constructor(private messageHub: MessageHubService, private geoService: GeolocateService) {}
 
   async ngOnInit() {
     await this.messageHub.start();
@@ -28,5 +29,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     this.messageHub.dispose();
+    this.geoService.dispose();
   }
 }

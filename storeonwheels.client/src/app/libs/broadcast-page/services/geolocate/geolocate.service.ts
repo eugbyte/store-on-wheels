@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject, firstValueFrom } from "rxjs";
 
 @Injectable({
-  providedIn: null,
+  providedIn: "root",
 })
 export class GeolocateService {
   private _position$ = new Subject<GeolocationPosition>();
@@ -31,7 +31,7 @@ export class GeolocateService {
   }
 
   /**
-   * Get the user's geolocation. Requests for permission if permission has not been granted.
+   * Get the user's geolocation once. Requests for permission if permission has not been granted.
    * @param timeout timeout in miliseconds
    * @returns GeolocationPosition
    */
