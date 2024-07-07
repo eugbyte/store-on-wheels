@@ -30,6 +30,24 @@ export class GeolocateService {
     return res.state;
   }
 
+  async requestPermission(timeout: number = 5000): Promise<PermissionState> {
+    let permission: PermissionState = "prompt";
+    try {
+      const position = await this.geolocate(timeout);
+      this._position$.next(position);
+
+      permission = "granted";
+    } catch (error) {
+      if (error instanceof GeolocationPositionError) {
+        // Firefox does not treat temporary denial as "denied" but "prompt"
+        if (error.code == GeolocationPositionError.PERMISSION_DENIED) {
+          permission = "denied";
+        }
+      }
+    }
+    return permission;
+  }
+
   /**
    * Get the user's geolocation. Requests for permission if permission has not been granted.
    * @param timeout timeout in miliseconds

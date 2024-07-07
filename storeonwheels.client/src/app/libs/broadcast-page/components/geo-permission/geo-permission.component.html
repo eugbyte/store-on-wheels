@@ -1,17 +1,27 @@
-<div class="flex flex-col">
+<div class="">
   @if (geoPermissionState.toString() === "prompt") {
-    <button mat-button class="mx-auto" (click)="onClick()">
+    <button mat-flat-button class="mx-auto" (click)="onClick()">
       Grant Permission
     </button>
   } @else if (geoPermissionState.toString() === "granted") {
-    <p>
-      Permission granted. To revoke permission, click the map marker icon at the
-      URL bar
-    </p>
+    <p>Permission granted.</p>
+    <ng-container *ngTemplateOutlet="instructions"></ng-container>
   } @else if (geoPermissionState.toString() === "denied") {
-    <p>
-      Permission denied. To grant permission, click the map marker icon at the
-      URL bar
-    </p>
+    <p>Permission denied.</p>
+    <ng-container *ngTemplateOutlet="instructions"></ng-container>
   }
 </div>
+
+<ng-template #instructions>
+  <p>
+    To modify permission, click the map marker icon at the address bar or via
+    the
+    <a
+      mat-button
+      href="https://support.google.com/chrome/answer/142065?hl=en&co=GENIE.Platform%3DDesktop"
+      target="”_blank”"
+      >browser settings</a
+    >. Finally, <button mat-button (click)="reloadPage()">refresh</button> the
+    page.
+  </p>
+</ng-template>

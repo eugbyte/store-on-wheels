@@ -18,9 +18,11 @@
 
     <mat-step>
       <ng-template matStepLabel>Grant Geolocation Permission</ng-template>
-      <app-geo-permission
-        [geoPermissionState]="geoPermissionState"
-        (clickEvent)="grantPermission()"></app-geo-permission>
+      <div class="my-2">
+        <app-geo-permission
+          [geoPermissionState]="geoPermissionState"
+          (clickEvent)="grantPermission()"></app-geo-permission>
+      </div>
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>

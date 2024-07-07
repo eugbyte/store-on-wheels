@@ -17,4 +17,8 @@ export class GeoPermissionComponent {
   onClick() {
     this.clickEvent.emit();
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
 }

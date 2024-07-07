@@ -132,16 +132,9 @@ export class BroadcastPageComponent implements OnInit {
   }
 
   async grantPermission() {
-    try {
-      await this.geoService.geolocate(5000);
-    } catch (error) {
-      if (error instanceof GeolocationPositionError) {
-        // Firefox does not treat temporary denial as "denied" but "prompt"
-        if (error.code == GeolocationPositionError.PERMISSION_DENIED) {
-          this.geoPermissionState = "denied";
-        }
-      }
-    }
+    const permission: PermissionState =
+      await this.geoService.requestPermission(5000);
+    this.geoPermissionState = permission;
   }
 
   toggle() {
