@@ -1,5 +1,42 @@
-<div class="w-full flex flex-col justify-center items-center mt-10">
-  <app-vendor-form
-    [vendorForm]="vendorForm"
-    (submitEvent)="onSubmit($event)"></app-vendor-form>
+<div class="w-2/3 mx-auto pt-2">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="vendorForm">
+      <ng-template matStepLabel>Create Vendor</ng-template>
+      <app-vendor-form
+        [vendorForm]="vendorForm"
+        (submitEvent)="onSubmit()"></app-vendor-form>
+      <div>
+        <button
+          mat-button
+          (click)="onSubmit()"
+          type="submit"
+          [disabled]="!vendorBtnEnabled()">
+          {{ vendorBtnText() }}
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Grant Geolocation Permission</ng-template>
+      <app-geo-permission
+        [geoPermissionState]="geoPermissionState"
+        (clickEvent)="grantPermission()"></app-geo-permission>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Broadcast</ng-template>
+      <p>
+        <mat-slide-toggle [(ngModel)]="canBroadcast" (change)="toggle()">{{
+          toggleTexts[canBroadcast.toString()]
+        }}</mat-slide-toggle>
+      </p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

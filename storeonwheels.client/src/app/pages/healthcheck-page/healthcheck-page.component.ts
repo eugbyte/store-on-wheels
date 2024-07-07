@@ -13,7 +13,7 @@ import { MessageHubService, hubConnection } from "~/app/libs/map-page/services";
 export class HealthcheckComponent implements OnInit {
   public message = "";
   title = "healthcheck";
-  wsState: HubConnectionState = this.messageHub.state;
+  wsState: HubConnectionState = HubConnectionState.Disconnected;
   wsUrl = "";
 
   constructor(private messageHub: MessageHubService) {}
@@ -26,7 +26,6 @@ export class HealthcheckComponent implements OnInit {
     this.wsUrl = hubConnection.baseUrl;
 
     const { messageHub } = this;
-    console.log("ws healthcheck:", messageHub.state);
-    messageHub.state$.subscribe((state) => (this.wsState = state));
+    messageHub.state$.subscribe((state) => (this.wsState = state.state));
   }
 }

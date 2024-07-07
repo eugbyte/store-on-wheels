@@ -21,7 +21,6 @@ public class VendorsController(IVendorService vendorService, LRUCache<string, Ve
 
 	[HttpPost]
 	public async Task<ActionResult<Vendor>> Create([FromBody] Vendor vendor) {
-		vendor.Id ??= Nanoid.Generate();
 		return await vendorService.Create(vendor);
 	}
 }

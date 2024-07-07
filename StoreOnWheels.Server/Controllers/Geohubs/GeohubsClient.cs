@@ -10,7 +10,6 @@ public class GeohubsClient(
 	ILogger<GeohubsClient> Logger,
 	LRUCache<string, Vendor> vendorCache,
 	IVendorService vendorService) : Hub<IGeoHubClient> {
-	private string _vendorId = "";
 	// Allow user to broadcast message without first authenticating
 	// js client calls "BroadcastVendorPositionAnonymously()"
 	// SignalR hub broadcast message to all ws clients with the event name of "ReceiveMessage"
@@ -19,7 +18,6 @@ public class GeohubsClient(
 		if (vendorId != Context.ConnectionId) {
 			throw new Exception("For annonymous broadcast, vendor id is set to ws connection id");
 		}
-		_vendorId = vendorId;
 
 		GeolocationPosition? geoposition = JsonConvert.DeserializeObject<GeolocationPosition>(message);
 		if (geoposition is null) {
@@ -50,8 +48,9 @@ public class GeohubsClient(
 
 		// in the event the connection is annonymous, immediately free the information		
 		try {
-			vendorCache.Remove(_vendorId);
-			await vendorService.Delete(_vendorId);
+			string anonymousVendorId = Context.ConnectionId;
+			vendorCache.Remove(anonymousVendorId);
+			await vendorService.Delete(anonymousVendorId);
 		} catch (Exception) {
 			// Most likely, the user was not annonymous
 			// let the LRU cache remove the user naturally when the cache size is hit

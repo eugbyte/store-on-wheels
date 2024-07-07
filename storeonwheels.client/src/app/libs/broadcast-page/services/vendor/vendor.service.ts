@@ -1,16 +1,30 @@
 import { Injectable } from "@angular/core";
 import { Vendor } from "~/app/libs/shared/models";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 @Injectable({
   providedIn: "root",
 })
 export class VendorService {
-  constructor() {}
-
   async createVendor(vendor: Vendor): Promise<Vendor> {
-    const response = await axios.post("/api/v1/vendors", vendor);
-    const updatedVendor = response.data;
-    return updatedVendor;
+    try {
+      const response = await axios.post("/api/v1/vendors", vendor);
+      const updatedVendor = response.data;
+      return updatedVendor;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const response = error.response as AxiosResponse<string, string>;
+        const data = response.data ?? "";
+        throw {
+          name: "",
+          status: response?.status,
+          statusText: response?.statusText,
+          message: data.slice(0, 400) + " ...",
+          stack: "",
+        };
+      } else {
+        throw error;
+      }
+    }
   }
 }

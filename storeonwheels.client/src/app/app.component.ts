@@ -6,13 +6,14 @@ import {
   MessageHubService,
   hubConnection,
 } from "./libs/map-page/services";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
   standalone: true,
-  imports: [FooterNavComponent, RouterModule],
+  imports: [FooterNavComponent, RouterModule, ReactiveFormsModule],
   providers: [
     { provide: HUB_CONNECTION, useValue: hubConnection },
     MessageHubService,
@@ -23,7 +24,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.messageHub.start();
-    console.log({ rootState: this.messageHub.state });
   }
 
   async ngOnDestroy() {

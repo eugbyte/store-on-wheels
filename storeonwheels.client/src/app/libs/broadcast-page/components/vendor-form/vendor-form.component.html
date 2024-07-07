@@ -1,5 +1,5 @@
 @if (vendorForm) {
-  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" class="flex flex-col">
+  <form [formGroup]="vendorForm" class="flex flex-col" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="displayName" />
@@ -10,6 +10,8 @@
       <input matInput formControlName="description" />
     </mat-form-field>
 
-    <button mat-flat-button type="submit">Submit</button>
+    <!--workaround to get form submission to work when user press enter on input focus-->
+    <!--https://stackoverflow.com/a/477699/6514532-->
+    <input type="submit" hidden />
   </form>
 }

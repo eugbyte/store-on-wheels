@@ -46,7 +46,7 @@ export class TimeoutCache<K, V> extends Map<K, V> implements TimedMap<K, V> {
     return this.timeouts.get(key);
   }
 
-  getTimeouts() {
+  getTimeouts(): Map<K, TimeoutInfo> {
     return cloneDeep(this.timeouts);
   }
 }

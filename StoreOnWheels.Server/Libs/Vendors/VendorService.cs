@@ -16,7 +16,9 @@ public class VendorService(AppDbContext db) : IVendorService {
 	}
 
 	public async Task Delete(string vendorId) {
-		db.Vendors.Remove(new Vendor { Id = vendorId, DisplayName = "" });
+		Vendor vendor = new() { Id = vendorId, DisplayName = "" };
+		db.Vendors.Attach(vendor);
+		db.Vendors.Remove(vendor);
 		await db.SaveChangesAsync();
 	}
 }

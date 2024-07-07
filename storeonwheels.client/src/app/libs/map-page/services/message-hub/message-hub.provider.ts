@@ -13,3 +13,5 @@ export function createConnection(url: string): HubConnection {
 export const hubConnection = createConnection("stream/v1/geohub");
 
 export const HUB_CONNECTION = new InjectionToken<string>("HUB_CONNECTION");
+
+export type WsState = Pick<HubConnection, "connectionId" | "state" | "baseUrl">;

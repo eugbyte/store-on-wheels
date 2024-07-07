@@ -1,0 +1,17 @@
+<div class="flex flex-col">
+  @if (geoPermissionState.toString() === "prompt") {
+    <button mat-button class="mx-auto" (click)="onClick()">
+      Grant Permission
+    </button>
+  } @else if (geoPermissionState.toString() === "granted") {
+    <p>
+      Permission granted. To revoke permission, click the map marker icon at the
+      URL bar
+    </p>
+  } @else if (geoPermissionState.toString() === "denied") {
+    <p>
+      Permission denied. To grant permission, click the map marker icon at the
+      URL bar
+    </p>
+  }
+</div>
