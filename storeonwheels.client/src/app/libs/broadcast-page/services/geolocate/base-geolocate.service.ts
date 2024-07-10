@@ -25,7 +25,7 @@ export class BaseGeolocateService {
   /**
    * Get the user's geolocation. Requests for permission if permission has not been granted.
    * @param timeout timeout in miliseconds
-   * @throws GeolocationPositionError 
+   * @throws GeolocationPositionError
    * @returns GeolocationPosition
    */
   async geolocate({

@@ -5,7 +5,12 @@ import {
   WsState,
   hubConnection,
 } from "~/app/libs/map-page/services";
-import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
+import {
+  GeoInfo,
+  Result as _Result,
+  Vendor,
+  VendorForm,
+} from "~/app/libs/shared/models";
 import { Observable } from "rxjs";
 import { VendorService } from "~/app/libs/broadcast-page/services";
 import {
@@ -79,19 +84,14 @@ export class BroadcastPageComponent implements OnInit {
       this.vendorForm.patchValue({ id: state.connectionId ?? "" })
     );
 
-    this.position$.subscribe({
-      next: (position: GeolocationPosition) => {
-        console.log("watched", position);
-        const geoInfo = new GeoInfo();
-        geoInfo.coords = position.coords;
-        geoInfo.timestamp = Date.now();
+    this.position$.subscribe((position) => {
+      const geoInfo = new GeoInfo();
+      geoInfo.coords = position.coords;
+      geoInfo.timestamp = Date.now();
 
-        const vendorId: string = hubConnection.connectionId ?? "";
-        this.messageHub.sendGeoInfo(vendorId, geoInfo);
-        this.vendorForm;
-      },
-      error: (err) => console.error({ err }),
-      complete: () => console.log("complete"),
+      const vendorId: string = hubConnection.connectionId ?? "";
+      this.messageHub.sendGeoInfo(vendorId, geoInfo);
+      this.vendorForm;
     });
 
     const geoPermissionState = await this.geoService.getPermPermissionState();

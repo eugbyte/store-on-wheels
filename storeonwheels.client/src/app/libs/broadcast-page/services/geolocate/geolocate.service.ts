@@ -7,9 +7,13 @@ import { BaseGeolocateService } from "./base-geolocate.service";
 })
 export class GeolocateService extends BaseGeolocateService {
   private _position$ = new Subject<GeolocationPosition>();
+  private _error$ = new Subject<GeolocationPositionError>();
 
   get position$(): Observable<GeolocationPosition> {
     return this._position$.asObservable();
+  }
+  get error$(): Observable<GeolocationPositionError> {
+    return this._error$.asObservable();
   }
 
   /**
@@ -38,11 +42,12 @@ export class GeolocateService extends BaseGeolocateService {
       maximumAge: 0,
     },
   } = {}): Promise<GeolocationPositionError | null> {
+    console.log("watching...");
     const { _position$ } = this;
 
     const promise = super.watchPosition({
       onSuccess: (position) => _position$.next(position),
-      onError: (error) => _position$.error(error),
+      onError: (error) => this._error$.next(error),
       options,
     });
     return promise;
