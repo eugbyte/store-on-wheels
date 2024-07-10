@@ -24,7 +24,9 @@
           (clickEvent)="grantPermission()"></app-geo-permission>
       </div>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext [disabled]="!canBroadcast()">
+          Next
+        </button>
       </div>
     </mat-step>
 

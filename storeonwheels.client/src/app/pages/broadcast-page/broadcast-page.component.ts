@@ -58,7 +58,7 @@ export class BroadcastPageComponent implements OnInit {
 
   geoPermissionState: PermissionState = "denied";
 
-  canBroadcast = false;
+  canBroadcast = signal(false);
   toggleTexts: Record<string, string> = {
     true: "Broadcasting...",
     false: "Broadcast stopped",
@@ -78,17 +78,23 @@ export class BroadcastPageComponent implements OnInit {
     this.messageHub.state$.subscribe((state: WsState) =>
       this.vendorForm.patchValue({ id: state.connectionId ?? "" })
     );
-    this.position$.subscribe((position: GeolocationPosition) => {
-      const geoInfo = new GeoInfo();
-      geoInfo.coords = position.coords;
-      geoInfo.timestamp = Date.now();
 
-      const vendorId: string = hubConnection.connectionId ?? "";
-      this.messageHub.sendGeoInfo(vendorId, geoInfo);
-      this.vendorForm;
+    this.position$.subscribe({
+      next: (position: GeolocationPosition) => {
+        console.log("watched", position);
+        const geoInfo = new GeoInfo();
+        geoInfo.coords = position.coords;
+        geoInfo.timestamp = Date.now();
+
+        const vendorId: string = hubConnection.connectionId ?? "";
+        this.messageHub.sendGeoInfo(vendorId, geoInfo);
+        this.vendorForm;
+      },
+      error: (err) => console.error({ err }),
+      complete: () => console.log("complete"),
     });
 
-    const geoPermissionState = await this.geoService.getPermissionState();
+    const geoPermissionState = await this.geoService.getPermPermissionState();
     this.geoPermissionState = geoPermissionState;
     console.log({ geoPermissionState });
   }
@@ -132,18 +138,18 @@ export class BroadcastPageComponent implements OnInit {
   }
 
   async grantPermission() {
-    const permission: PermissionState =
-      await this.geoService.requestPermission(5000);
-    this.geoPermissionState = permission;
+    const err: GeolocationPositionError | null =
+      await this.geoService.watchPosition();
+    this.canBroadcast.set(err == null);
   }
 
   toggle() {
     const { canBroadcast, geoService } = this;
-    console.log({ canBroadcast });
-    if (!canBroadcast) {
+    console.log({ canBroadcast: canBroadcast() });
+    if (!canBroadcast()) {
       geoService.stopWatch();
     } else {
-      geoService.watchPosition(5000);
+      geoService.watchPosition();
     }
   }
 }
