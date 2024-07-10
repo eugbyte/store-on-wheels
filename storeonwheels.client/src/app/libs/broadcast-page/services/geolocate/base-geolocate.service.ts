@@ -55,11 +55,9 @@ export class BaseGeolocateService {
   watchPosition({
     onSuccess = (_position: GeolocationPosition) => {},
     onError = (_error: GeolocationPositionError) => {},
-    options = {
-      enableHighAccuracy: false,
-      timeout: 5_000,
-      maximumAge: 0,
-    },
+    enableHighAccuracy = false,
+    timeout = 5000,
+    maximumAge = 0
   } = {}): Promise<GeolocationPositionError | null> {
     if (!("geolocation" in window.navigator)) {
       throw new Error("browser does not supprt geolocation");
@@ -79,7 +77,7 @@ export class BaseGeolocateService {
       this._watchId = navigator.geolocation.watchPosition(
         _onSuccess,
         _onError,
-        options
+        { enableHighAccuracy, timeout, maximumAge }
       );
     });
     return promise;

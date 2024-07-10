@@ -4,11 +4,11 @@
       <ng-template matStepLabel>Create Vendor</ng-template>
       <app-vendor-form
         [vendorForm]="vendorForm"
-        (submitEvent)="onSubmit()"></app-vendor-form>
+        (submitEvent)="submitVendor()"></app-vendor-form>
       <div>
         <button
           mat-button
-          (click)="onSubmit()"
+          (click)="submitVendor()"
           type="submit"
           [disabled]="!vendorBtnEnabled()">
           {{ vendorBtnText() }}
@@ -20,8 +20,11 @@
       <ng-template matStepLabel>Grant Geolocation Permission</ng-template>
       <div class="my-2">
         <app-geo-permission
-          [geoPermissionState]="geoPermissionState"
-          (clickEvent)="grantPermission()"></app-geo-permission>
+          [geoPermissionState]="geoPermissionState()"
+          (clickEvent)="grantWatchPermission()"></app-geo-permission>
+        @if (posError() !== null) {
+          <p>{{ posError()?.message }}</p>
+        }
       </div>
       <div>
         <button mat-button matStepperNext [disabled]="!canBroadcast()">
@@ -33,7 +36,7 @@
     <mat-step>
       <ng-template matStepLabel>Broadcast</ng-template>
       <p>
-        <mat-slide-toggle [(ngModel)]="canBroadcast" (change)="toggle()">{{
+        <mat-slide-toggle [(ngModel)]="canBroadcast" (change)="toggleBroadcast()">{{
           toggleTexts[canBroadcast.toString()]
         }}</mat-slide-toggle>
       </p>

@@ -6,6 +6,7 @@ import { BaseGeolocateService } from "./base-geolocate.service";
   providedIn: "root",
 })
 export class GeolocateService extends BaseGeolocateService {
+  // Need 2 separate subjects to handle error of subjects (https://stackoverflow.com/a/41828984/6514532)
   private _position$ = new Subject<GeolocationPosition>();
   private _error$ = new Subject<GeolocationPositionError>();
 
@@ -36,11 +37,9 @@ export class GeolocateService extends BaseGeolocateService {
   }
 
   override watchPosition({
-    options = {
-      enableHighAccuracy: false,
-      timeout: 5_000,
-      maximumAge: 0,
-    },
+    enableHighAccuracy = false,
+    timeout = 5_000,
+    maximumAge = 0,
   } = {}): Promise<GeolocationPositionError | null> {
     console.log("watching...");
     const { _position$, _error$ } = this;
@@ -48,7 +47,9 @@ export class GeolocateService extends BaseGeolocateService {
     const promise = super.watchPosition({
       onSuccess: (position) => _position$.next(position),
       onError: (error) => _error$.next(error),
-      options,
+      enableHighAccuracy,
+      timeout,
+      maximumAge
     });
     return promise;
   }
@@ -56,5 +57,6 @@ export class GeolocateService extends BaseGeolocateService {
   dispose(): void {
     this.stopWatch();
     this._position$.complete();
+    this._error$.complete();
   }
 }
