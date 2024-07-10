@@ -43,11 +43,11 @@ export class GeolocateService extends BaseGeolocateService {
     },
   } = {}): Promise<GeolocationPositionError | null> {
     console.log("watching...");
-    const { _position$ } = this;
+    const { _position$, _error$ } = this;
 
     const promise = super.watchPosition({
       onSuccess: (position) => _position$.next(position),
-      onError: (error) => this._error$.next(error),
+      onError: (error) => _error$.next(error),
       options,
     });
     return promise;
