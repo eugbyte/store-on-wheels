@@ -1,4 +1,4 @@
-<div class="w-full sm:w-2/3 mx-auto pt-2">
+<div class="w-full sm:w-2/3 mx-auto pt-1">
   <mat-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="vendorForm">
       <ng-template matStepLabel>Create Vendor</ng-template>
@@ -39,7 +39,8 @@
         <mat-divider class="margin-y-10"></mat-divider>
       }
 
-      <app-geo-permission [geoPermission]="geoPermission"></app-geo-permission>
+      <app-geo-permission-instruction
+        [geoPermission]="geoPermission"></app-geo-permission-instruction>
       <mat-divider class="margin-y-10"></mat-divider>
 
       <p class="text-sm text-red-500">{{ posError()?.message }}</p>

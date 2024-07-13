@@ -22,7 +22,7 @@ import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { MatDividerModule } from "@angular/material/divider";
 import { Observable } from "rxjs";
 import {
-  GeoPermissionComponent,
+  GeoPermissionInstructionComponent,
   VendorFormComponent,
 } from "~/app/libs/broadcast-page/components";
 import {
@@ -51,7 +51,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
     MatInputModule,
     VendorFormComponent,
     MatSlideToggleModule,
-    GeoPermissionComponent,
+    GeoPermissionInstructionComponent,
     MatDividerModule,
   ],
   templateUrl: "./broadcast-page.component.html",
@@ -119,7 +119,7 @@ export class BroadcastPageComponent implements OnInit {
     });
 
     const permission: PermissionState =
-      await this.geoService.getPermPermissionState();
+      await this.geoService.getPermanentPermission();
     console.log({ permission });
     this.geoPermission.set(permission);
   }
@@ -169,8 +169,9 @@ export class BroadcastPageComponent implements OnInit {
     if (!broadcastOn()) {
       geoService.stopWatch();
       // note that permanent permission != temporary permission
+      // e..g, user might have granted permanent permission, but decide to turn off geoWatch
       const permanentPerm: PermissionState =
-        await geoService.getPermPermissionState();
+        await geoService.getPermanentPermission();
       geoPermission.set(permanentPerm);
       return;
     }

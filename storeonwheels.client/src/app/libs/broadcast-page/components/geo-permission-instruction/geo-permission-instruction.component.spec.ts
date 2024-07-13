@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GeoPermissionComponent } from "./geo-permission.component";
+import { GeoPermissionInstructionComponent } from "./geo-permission-instruction.component";
 
 describe("GeoPermissionComponent", () => {
-  let component: GeoPermissionComponent;
-  let fixture: ComponentFixture<GeoPermissionComponent>;
+  let component: GeoPermissionInstructionComponent;
+  let fixture: ComponentFixture<GeoPermissionInstructionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GeoPermissionComponent],
+      imports: [GeoPermissionInstructionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GeoPermissionComponent);
+    fixture = TestBed.createComponent(GeoPermissionInstructionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

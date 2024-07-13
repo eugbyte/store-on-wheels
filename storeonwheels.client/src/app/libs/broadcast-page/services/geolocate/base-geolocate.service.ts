@@ -15,7 +15,7 @@ export class BaseGeolocateService {
    * as the temporary permission is tied to the watchId.
    * @returns The geolocation permission state.
    */
-  async getPermPermissionState(): Promise<PermissionState> {
+  async getPermanentPermission(): Promise<PermissionState> {
     if (!("geolocation" in window.navigator)) {
       throw new Error("browser does not supprt geolocation");
     }

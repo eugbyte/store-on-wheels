@@ -1,2 +1,2 @@
 export * from "./vendor-form/vendor-form.component";
-export * from "./geo-permission/geo-permission.component";
+export * from "./geo-permission-instruction/geo-permission-instruction.component";
