@@ -46,16 +46,14 @@ if (app.Environment.IsDevelopment()) {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
-
-if (app.Environment.IsDevelopment()) {
-	app.UseSwagger();
-	app.UseSwaggerUI();
-};
-
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// UseCors must be called before MapHub.
+// The call to UseCors must be placed after UseRouting, but before UseAuthorization
+// https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-8.0
+app.UseCors();
 
+app.UseAuthorization();
 app.MapControllers();
 
 // UseCors must be called before MapHub.
