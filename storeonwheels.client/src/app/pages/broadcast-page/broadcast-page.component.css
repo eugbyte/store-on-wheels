@@ -5,3 +5,8 @@
 .mat-mdc-form-field {
   margin-top: 16px;
 }
+
+.margin-y-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

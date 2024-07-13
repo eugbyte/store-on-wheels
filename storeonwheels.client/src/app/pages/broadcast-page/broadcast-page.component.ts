@@ -1,6 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, Signal, ViewChild, signal } from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
+import {
+  Component,
+  OnInit,
+  Signal,
+  ViewChild,
+  WritableSignal,
+  signal,
+} from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +19,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatStepper, MatStepperModule } from "@angular/material/stepper";
+import { MatDividerModule } from "@angular/material/divider";
 import { Observable } from "rxjs";
 import {
   GeoPermissionComponent,
@@ -44,6 +51,7 @@ import { SleepService } from "~/app/libs/shared/services";
     VendorFormComponent,
     MatSlideToggleModule,
     GeoPermissionComponent,
+    MatDividerModule,
   ],
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",
@@ -51,6 +59,9 @@ import { SleepService } from "~/app/libs/shared/services";
 export class BroadcastPageComponent implements OnInit {
   private position$: Observable<GeolocationPosition> = new Observable();
   private posError$: Observable<GeolocationPositionError> = new Observable();
+  posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
+  coordinates: WritableSignal<GeolocationCoordinates | undefined> =
+    signal(undefined);
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
@@ -58,21 +69,19 @@ export class BroadcastPageComponent implements OnInit {
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
-  // 2. Grant geo watch permission and start geo watch.
   vendorForm: FormGroup<VendorForm> = this.formBuilder.nonNullable.group({
     id: ["", Validators.required],
     displayName: ["", Validators.required],
     description: ["", Validators.required],
   });
-  geoPermissionState = signal<PermissionState>("denied");
-  posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
 
-  // 3. Broadcast toggle.
-  canBroadcast = signal(false);
-  toggleTexts: Record<string, string> = {
-    true: "Broadcasting...",
-    false: "Broadcast stopped",
-  };
+  // 2. Broadcast toggle.
+  geoPermission = signal<PermissionState>("denied");
+  broadcastOn = signal(false);
+  toggleTexts = new Map<boolean, string>([
+    [true, "Broadcasting"],
+    [false, "Broadcast stopped"],
+  ]);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,7 +92,6 @@ export class BroadcastPageComponent implements OnInit {
   ) {
     this.position$ = geoService.position$;
     this.posError$ = geoService.error$;
-    this.posError = toSignal(this.posError$);
   }
 
   async ngOnInit() {
@@ -94,21 +102,24 @@ export class BroadcastPageComponent implements OnInit {
     this.position$.subscribe((position) => {
       console.log(position);
       const geoInfo = new GeoInfo();
-      geoInfo.coords = position.coords;
+      const { coords } = position;
+      geoInfo.coords = coords;
       geoInfo.timestamp = Date.now();
 
       const vendorId: string = hubConnection.connectionId ?? "";
       this.messageHub.sendGeoInfo(vendorId, geoInfo);
+
+      this.coordinates.set(coords);
     });
 
-    this.posError$.subscribe(((err) => {
+    this.posError$.subscribe((err) => {
       console.log(err);
-    }));
+    });
 
     const permission: PermissionState =
       await this.geoService.getPermPermissionState();
-    this.geoPermissionState.set(permission);
     console.log({ permission });
+    this.geoPermission.set(permission);
   }
 
   // 1. Create Vendor.
@@ -150,25 +161,36 @@ export class BroadcastPageComponent implements OnInit {
     }
   }
 
-  // 2. Grant geo watch permission and start geo watch.
-  async grantWatchPermission() {
-    const err: GeolocationPositionError | null =
-      await this.geoService.watchPosition({
-        enableHighAccuracy: false,
-        timeout: 20_000,
-        maximumAge: 60_000,        
-      });
-    this.canBroadcast.set(err == null);    
+  // 2. Broadcast toggle.
+  async toggleBroadcast() {
+    const { broadcastOn, geoService, geoPermission } = this;
+    if (!broadcastOn()) {
+      geoService.stopWatch();
+      // note that permanent permission != temporary permission
+      const permanentPerm: PermissionState =
+        await geoService.getPermPermissionState();
+      geoPermission.set(permanentPerm);
+      return;
+    }
+
+    const error = await geoService.watchPosition();
+
+    // need to set the permission explicitly, instead of calling geoService.getPermPermissionState as permission might be temporary.
+    // geoService.getPermPermissionState will return "prompt" regardless
+    if (
+      error != null &&
+      error.code == GeolocationPositionError.PERMISSION_DENIED
+    ) {
+      geoPermission.set("denied");
+      broadcastOn.set(false);
+    } else if (error == null) {
+      geoPermission.set("granted");
+    }
   }
 
-  // 3. Broadcast toggle.
-  toggleBroadcast() {
-    const { canBroadcast, geoService } = this;
-    console.log({ canBroadcast: canBroadcast() });
-    if (!canBroadcast()) {
-      geoService.stopWatch();
-    } else {
-      geoService.watchPosition();
-    }
+  reset() {
+    const { geoService } = this;
+    geoService.stopWatch();
+    this.stepper?.reset();
   }
 }

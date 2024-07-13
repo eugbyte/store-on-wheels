@@ -17,31 +17,11 @@ export class GeolocateService extends BaseGeolocateService {
     return this._error$.asObservable();
   }
 
-  /**
-   * Get the user's geolocation. Requests for permission if permission has not been granted.
-   * @param timeout timeout in miliseconds
-   * @returns GeolocationPosition
-   */
-  override async geolocate({
-    enableHighAccuracy = false,
-    timeout = 5_000,
-    maximumAge = 0,
-  } = {}): Promise<GeolocationPosition> {
-    const position = await super.geolocate({
-      enableHighAccuracy,
-      timeout,
-      maximumAge,
-    });
-    this._position$.next(position);
-    return position;
-  }
-
   override watchPosition({
     enableHighAccuracy = false,
-    timeout = 5_000,
-    maximumAge = 0,
+    timeout = Infinity,
+    maximumAge = Infinity,
   } = {}): Promise<GeolocationPositionError | null> {
-    console.log("watching...");
     const { _position$, _error$ } = this;
 
     const promise = super.watchPosition({
@@ -49,9 +29,13 @@ export class GeolocateService extends BaseGeolocateService {
       onError: (error) => _error$.next(error),
       enableHighAccuracy,
       timeout,
-      maximumAge
+      maximumAge,
     });
     return promise;
+  }
+
+  stopWatch(): void {
+    navigator.geolocation.clearWatch(this.watchId);
   }
 
   dispose(): void {

@@ -5,10 +5,14 @@ import { Injectable } from "@angular/core";
 })
 export class BaseGeolocateService {
   private _watchId = -1;
+  get watchId(): number {
+    return this._watchId;
+  }
 
   /**
    * Without prompting the user, get the permission state (https://stackoverflow.com/a/37750156).
-   * Note that if the user only grants the permission "temporarily", the permission will still be "prompt".
+   * Note that if the user only grants the permission "temporarily", the permission will still be "prompt",
+   * as the temporary permission is tied to the watchId.
    * @returns The geolocation permission state.
    */
   async getPermPermissionState(): Promise<PermissionState> {
@@ -30,8 +34,8 @@ export class BaseGeolocateService {
    */
   async geolocate({
     enableHighAccuracy = false,
-    timeout = 5_000,
-    maximumAge = 0,
+    timeout = Infinity,
+    maximumAge = Infinity,
   } = {}): Promise<GeolocationPosition> {
     if (!("geolocation" in window.navigator)) {
       throw new Error("browser does not supprt geolocation");
@@ -49,6 +53,7 @@ export class BaseGeolocateService {
 
   /**
    * Watches the user's geolocation. Requests for permission if permission has not been granted.
+   * https://stackoverflow.com/a/31770930/6514532
    * @throws null
    * @returns Error, if any.
    */
@@ -56,12 +61,14 @@ export class BaseGeolocateService {
     onSuccess = (_position: GeolocationPosition) => {},
     onError = (_error: GeolocationPositionError) => {},
     enableHighAccuracy = false,
-    timeout = 5000,
-    maximumAge = 0
+    timeout = Infinity,
+    maximumAge = Infinity,
   } = {}): Promise<GeolocationPositionError | null> {
     if (!("geolocation" in window.navigator)) {
       throw new Error("browser does not supprt geolocation");
     }
+
+    console.log({ enableHighAccuracy, timeout, maximumAge });
 
     const promise = new Promise<GeolocationPositionError | null>((resolve) => {
       const _onSuccess = (position: GeolocationPosition) => {
@@ -81,14 +88,5 @@ export class BaseGeolocateService {
       );
     });
     return promise;
-  }
-
-  get watchId(): number {
-    return this._watchId;
-  }
-
-  stopWatch(): void {
-    navigator.geolocation.clearWatch(this._watchId);
-    this._watchId = -1;
   }
 }

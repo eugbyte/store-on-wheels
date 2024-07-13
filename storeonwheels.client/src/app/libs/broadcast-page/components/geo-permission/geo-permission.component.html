@@ -1,27 +1,32 @@
-<div class="">
-  @if (geoPermissionState.toString() === "prompt") {
-    <button mat-flat-button class="mx-auto" (click)="onClick()">
-      Grant Permission
-    </button>
-  } @else if (geoPermissionState.toString() === "granted") {
-    <p>Permission granted.</p>
+<div class="text-sm">
+  @if (geoPermission() === "prompt") {
+    <p>The application will request geolocation permission.</p>
+  } @else if (geoPermission() === "denied") {
+    <p>Permission denied</p>
     <ng-container *ngTemplateOutlet="instructions"></ng-container>
-  } @else if (geoPermissionState.toString() === "denied") {
-    <p>Permission denied.</p>
+  } @else if (geoPermission() === "granted") {
+    <p>Permission granted</p>
     <ng-container *ngTemplateOutlet="instructions"></ng-container>
   }
 </div>
 
 <ng-template #instructions>
-  <p>
+  <p class="text-xs">
     To modify permission, click the map marker icon at the address bar or via
     the
     <a
+      class="md-link"
       mat-button
       href="https://support.google.com/chrome/answer/142065?hl=en&co=GENIE.Platform%3DDesktop"
       target="”_blank”"
-      >browser settings</a
-    >. Finally, <button mat-button (click)="reloadPage()">refresh</button> the
-    page.
+      >browser settings.</a
+    >
+    Finally,<a
+      class="md-link"
+      mat-button
+      href="javascript:void(0)"
+      (click)="reloadPage()"
+      >refresh</a
+    >the page.
   </p>
 </ng-template>

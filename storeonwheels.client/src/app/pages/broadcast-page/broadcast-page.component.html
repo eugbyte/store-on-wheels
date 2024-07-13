@@ -1,4 +1,4 @@
-<div class="w-2/3 mx-auto pt-2">
+<div class="w-full sm:w-2/3 mx-auto pt-2">
   <mat-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="vendorForm">
       <ng-template matStepLabel>Create Vendor</ng-template>
@@ -17,32 +17,36 @@
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>Grant Geolocation Permission</ng-template>
-      <div class="my-2">
-        <app-geo-permission
-          [geoPermissionState]="geoPermissionState()"
-          (clickEvent)="grantWatchPermission()"></app-geo-permission>
-        @if (posError() !== null) {
-          <p>{{ posError()?.message }}</p>
-        }
-      </div>
-      <div>
-        <button mat-button matStepperNext [disabled]="!canBroadcast()">
-          Next
-        </button>
-      </div>
-    </mat-step>
-
-    <mat-step>
       <ng-template matStepLabel>Broadcast</ng-template>
-      <p>
-        <mat-slide-toggle [(ngModel)]="canBroadcast" (change)="toggleBroadcast()">{{
-          toggleTexts[canBroadcast.toString()]
-        }}</mat-slide-toggle>
-      </p>
+      @if (geoPermission() !== "denied") {
+        <mat-slide-toggle
+          class="mb-2"
+          [(ngModel)]="broadcastOn"
+          (change)="toggleBroadcast()">
+          {{ toggleTexts.get(broadcastOn()) }}
+        </mat-slide-toggle>
+        <mat-divider class="margin-y-10"></mat-divider>
+      }
+
+      @if (geoPermission() === "granted" && coordinates() !== undefined) {
+        <p class="text-sm">
+          (Longitude, Latitude):
+          <code>
+            [{{ coordinates()?.longitude?.toFixed(4) }},
+            {{ coordinates()?.latitude?.toFixed(4) }}]
+          </code>
+        </p>
+        <mat-divider class="margin-y-10"></mat-divider>
+      }
+
+      <app-geo-permission [geoPermission]="geoPermission"></app-geo-permission>
+      <mat-divider class="margin-y-10"></mat-divider>
+
+      <p class="text-sm text-red-500">{{ posError()?.message }}</p>
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="reset()">Reset</button>
       </div>
     </mat-step>
   </mat-stepper>
