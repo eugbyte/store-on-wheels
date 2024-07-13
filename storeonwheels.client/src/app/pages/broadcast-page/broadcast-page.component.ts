@@ -36,6 +36,7 @@ import {
 } from "~/app/libs/map-page/services";
 import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
 import { SleepService } from "~/app/libs/shared/services";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-broadcast-page",
@@ -92,6 +93,7 @@ export class BroadcastPageComponent implements OnInit {
   ) {
     this.position$ = geoService.position$;
     this.posError$ = geoService.error$;
+    this.posError = toSignal(this.posError$);
   }
 
   async ngOnInit() {
