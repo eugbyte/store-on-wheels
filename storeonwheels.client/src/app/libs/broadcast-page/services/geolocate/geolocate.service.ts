@@ -1,73 +1,37 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subject, firstValueFrom } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { BaseGeolocateService } from "./base-geolocate.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class GeolocateService {
+export class GeolocateService extends BaseGeolocateService {
+  // Need 2 separate subjects to handle error of subjects (https://stackoverflow.com/a/41828984/6514532)
   private _position$ = new Subject<GeolocationPosition>();
-  private watchId = 0;
-  private options: PositionOptions = {
-    enableHighAccuracy: true,
-    timeout: 5_000,
-    maximumAge: 0,
-  };
+  private _error$ = new Subject<GeolocationPositionError>();
 
   get position$(): Observable<GeolocationPosition> {
     return this._position$.asObservable();
   }
-
-  /**
-   * Without prompting the user, get the permission state (https://stackoverflow.com/a/37750156).
-   * @returns The geolocation permission state.
-   */
-  async getPermissionState(): Promise<PermissionState> {
-    if (!("geolocation" in window.navigator)) {
-      throw new Error("browser does not supprt geolocation");
-    }
-
-    const res = await navigator.permissions.query({ name: "geolocation" });
-    return res.state;
+  get error$(): Observable<GeolocationPositionError> {
+    return this._error$.asObservable();
   }
 
-  /**
-   * Get the user's geolocation once. Requests for permission if permission has not been granted.
-   * @param timeout timeout in miliseconds
-   * @returns GeolocationPosition
-   */
-  geolocate(timeout: number): Promise<GeolocationPosition> {
-    if (!("geolocation" in window.navigator)) {
-      throw new Error("browser does not supprt geolocation");
-    }
-    const { _position$, options } = this;
+  override watchPosition({
+    enableHighAccuracy = false,
+    timeout = Infinity,
+    maximumAge = Infinity,
+  } = {}): Promise<GeolocationPositionError | null> {
+    const { _position$, _error$ } = this;
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => _position$.next(position),
-      (err) => _position$.error(err),
-      { ...options, timeout }
-    );
-
-    return firstValueFrom(_position$);
-  }
-
-  watchPosition(timeout: number): void {
-    if (!("geolocation" in window.navigator)) {
-      throw new Error("browser does not supprt geolocation");
-    }
-    const { _position$ } = this;
-    const options: PositionOptions = {
-      enableHighAccuracy: true,
+    const promise = super.watchPosition({
+      onSuccess: (position) => _position$.next(position),
+      onError: (error) => _error$.next(error),
+      enableHighAccuracy,
       timeout,
-    };
-
-    const onSuccess = (position: GeolocationPosition) =>
-      _position$.next(position);
-    const onError = (err: GeolocationPositionError) => _position$.error(err);
-
-    this.watchId = navigator.geolocation.watchPosition(onSuccess, onError, {
-      ...options,
-      timeout,
+      maximumAge,
     });
+    return promise;
   }
 
   stopWatch(): void {
@@ -77,5 +41,6 @@ export class GeolocateService {
   dispose(): void {
     this.stopWatch();
     this._position$.complete();
+    this._error$.complete();
   }
 }

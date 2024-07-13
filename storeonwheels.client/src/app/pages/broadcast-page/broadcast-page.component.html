@@ -1,5 +1,53 @@
-<div class="w-full flex flex-col justify-center items-center mt-10">
-  <app-vendor-form
-    [vendorForm]="vendorForm"
-    (submitEvent)="onSubmit($event)"></app-vendor-form>
+<div class="w-full sm:w-2/3 mx-auto pt-1">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="vendorForm">
+      <ng-template matStepLabel>Create Vendor</ng-template>
+      <app-vendor-form
+        [vendorForm]="vendorForm"
+        (submitEvent)="submitVendor()"></app-vendor-form>
+      <div>
+        <button
+          mat-button
+          (click)="submitVendor()"
+          type="submit"
+          [disabled]="!vendorBtnEnabled()">
+          {{ vendorBtnText() }}
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Broadcast</ng-template>
+      @if (geoPermission() !== "denied") {
+        <mat-slide-toggle
+          class="mb-2"
+          [(ngModel)]="broadcastOn"
+          (change)="toggleBroadcast()">
+          {{ toggleTexts.get(broadcastOn()) }}
+        </mat-slide-toggle>
+        <mat-divider class="margin-y-10"></mat-divider>
+      }
+      <app-geo-permission-instruction
+        [geoPermission]="geoPermission"></app-geo-permission-instruction>
+      <mat-divider class="margin-y-10"></mat-divider>
+
+      @if (geoPermission() === "granted" && coordinates() !== undefined) {
+        <p class="text-sm">
+          (Longitude, Latitude):
+          <code>
+            [{{ coordinates()?.longitude?.toFixed(4) }},
+            {{ coordinates()?.latitude?.toFixed(4) }}]
+          </code>
+        </p>
+        <mat-divider class="margin-y-10"></mat-divider>
+      }
+
+      <p class="text-sm text-red-500">{{ posError()?.message }}</p>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

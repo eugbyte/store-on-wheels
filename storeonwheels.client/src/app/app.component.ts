@@ -6,29 +6,27 @@ import {
   MessageHubService,
   hubConnection,
 } from "./libs/map-page/services";
-import { GeolocateService } from "./libs/broadcast-page/services";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
   standalone: true,
-  imports: [FooterNavComponent, RouterModule],
+  imports: [FooterNavComponent, RouterModule, ReactiveFormsModule],
   providers: [
     { provide: HUB_CONNECTION, useValue: hubConnection },
     MessageHubService,
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(private messageHub: MessageHubService, private geoService: GeolocateService) {}
+  constructor(private messageHub: MessageHubService) {}
 
   async ngOnInit() {
     await this.messageHub.start();
-    console.log({ rootState: this.messageHub.state });
   }
 
   async ngOnDestroy() {
     this.messageHub.dispose();
-    this.geoService.dispose();
   }
 }

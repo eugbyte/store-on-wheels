@@ -1,0 +1,32 @@
+<div class="text-sm">
+  @if (geoPermission() === "prompt") {
+    <p>The application will request geolocation permission.</p>
+  } @else if (geoPermission() === "denied") {
+    <p>Permission denied</p>
+    <ng-container *ngTemplateOutlet="instructions"></ng-container>
+  } @else if (geoPermission() === "granted") {
+    <p>Permission granted</p>
+    <ng-container *ngTemplateOutlet="instructions"></ng-container>
+  }
+</div>
+
+<ng-template #instructions>
+  <p class="text-xs">
+    To modify permission, click the map marker icon at the address bar or via
+    the
+    <a
+      class="md-link"
+      mat-button
+      href="https://support.google.com/chrome/answer/142065?hl=en&co=GENIE.Platform%3DDesktop"
+      target="”_blank”"
+      >browser settings.</a
+    >
+    Finally,<a
+      class="md-link"
+      mat-button
+      href="javascript:void(0)"
+      (click)="reloadPage()"
+      >refresh</a
+    >the page.
+  </p>
+</ng-template>

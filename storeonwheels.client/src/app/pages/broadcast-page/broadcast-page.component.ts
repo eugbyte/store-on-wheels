@@ -1,37 +1,74 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { GeolocateService } from "~/app/libs/broadcast-page/services";
-import { MessageHubService, hubConnection } from "~/app/libs/map-page/services";
-import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
-import { Observable } from "rxjs";
-import { VendorService } from "~/app/libs/broadcast-page/services";
+import { CommonModule } from "@angular/common";
+import {
+  Component,
+  OnInit,
+  Signal,
+  ViewChild,
+  WritableSignal,
+  signal,
+} from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { MatSelectModule } from "@angular/material/select";
-import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { VendorFormComponent } from "~/app/libs/broadcast-page/components";
+import { MatInputModule } from "@angular/material/input";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatStepper, MatStepperModule } from "@angular/material/stepper";
+import { MatDividerModule } from "@angular/material/divider";
+import { Observable } from "rxjs";
+import {
+  GeoPermissionInstructionComponent,
+  VendorFormComponent,
+} from "~/app/libs/broadcast-page/components";
+import {
+  GeolocateService,
+  VendorService,
+} from "~/app/libs/broadcast-page/services";
+import {
+  MessageHubService,
+  WsState,
+  hubConnection,
+} from "~/app/libs/map-page/services";
+import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
+import { SleepService } from "~/app/libs/shared/services";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-broadcast-page",
   standalone: true,
   imports: [
+    CommonModule,
+    MatButtonModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    ReactiveFormsModule,
     VendorFormComponent,
+    MatSlideToggleModule,
+    GeoPermissionInstructionComponent,
+    MatDividerModule,
   ],
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",
 })
-export class BroadcastPageComponent implements OnInit, OnDestroy {
-  private canBroadcast = false;
+export class BroadcastPageComponent implements OnInit {
   private position$: Observable<GeolocationPosition> = new Observable();
-  steps: boolean[] = [false, false];
+  private posError$: Observable<GeolocationPositionError> = new Observable();
+  posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
+  coordinates: WritableSignal<GeolocationCoordinates | undefined> =
+    signal(undefined);
+
+  // 1. Create Vendor.
+  @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
+  isLinear = false;
+  vendorBtnText = signal("Next");
+  vendorBtnEnabled = signal(true);
 
   vendorForm: FormGroup<VendorForm> = this.formBuilder.nonNullable.group({
     id: ["", Validators.required],
@@ -39,49 +76,124 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
     description: ["", Validators.required],
   });
 
+  // 2. Broadcast toggle.
+  geoPermission = signal<PermissionState>("denied");
+  broadcastOn = signal(false);
+  toggleTexts = new Map<boolean, string>([
+    [true, "Broadcasting"],
+    [false, "Broadcast stopped"],
+  ]);
+
   constructor(
     private formBuilder: FormBuilder,
     private geoService: GeolocateService,
     private messageHub: MessageHubService,
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private sleepService: SleepService
   ) {
     this.position$ = geoService.position$;
+    this.posError$ = geoService.error$;
+    this.posError = toSignal(this.posError$);
   }
 
   async ngOnInit() {
-    await this.messageHub.start();
-    this.vendorForm.patchValue({ id: hubConnection.connectionId ?? "" });
+    this.messageHub.state$.subscribe((state: WsState) =>
+      this.vendorForm.patchValue({ id: state.connectionId ?? "" })
+    );
 
-    this.position$.subscribe((position: GeolocationPosition) => {
-      if (!this.canBroadcast) {
-        return;
-      }
-
+    this.position$.subscribe((position) => {
+      console.log(position);
       const geoInfo = new GeoInfo();
-      geoInfo.coords = position.coords;
+      const { coords } = position;
+      geoInfo.coords = coords;
       geoInfo.timestamp = Date.now();
 
       const vendorId: string = hubConnection.connectionId ?? "";
       this.messageHub.sendGeoInfo(vendorId, geoInfo);
+
+      this.coordinates.set(coords);
     });
+
+    this.posError$.subscribe((err) => {
+      console.log(err);
+    });
+
+    const permission: PermissionState =
+      await this.geoService.getPermanentPermission();
+    console.log({ permission });
+    this.geoPermission.set(permission);
   }
 
-  toggleBroadcast() {
-    this.canBroadcast = !this.canBroadcast;
+  // 1. Create Vendor.
+  async submitVendor() {
+    const {
+      vendorForm,
+      stepper,
+      vendorService,
+      vendorBtnEnabled,
+      vendorBtnText,
+      sleepService,
+    } = this;
+    if (!vendorBtnEnabled()) {
+      return;
+    }
 
-    if (!this.canBroadcast) {
-      this.geoService.stopWatch();
-    } else {
-      this.geoService.watchPosition(5000);
+    vendorForm.markAllAsTouched();
+    const isValid = vendorForm.valid && stepper != null;
+    if (!isValid) {
+      return;
+    }
+
+    const vendor = vendorForm.value as Vendor;
+    try {
+      vendorBtnText.set("Loading...");
+      vendorBtnEnabled.set(false);
+      await vendorService.createVendor(vendor);
+      console.log("created");
+
+      stepper.next();
+    } catch (error) {
+      console.error(error);
+
+      vendorBtnText.set("Something went wrong");
+      await sleepService.sleep(2000);
+
+      vendorBtnEnabled.set(true);
+      vendorBtnText.set("Next");
     }
   }
 
-  async onSubmit(vendor: Vendor) {
-    console.log("parent");
-    console.log(vendor);
+  // 2. Broadcast toggle.
+  async toggleBroadcast() {
+    const { broadcastOn, geoService, geoPermission } = this;
+    if (!broadcastOn()) {
+      geoService.stopWatch();
+      // note that permanent permission != temporary permission
+      // e..g, user might have granted permanent permission, but decide to turn off geoWatch
+      const permanentPerm: PermissionState =
+        await geoService.getPermanentPermission();
+      geoPermission.set(permanentPerm);
+      return;
+    }
+
+    const error = await geoService.watchPosition();
+
+    // need to set the permission explicitly, instead of calling geoService.getPermPermissionState as permission might be temporary.
+    // geoService.getPermPermissionState will return "prompt" regardless
+    if (
+      error != null &&
+      error.code == GeolocationPositionError.PERMISSION_DENIED
+    ) {
+      geoPermission.set("denied");
+      broadcastOn.set(false);
+    } else if (error == null) {
+      geoPermission.set("granted");
+    }
   }
 
-  ngOnDestroy() {
-    this.geoService.dispose();
+  reset() {
+    const { geoService } = this;
+    geoService.stopWatch();
+    this.stepper?.reset();
   }
 }

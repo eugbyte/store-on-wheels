@@ -1,15 +1,20 @@
 import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 import { GeoInfo } from "~/app/libs/shared/models";
-import { Observable, Subject } from "rxjs";
-import { HUB_CONNECTION } from "./message-hub.provider";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { HUB_CONNECTION, WsState } from "./message-hub.provider";
 
 @Injectable({
   providedIn: "root",
 })
 export class MessageHubService {
   private _geoInfo$ = new Subject<GeoInfo>();
-  private _state$ = new Subject<HubConnectionState>();
+  // use behaviour subject since we want a cold observable, that is, to "save" the latest value even if not yet subscribed
+  private _state$ = new BehaviorSubject<WsState>({
+    connectionId: "",
+    baseUrl: "",
+    state: HubConnectionState.Disconnected,
+  });
   private intervalId = 0;
 
   constructor(@Inject(HUB_CONNECTION) private connection: HubConnection) {
@@ -18,24 +23,28 @@ export class MessageHubService {
       this._geoInfo$.next(info);
     });
 
-    this._state$.next(connection.state);
+    this._state$.next({
+      connectionId: connection.connectionId,
+      baseUrl: connection.baseUrl,
+      state: connection.state,
+    });
   }
 
   get geoInfo$(): Observable<GeoInfo> {
     return this._geoInfo$.asObservable();
   }
 
-  get state(): HubConnectionState {
-    return this.connection.state;
-  }
-
-  get state$(): Observable<HubConnectionState> {
+  get state$(): Observable<WsState> {
     return this._state$.asObservable();
   }
 
   async start() {
     const { connection } = this;
-    this._state$.next(connection.state);
+    this._state$.next({
+      connectionId: connection.connectionId,
+      baseUrl: connection.baseUrl,
+      state: connection.state,
+    });
 
     if (
       connection == null ||
@@ -46,7 +55,11 @@ export class MessageHubService {
     }
 
     await connection.start();
-    this._state$.next(connection.state);
+    this._state$.next({
+      connectionId: connection.connectionId,
+      baseUrl: connection.baseUrl,
+      state: connection.state,
+    });
   }
 
   async sendGeoInfo(userId: string, info: GeoInfo) {
