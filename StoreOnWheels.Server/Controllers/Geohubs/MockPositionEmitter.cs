@@ -23,7 +23,7 @@ public class MockPositionEmitter(
 		return new() {
 			VendorId = vendorId,
 			Coords = new GeolocationCoordinate() {
-				Latitude = (float)(1.3 + rnd.Next(1, 100) / 1000.0),	// 1000.0 => Needs to be float
+				Latitude = (float)(1.3 + rnd.Next(1, 100) / 1000.0),    // 1000.0 => Needs to be float
 				Longitude = (float)(103.8 + rnd.Next(1, 100) / 1000.0), // 1000.0 => Needs to be float
 				Heading = rnd.Next(0, 360)
 			},

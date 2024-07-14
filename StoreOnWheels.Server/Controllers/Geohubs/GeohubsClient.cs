@@ -29,7 +29,7 @@ public class GeohubsClient(
 		// replace the vendor information sent by the client. Disallow users from modifying the profile.
 		if (!vendorCache.Contains(vendorId)) {
 			// To Do: Throw Exception if vendor not found
-			Vendor vendor = await vendorService.Get(vendorId) 
+			Vendor vendor = await vendorService.Get(vendorId)
 				?? throw new Exception("vendor not found");
 			vendorCache.AddReplace(vendorId, vendor);
 		}
