@@ -18,7 +18,7 @@
 
     <mat-step>
       <ng-template matStepLabel>Broadcast</ng-template>
-      @if (geoPermission() !== "denied" || geoPermission() !== "temp_denied") {
+      @if (geoPermission() !== "denied" && geoPermission() !== "temp_denied") {
         <mat-slide-toggle
           class="mb-2"
           [(ngModel)]="broadcastOn"

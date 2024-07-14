@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import {
   Component,
+  OnDestroy,
   OnInit,
   Signal,
   ViewChild,
@@ -58,7 +59,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",
 })
-export class BroadcastPageComponent implements OnInit {
+export class BroadcastPageComponent implements OnInit, OnDestroy {
   private position$: Observable<GeolocationPosition> = new Observable();
   posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
   coordinates: WritableSignal<GeolocationCoordinates | undefined> =
@@ -194,11 +195,17 @@ export class BroadcastPageComponent implements OnInit {
     } else {
       geoPermission.set("temp_granted");
     }
+
+    console.log({ geoPerm: geoPermission() });
   }
 
   reset() {
     const { geoService, stepper } = this;
     geoService.stopWatch();
     stepper?.reset();
+  }
+
+  ngOnDestroy() {
+    this.geoService.stopWatch();
   }
 }
