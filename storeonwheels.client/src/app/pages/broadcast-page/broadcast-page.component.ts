@@ -67,7 +67,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
-  isLinear = false;
+  isLinear = true;
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
