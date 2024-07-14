@@ -59,14 +59,13 @@ import { toSignal } from "@angular/core/rxjs-interop";
 })
 export class BroadcastPageComponent implements OnInit {
   private position$: Observable<GeolocationPosition> = new Observable();
-  private posError$: Observable<GeolocationPositionError> = new Observable();
   posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
   coordinates: WritableSignal<GeolocationCoordinates | undefined> =
     signal(undefined);
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
-  isLinear = false;
+  isLinear = true;
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
@@ -92,8 +91,7 @@ export class BroadcastPageComponent implements OnInit {
     private sleepService: SleepService
   ) {
     this.position$ = geoService.position$;
-    this.posError$ = geoService.error$;
-    this.posError = toSignal(this.posError$);
+    this.posError = toSignal(geoService.error$);
   }
 
   async ngOnInit() {
@@ -112,10 +110,6 @@ export class BroadcastPageComponent implements OnInit {
       this.messageHub.sendGeoInfo(vendorId, geoInfo);
 
       this.coordinates.set(coords);
-    });
-
-    this.posError$.subscribe((err) => {
-      console.log(err);
     });
 
     const permission: PermissionState =
@@ -192,8 +186,8 @@ export class BroadcastPageComponent implements OnInit {
   }
 
   reset() {
-    const { geoService } = this;
+    const { geoService, stepper } = this;
     geoService.stopWatch();
-    this.stepper?.reset();
+    stepper?.reset();
   }
 }
