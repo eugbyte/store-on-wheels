@@ -1,6 +1,5 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.Mvc;
-using NanoidDotNet;
 using StoreOnWheels.Server.Libs.Shared.Models;
 using StoreOnWheels.Server.Libs.Vendors;
 
