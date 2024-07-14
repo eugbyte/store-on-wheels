@@ -11,16 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 string? dbConnStr = builder.Configuration.GetConnectionString("WebApiDatabase");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(dbConnStr));
 
-// Disable CORs
-builder.Services.AddCors(options => {
-	options.AddDefaultPolicy(
-		builder => {
-			builder.WithOrigins("https://localhost:4200")
-				.AllowAnyHeader()
-				.AllowAnyMethod()
-				.AllowCredentials();
-		});
-});
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
 builder.Services.AddSingleton(new LRUCache<int, int>(capacity: 200, evictCount: 10));
