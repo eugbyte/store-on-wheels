@@ -18,7 +18,7 @@
 
     <mat-step>
       <ng-template matStepLabel>Broadcast</ng-template>
-      @if (geoPermission() !== "denied") {
+      @if (geoPermission() !== "denied" || geoPermission() !== "temp_denied") {
         <mat-slide-toggle
           class="mb-2"
           [(ngModel)]="broadcastOn"
@@ -31,7 +31,10 @@
         [geoPermission]="geoPermission()"></app-geo-permission-instruction>
       <mat-divider class="margin-y-10"></mat-divider>
 
-      @if (geoPermission() === "granted" && coordinates() !== undefined) {
+      @if (
+        (geoPermission() === "granted" || geoPermission() === "temp_granted") &&
+        coordinates() !== undefined
+      ) {
         <p class="text-sm">
           (Longitude, Latitude):
           <code>

@@ -26,6 +26,7 @@ import {
   VendorFormComponent,
 } from "~/app/libs/broadcast-page/components";
 import {
+  GeoPermission,
   GeolocateService,
   VendorService,
 } from "~/app/libs/broadcast-page/services";
@@ -65,7 +66,7 @@ export class BroadcastPageComponent implements OnInit {
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
-  isLinear = true;
+  isLinear = false;
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
@@ -76,7 +77,7 @@ export class BroadcastPageComponent implements OnInit {
   });
 
   // 2. Broadcast toggle.
-  geoPermission = signal<PermissionState>("denied");
+  geoPermission = signal<GeoPermission>("denied");
   broadcastOn = signal(false);
   toggleTexts = new Map<boolean, string>([
     [true, "Broadcasting"],
@@ -170,18 +171,28 @@ export class BroadcastPageComponent implements OnInit {
       return;
     }
 
-    const error = await geoService.watchPosition();
+    // user has 4 choices w.r.t geo permission
+    // allow permenanet, allow temp, ban permenanent, ban temp
+    // if temporary decision is made, getPermanentPermission() will still return "prompt" regardless.
+    const error: GeolocationPositionError | null =
+      await geoService.watchPosition();
+    const permanentPermission: PermissionState =
+      await geoService.getPermanentPermission();
+    console.log({ error, permanentPermission });
 
-    // need to set the permission explicitly, instead of calling geoService.getPermPermissionState as permission might be temporary.
-    // geoService.getPermPermissionState will return "prompt" regardless
-    if (
+    if (permanentPermission == "granted") {
+      geoPermission.set("granted");
+    } else if (permanentPermission == "denied") {
+      geoPermission.set("denied");
+      broadcastOn.set(false);
+    } else if (
       error != null &&
       error.code == GeolocationPositionError.PERMISSION_DENIED
     ) {
-      geoPermission.set("denied");
+      geoPermission.set("temp_denied");
       broadcastOn.set(false);
-    } else if (error == null) {
-      geoPermission.set("granted");
+    } else {
+      geoPermission.set("temp_granted");
     }
   }
 
