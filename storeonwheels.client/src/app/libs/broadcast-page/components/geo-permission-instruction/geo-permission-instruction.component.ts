@@ -1,10 +1,5 @@
 import { CommonModule } from "@angular/common";
-import {
-  Component,
-  Input,
-  Signal as ReadOnlySignal,
-  signal,
-} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 
@@ -16,7 +11,7 @@ import { MatInputModule } from "@angular/material/input";
   styleUrl: "./geo-permission-instruction.component.css",
 })
 export class GeoPermissionInstructionComponent {
-  @Input() geoPermission: ReadOnlySignal<PermissionState> = signal("denied");
+  @Input() geoPermission: PermissionState = "denied";
 
   reloadPage() {
     window.location.reload();

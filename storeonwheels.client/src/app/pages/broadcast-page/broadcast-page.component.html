@@ -28,7 +28,7 @@
         <mat-divider class="margin-y-10"></mat-divider>
       }
       <app-geo-permission-instruction
-        [geoPermission]="geoPermission"></app-geo-permission-instruction>
+        [geoPermission]="geoPermission()"></app-geo-permission-instruction>
       <mat-divider class="margin-y-10"></mat-divider>
 
       @if (geoPermission() === "granted" && coordinates() !== undefined) {
