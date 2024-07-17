@@ -199,6 +199,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
     console.log({ geoPerm: geoPermission() });
   }
 
+  // by forcing a reload, the ws conn resets, and the vendor is deleted.
   reset() {
     window.location.reload();
   }

@@ -13,4 +13,8 @@ import { GeoPermission } from "~/app/libs/broadcast-page/services";
 })
 export class GeoPermissionInstructionComponent {
   @Input() geoPermission: GeoPermission = "denied";
+
+  reloadPage() {
+    window.location.reload();
+  }
 }
