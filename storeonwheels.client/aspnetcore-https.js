@@ -27,7 +27,7 @@ function generatePem() {
   const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
   if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
-    spawn(
+    const child = spawn(
       "dotnet",
       [
         "dev-certs",
@@ -39,16 +39,17 @@ function generatePem() {
         "--no-password",
       ],
       { stdio: "inherit" }
-    ).on("exit", (code) => process.exit(code));
-  }
+    );
 
-  // for debugging purpose
-  return {
-    key: fs.readFileSync(keyFilePath).toString(),
-    cert: fs.readFileSync(certFilePath).toString(),
-  };
+    child.on("exit", (code) => process.exit(code));
+  } else {
+    // for debugging purpose
+    const certInfo = {
+      key: fs.readFileSync(keyFilePath).toString(),
+      cert: fs.readFileSync(certFilePath).toString(),
+    };
+    // console.log(certInfo);
+  }
 }
 
-const { key, cert } = generatePem();
-//console.log(key);
-//console.log(cert);
+generatePem();

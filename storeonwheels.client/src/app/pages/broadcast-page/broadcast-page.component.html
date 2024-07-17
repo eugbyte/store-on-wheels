@@ -18,7 +18,7 @@
 
     <mat-step>
       <ng-template matStepLabel>Broadcast</ng-template>
-      @if (geoPermission() !== "denied") {
+      @if (geoPermission() !== "denied" && geoPermission() !== "temp_denied") {
         <mat-slide-toggle
           class="mb-2"
           [(ngModel)]="broadcastOn"
@@ -28,15 +28,18 @@
         <mat-divider class="margin-y-10"></mat-divider>
       }
       <app-geo-permission-instruction
-        [geoPermission]="geoPermission"></app-geo-permission-instruction>
+        [geoPermission]="geoPermission()"></app-geo-permission-instruction>
       <mat-divider class="margin-y-10"></mat-divider>
 
-      @if (geoPermission() === "granted" && coordinates() !== undefined) {
+      @if (
+        (geoPermission() === "granted" || geoPermission() === "temp_granted") &&
+        coordinates() !== undefined
+      ) {
         <p class="text-sm">
           (Longitude, Latitude):
           <code>
-            [{{ coordinates()?.longitude?.toFixed(4) }},
-            {{ coordinates()?.latitude?.toFixed(4) }}]
+            ({{ coordinates()?.longitude?.toFixed(4) }},
+            {{ coordinates()?.latitude?.toFixed(4) }})
           </code>
         </p>
         <mat-divider class="margin-y-10"></mat-divider>
@@ -45,7 +48,6 @@
       <p class="text-sm text-red-500">{{ posError()?.message }}</p>
 
       <div>
-        <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="reset()">Reset</button>
       </div>
     </mat-step>

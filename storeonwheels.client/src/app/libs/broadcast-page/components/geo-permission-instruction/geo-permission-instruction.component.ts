@@ -1,12 +1,8 @@
 import { CommonModule } from "@angular/common";
-import {
-  Component,
-  Input,
-  Signal as ReadOnlySignal,
-  signal,
-} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
+import { GeoPermission } from "~/app/libs/broadcast-page/services";
 
 @Component({
   selector: "app-geo-permission-instruction",
@@ -16,7 +12,14 @@ import { MatInputModule } from "@angular/material/input";
   styleUrl: "./geo-permission-instruction.component.css",
 })
 export class GeoPermissionInstructionComponent {
-  @Input() geoPermission: ReadOnlySignal<PermissionState> = signal("denied");
+  @Input() geoPermission: GeoPermission = "denied";
+  permissionTexts = new Map<GeoPermission, string>([
+    ["prompt", "The application will request geolocation permission."],
+    ["granted", "Permission granted."],
+    ["temp_granted", "Permission temporarily granted."],
+    ["denied", "Permission denied."],
+    ["temp_denied", "Permission temporarily denied"],
+  ]);
 
   reloadPage() {
     window.location.reload();

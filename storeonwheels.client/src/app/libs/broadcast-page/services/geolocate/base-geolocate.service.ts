@@ -1,8 +1,5 @@
-import { Injectable } from "@angular/core";
+export type GeoPermission = PermissionState | "temp_granted" | "temp_denied";
 
-@Injectable({
-  providedIn: "root",
-})
 export class BaseGeolocateService {
   private _watchId = -1;
   get watchId(): number {

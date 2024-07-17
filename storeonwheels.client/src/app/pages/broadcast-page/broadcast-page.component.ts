@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import {
   Component,
+  OnDestroy,
   OnInit,
   Signal,
   ViewChild,
@@ -26,6 +27,7 @@ import {
   VendorFormComponent,
 } from "~/app/libs/broadcast-page/components";
 import {
+  GeoPermission,
   GeolocateService,
   VendorService,
 } from "~/app/libs/broadcast-page/services";
@@ -57,9 +59,8 @@ import { toSignal } from "@angular/core/rxjs-interop";
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",
 })
-export class BroadcastPageComponent implements OnInit {
+export class BroadcastPageComponent implements OnInit, OnDestroy {
   private position$: Observable<GeolocationPosition> = new Observable();
-  private posError$: Observable<GeolocationPositionError> = new Observable();
   posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
   coordinates: WritableSignal<GeolocationCoordinates | undefined> =
     signal(undefined);
@@ -77,7 +78,7 @@ export class BroadcastPageComponent implements OnInit {
   });
 
   // 2. Broadcast toggle.
-  geoPermission = signal<PermissionState>("denied");
+  geoPermission = signal<GeoPermission>("denied");
   broadcastOn = signal(false);
   toggleTexts = new Map<boolean, string>([
     [true, "Broadcasting"],
@@ -92,8 +93,7 @@ export class BroadcastPageComponent implements OnInit {
     private sleepService: SleepService
   ) {
     this.position$ = geoService.position$;
-    this.posError$ = geoService.error$;
-    this.posError = toSignal(this.posError$);
+    this.posError = toSignal(geoService.error$);
   }
 
   async ngOnInit() {
@@ -112,10 +112,6 @@ export class BroadcastPageComponent implements OnInit {
       this.messageHub.sendGeoInfo(vendorId, geoInfo);
 
       this.coordinates.set(coords);
-    });
-
-    this.posError$.subscribe((err) => {
-      console.log(err);
     });
 
     const permission: PermissionState =
@@ -176,24 +172,39 @@ export class BroadcastPageComponent implements OnInit {
       return;
     }
 
-    const error = await geoService.watchPosition();
+    // user has 4 choices w.r.t geo permission
+    // allow permenanet, allow temp, ban permenanent, ban temp
+    // if temporary decision is made, getPermanentPermission() will still return "prompt" regardless.
+    const error: GeolocationPositionError | null =
+      await geoService.watchPosition();
+    const permanentPermission: PermissionState =
+      await geoService.getPermanentPermission();
+    console.log({ error, permanentPermission });
 
-    // need to set the permission explicitly, instead of calling geoService.getPermPermissionState as permission might be temporary.
-    // geoService.getPermPermissionState will return "prompt" regardless
-    if (
+    if (permanentPermission == "granted") {
+      geoPermission.set("granted");
+    } else if (permanentPermission == "denied") {
+      geoPermission.set("denied");
+      broadcastOn.set(false);
+    } else if (
       error != null &&
       error.code == GeolocationPositionError.PERMISSION_DENIED
     ) {
-      geoPermission.set("denied");
+      geoPermission.set("temp_denied");
       broadcastOn.set(false);
-    } else if (error == null) {
-      geoPermission.set("granted");
+    } else {
+      geoPermission.set("temp_granted");
     }
+
+    console.log({ geoPerm: geoPermission() });
   }
 
+  // by forcing a reload, the ws conn resets, and the vendor is deleted.
   reset() {
-    const { geoService } = this;
-    geoService.stopWatch();
-    this.stepper?.reset();
+    window.location.reload();
+  }
+
+  ngOnDestroy() {
+    this.geoService.stopWatch();
   }
 }
