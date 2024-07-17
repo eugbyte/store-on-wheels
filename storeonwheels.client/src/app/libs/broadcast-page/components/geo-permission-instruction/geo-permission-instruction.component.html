@@ -1,18 +1,7 @@
 <div class="text-sm">
-  @if (geoPermission === "prompt") {
-  <p>The application will request geolocation permission.</p>
-  } @else if (geoPermission === "denied") {
-  <p>Permission denied</p>
-  <ng-container *ngTemplateOutlet="instructions"></ng-container>
-  } @else if (geoPermission === "granted") {
-  <p>Permission granted</p>
-  <ng-container *ngTemplateOutlet="instructions"></ng-container>
-  } @else if (geoPermission === "temp_granted") {
-  <p>Permission temporarily granted</p>
-  <ng-container *ngTemplateOutlet="instructions"></ng-container>
-  } @else if (geoPermission === "temp_denied") {
-  <p>Permission temporarily denied</p>
-  <ng-container *ngTemplateOutlet="instructions"></ng-container>
+  <p>{{ permissionTexts.get(geoPermission) }}</p>
+  @if (geoPermission !== "prompt") {
+    <ng-container *ngTemplateOutlet="instructions"></ng-container>
   }
 </div>
 

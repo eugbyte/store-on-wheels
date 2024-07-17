@@ -13,6 +13,13 @@ import { GeoPermission } from "~/app/libs/broadcast-page/services";
 })
 export class GeoPermissionInstructionComponent {
   @Input() geoPermission: GeoPermission = "denied";
+  permissionTexts = new Map<GeoPermission, string>([
+    ["prompt", "The application will request geolocation permission."],
+    ["granted", "Permission granted."],
+    ["temp_granted", "Permission temporarily granted."],
+    ["denied", "Permission denied."],
+    ["temp_denied", "Permission temporarily denied"],
+  ]);
 
   reloadPage() {
     window.location.reload();
