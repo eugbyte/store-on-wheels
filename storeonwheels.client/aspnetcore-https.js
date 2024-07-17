@@ -4,7 +4,7 @@ const spawn = require("child_process").spawn;
 const path = require("path");
 
 function generatePem() {
-  let baseFolder =
+  const baseFolder =
     process.env.APPDATA !== undefined && process.env.APPDATA !== ""
       ? `${process.env.APPDATA}/ASP.NET/https`
       : `${process.env.HOME}/.aspnet/https`;
@@ -52,5 +52,4 @@ function generatePem() {
   }
 }
 
-// for debugging purpose
 generatePem();

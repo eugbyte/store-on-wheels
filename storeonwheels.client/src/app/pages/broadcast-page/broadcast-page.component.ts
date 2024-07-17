@@ -67,7 +67,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
-  isLinear = true;
+  isLinear = false;
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
@@ -200,9 +200,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-    const { geoService, stepper } = this;
-    geoService.stopWatch();
-    stepper?.reset();
+    window.location.reload();
   }
 
   ngOnDestroy() {
