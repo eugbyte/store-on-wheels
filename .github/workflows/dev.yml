@@ -22,5 +22,7 @@ jobs:
                 node-version: '20.x'
             - name: Install dependencies
               run: dotnet restore
-            - name: Build both .NET and JS
+            - name: Build Angular
+              run: cd storeonwheels.client && npm run build
+            - name: Build .NET and JS
               run: dotnet build
