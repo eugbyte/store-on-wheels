@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Libs.Shared.Configs;
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations
-{
-    [DbContext(typeof(AppDbContext))]
+namespace StoreOnWheels.Server.Migrations {
+	[DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
