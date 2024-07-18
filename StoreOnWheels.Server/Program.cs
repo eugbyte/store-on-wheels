@@ -1,7 +1,7 @@
 using Caching;
 using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Configs;
 using StoreOnWheels.Server.Controllers.Geohubs;
+using StoreOnWheels.Server.Libs.Shared.Configs;
 using StoreOnWheels.Server.Libs.Shared.Models;
 using StoreOnWheels.Server.Libs.Vendors;
 
