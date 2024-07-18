@@ -25,5 +25,7 @@ export class VendorFormComponent {
     if (this.vendorForm != null) {
       this.submitEvent.emit(Date.now());
     }
+
+    const x = 5 + 5; 
   }
 }
