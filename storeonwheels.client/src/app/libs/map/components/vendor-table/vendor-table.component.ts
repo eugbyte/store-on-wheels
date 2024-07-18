@@ -18,7 +18,7 @@ import {
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-} from "~/app/libs/map-page/services";
+} from "~/app/libs/map/services";
 import { CommonModule } from "@angular/common";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MatRow, MatTableModule } from "@angular/material/table";

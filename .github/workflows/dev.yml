@@ -3,7 +3,7 @@ concurrency:
     group: store-on-wheels-dev
     cancel-in-progress: true
 
-on: [pull_request, push]
+on: [push, pull_request]
 
 jobs:
     build:
@@ -20,7 +20,15 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: '20.x'
-            - name: Install dependencies
+            - name: Install .NET Dependencies
               run: dotnet restore
-            - name: Build both .NET and JS
+            - name: Install npm modules
+              run: |
+                  cd storeonwheels.client
+                  npm ci
+            - name: Build JS
+              run: |
+                  cd storeonwheels.client
+                  npm run build
+            - name: Build .NET
               run: dotnet build
