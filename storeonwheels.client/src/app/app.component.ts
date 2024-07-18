@@ -5,7 +5,7 @@ import {
   HUB_CONNECTION,
   MessageHubService,
   hubConnection,
-} from "./libs/map-page/services";
+} from "./libs/map/services";
 import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({

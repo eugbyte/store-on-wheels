@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreOnWheels.Server.Libs.Shared.Models;
 
-namespace StoreOnWheels.Server.Configs;
+namespace StoreOnWheels.Server.Libs.Shared.Configs;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) {
 	public DbSet<Vendor> Vendors { get; set; }

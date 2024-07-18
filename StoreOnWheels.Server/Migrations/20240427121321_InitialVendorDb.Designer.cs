@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Libs.Shared.Configs;
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations
-{
-    [DbContext(typeof(AppDbContext))]
+namespace StoreOnWheels.Server.Migrations {
+	[DbContext(typeof(AppDbContext))]
     [Migration("20240427121321_InitialVendorDb")]
     partial class InitialVendorDb
     {

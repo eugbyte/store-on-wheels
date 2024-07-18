@@ -25,17 +25,17 @@ import { Observable } from "rxjs";
 import {
   GeoPermissionInstructionComponent,
   VendorFormComponent,
-} from "~/app/libs/broadcast-page/components";
+} from "~/app/libs/broadcast/components";
 import {
   GeoPermission,
   GeolocateService,
   VendorService,
-} from "~/app/libs/broadcast-page/services";
+} from "~/app/libs/broadcast/services";
 import {
   MessageHubService,
   WsState,
   hubConnection,
-} from "~/app/libs/map-page/services";
+} from "~/app/libs/map/services";
 import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
 import { SleepService } from "~/app/libs/shared/services";
 import { toSignal } from "@angular/core/rxjs-interop";
@@ -67,7 +67,7 @@ export class BroadcastPageComponent implements OnInit, OnDestroy {
 
   // 1. Create Vendor.
   @ViewChild("stepper", { read: MatStepper }) stepper?: MatStepper;
-  isLinear = false;
+  isLinear = true;
   vendorBtnText = signal("Next");
   vendorBtnEnabled = signal(true);
 
