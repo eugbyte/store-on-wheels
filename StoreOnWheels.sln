@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "storeonwheels.client", "storeonwheels.client\storeonwheels.client.esproj", "{2AC01E4D-903F-45AA-A01D-3C085CBB62D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{11F10565-B055-48EC-BEDC-8A9A486DEFEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF5D3229-EF07-4DBC-ABCA-A90E7CEB7875} = {11F10565-B055-48EC-BEDC-8A9A486DEFEB}
+		{2AC01E4D-903F-45AA-A01D-3C085CBB62D1} = {11F10565-B055-48EC-BEDC-8A9A486DEFEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD035BD-C2BF-4757-B355-0C9CB3787FE5}
