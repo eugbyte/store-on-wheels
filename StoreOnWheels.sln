@@ -18,13 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server.Test",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8043B9CA-C787-4BE8-9813-FDBF135ECE71}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FFBBA6AE-B507-4F77-B85C-7BD2F2FBBEB5}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dev.yml = .github\workflows\dev.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,7 +46,6 @@ Global
 		{0B32994A-9790-48AC-8899-FE7EF79E5A02} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
 		{D3864E6A-99E5-4282-B5EE-AF4DA1481842} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
 		{5C5D2A84-3755-4883-BDBF-5E0CF4F2BD75} = {D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}
-		{FFBBA6AE-B507-4F77-B85C-7BD2F2FBBEB5} = {8043B9CA-C787-4BE8-9813-FDBF135ECE71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD035BD-C2BF-4757-B355-0C9CB3787FE5}
