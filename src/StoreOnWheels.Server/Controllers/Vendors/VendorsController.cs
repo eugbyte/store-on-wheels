@@ -20,6 +20,7 @@ public class VendorsController(IVendorService vendorService, LRUCache<string, Ve
 
 	[HttpPost]
 	public async Task<ActionResult<Vendor>> Create([FromBody] Vendor vendor) {
-		return await vendorService.Create(vendor);
+		Vendor createdVendor = await vendorService.Create(vendor);
+		return Created("api/v1/vendors", createdVendor);
 	}
 }

@@ -54,3 +54,6 @@ app.MapHub<GeohubsClient>("/stream/v1/geohub");
 app.MapFallbackToFile("/index.html");
 
 app.Run();
+
+// needed for integration test (https://tinyurl.com/yc2p5674)
+public partial class Program { }
