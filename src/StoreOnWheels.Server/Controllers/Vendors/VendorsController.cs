@@ -7,7 +7,9 @@ namespace StoreOnWheels.Server.Controllers.Vendors;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class VendorsController(IVendorService vendorService, LRUCache<string, Vendor> vendorCache) : ControllerBase {
+public class VendorsController(IVendorService vendorService,
+	ILogger<VendorsController> Logger,
+	LRUCache<string, Vendor> vendorCache) : ControllerBase {
 	[HttpGet("{vendorId}")]
 	public async Task<ActionResult<Vendor>> Get(string vendorId) {
 		Vendor? vendor = await vendorService.Get(vendorId);
