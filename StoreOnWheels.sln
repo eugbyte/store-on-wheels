@@ -17,13 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F0A221BA-10D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F9CCF139-F5F5-44B0-805D-FB4818CD062A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FA8D8FE9-6F11-4E8C-B22A-BA7D9E9D2588}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dev.yml = .github\workflows\dev.yml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server.Test.Integration", "tests\StoreOnWheels.Server.Test.Integration\StoreOnWheels.Server.Test.Integration.csproj", "{EF18603D-5B8C-484A-BFE2-201CA6F19879}"
 EndProject
 Global
@@ -53,7 +46,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0B32994A-9790-48AC-8899-FE7EF79E5A02} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
 		{D3864E6A-99E5-4282-B5EE-AF4DA1481842} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
-		{FA8D8FE9-6F11-4E8C-B22A-BA7D9E9D2588} = {F9CCF139-F5F5-44B0-805D-FB4818CD062A}
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879} = {D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
