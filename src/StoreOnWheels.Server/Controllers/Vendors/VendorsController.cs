@@ -7,7 +7,11 @@ namespace StoreOnWheels.Server.Controllers.Vendors;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class VendorsController(IVendorService vendorService, LRUCache<string, Vendor> vendorCache) : ControllerBase {
+public class VendorsController(
+	IVendorService vendorService,
+	LRUCache<string, Vendor> vendorCache
+	) : ControllerBase {
+
 	[HttpGet("{vendorId}")]
 	public async Task<ActionResult<Vendor>> Get(string vendorId) {
 		Vendor? vendor = await vendorService.Get(vendorId);
@@ -20,6 +24,7 @@ public class VendorsController(IVendorService vendorService, LRUCache<string, Ve
 
 	[HttpPost]
 	public async Task<ActionResult<Vendor>> Create([FromBody] Vendor vendor) {
-		return await vendorService.Create(vendor);
+		Vendor createdVendor = await vendorService.Create(vendor);
+		return Created("api/v1/vendors", createdVendor);
 	}
 }
