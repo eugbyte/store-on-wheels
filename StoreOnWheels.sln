@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\dev.yml = .github\workflows\dev.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreOnWheels.Server.Test.Integration", "tests\StoreOnWheels.Server.Test.Integration\StoreOnWheels.Server.Test.Integration.csproj", "{EF18603D-5B8C-484A-BFE2-201CA6F19879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server.Test.Integration", "tests\StoreOnWheels.Server.Test.Integration\StoreOnWheels.Server.Test.Integration.csproj", "{EF18603D-5B8C-484A-BFE2-201CA6F19879}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
