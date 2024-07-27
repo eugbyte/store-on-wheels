@@ -32,3 +32,7 @@ jobs:
                   npm run build
             - name: Build .NET
               run: dotnet build
+            - name: Test with the dotnet CLI
+              run: dotnet test
+            - name: Test JS
+              run: echo "Hello"

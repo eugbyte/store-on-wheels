@@ -20,7 +20,7 @@ public class MockPositionEmitter(
 	private GeolocationPosition MockPosition(int index) {
 		string vendorId = $"vendor_{index}";
 
-		return new() {
+		return new GeolocationPosition() {
 			VendorId = vendorId,
 			Coords = new GeolocationCoordinate() {
 				Latitude = (float)(1.3 + rnd.Next(1, 100) / 1000.0),    // 1000.0 => Needs to be float
