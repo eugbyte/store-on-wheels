@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Threading.Tasks;
 
 namespace StoreOnWheels.Server.Test.Integration.Controllers.Geohubs;
 
@@ -15,7 +13,7 @@ public class TestMockPositionEmitter : IClassFixture<CustomWebAppFactory<Program
 	public async Task Mock_Vendor_Info_On_Connected() {
 		await _connection.StartAsync();
 		(string vendorId, string message) = await GetMessageInfoAsync(_connection);
-		Assert.NotEmpty(vendorId);	
+		Assert.NotEmpty(vendorId);
 		Assert.NotEmpty(message);
 	}
 
