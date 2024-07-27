@@ -8,14 +8,13 @@ using System.Data.Common;
 
 namespace StoreOnWheels.Server.Test.Integration;
 
-public class CustomWebAppFactory<TProgram>
-	: WebApplicationFactory<TProgram> where TProgram : class {
-	private static readonly string connectionString = "DataSource=:memory:";
+public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class {
+	private static readonly string _connectionString = "DataSource=:memory:";
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder) {
-		builder.ConfigureServices((service) => {
-			RemoveCurrentDb(service);
-			UseSqlite(service);
+		builder.ConfigureServices((services) => {
+			RemoveCurrentDb(services);
+			UseSqlite(services);
 		});
 		builder.UseEnvironment("Development");
 	}
@@ -38,19 +37,19 @@ public class CustomWebAppFactory<TProgram>
 	private static void UseSqlite(IServiceCollection services) {
 		// Create open SqliteConnection so EF won't automatically close it.
 		services.AddSingleton<DbConnection>((container) => {
-			SqliteConnection connection = new(connectionString);
+			SqliteConnection connection = new(_connectionString);
 			connection.Open();
 			return connection;
 		});
 
 		services.AddDbContext<AppDbContext>((IServiceProvider container, DbContextOptionsBuilder optionsBuilder) => {
-			var connection = container.GetRequiredService<DbConnection>();
+			DbConnection connection = container.GetRequiredService<DbConnection>();
 			optionsBuilder.UseSqlite(connection);
 			var options = (DbContextOptions<AppDbContext>)optionsBuilder.Options;
 
 			// Seed Sqlite with latest migration
 			// https://tinyurl.com/2cyt3f9s
-			using var context = new AppDbContext(options);
+			using AppDbContext context = new(options);
 			context.Database.EnsureDeleted();
 			context.Database.Migrate();
 		});
