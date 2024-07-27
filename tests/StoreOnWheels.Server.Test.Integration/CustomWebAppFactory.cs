@@ -11,10 +11,11 @@ namespace StoreOnWheels.Server.Test.Integration;
 public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class {
 	private static readonly string _connectionString = "DataSource=:memory:";
 
+
 	protected override void ConfigureWebHost(IWebHostBuilder builder) {
-		builder.ConfigureServices((service) => {
-			RemoveCurrentDb(service);
-			UseSqlite(service);
+		builder.ConfigureServices((services) => {
+			RemoveCurrentDb(services);
+			UseSqlite(services);
 		});
 		builder.UseEnvironment("Development");
 	}
