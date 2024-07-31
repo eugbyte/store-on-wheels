@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ namespace StoreOnWheels.Server.Test.Integration;
 
 public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class {
 	private static readonly string _connectionString = "DataSource=:memory:";
+	// Base address is "http://localhost". https://tinyurl.com/ynvta4s2
+	private readonly string _wsUrl = "http://localhost/stream/v1/geohub";
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder) {
 		builder.ConfigureServices((services) => {
@@ -17,6 +20,10 @@ public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> whe
 			UseSqlite(services);
 		});
 		builder.UseEnvironment("Development");
+	}
+
+	public new void Dispose() {
+		base.Dispose();
 	}
 
 	// https://tinyurl.com/6ze2sweh
@@ -53,5 +60,15 @@ public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> whe
 			context.Database.EnsureDeleted();
 			context.Database.Migrate();
 		});
+	}
+
+	public HubConnection HubConnection() {
+		return new HubConnectionBuilder()
+				.WithUrl(_wsUrl, (option) => {
+					// TestServer requires HubConnectionBuilder to use the HttpMessageHandler created by it in order to be able to call the Hub(s).
+					// https://tinyurl.com/3fdet66t
+					option.HttpMessageHandlerFactory = (_) => Server.CreateHandler();
+				})
+				.Build();
 	}
 }
