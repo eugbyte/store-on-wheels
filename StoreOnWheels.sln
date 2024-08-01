@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		src\StoreOnWheels.Server\.editorconfig = src\StoreOnWheels.Server\.editorconfig
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "storeonwheels.client", "src\storeonwheels.client\storeonwheels.client.esproj", "{0B32994A-9790-48AC-8899-FE7EF79E5A02}"
@@ -49,8 +50,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD035BD-C2BF-4757-B355-0C9CB3787FE5}
-	EndGlobalSection
-EndGlobal
-D-C2BF-4757-B355-0C9CB3787FE5}
 	EndGlobalSection
 EndGlobal
