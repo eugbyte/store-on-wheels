@@ -43,4 +43,4 @@ jobs:
             - name: Test JS
               run: |
                   cd src/storeonwheels.client
-                  npm run test
+                  npm run test-ci
