@@ -14,13 +14,11 @@ import { Observable, map } from "rxjs";
 })
 export class MapPageComponent implements OnInit {
   geoInfo$: Observable<GeoInfo>;
-  vendor$: Observable<Vendor>; 
+  vendor$: Observable<Vendor>;
 
   constructor(private messageHub: MessageHubService) {
     this.geoInfo$ = messageHub.geoInfo$;
-    this.vendor$ = this.geoInfo$.pipe(
-      map((info) => info.vendor)
-    );
+    this.vendor$ = this.geoInfo$.pipe(map((info) => info.vendor));
   }
 
   async ngOnInit() {
