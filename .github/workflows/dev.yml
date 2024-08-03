@@ -3,7 +3,13 @@ concurrency:
     group: store-on-wheels-dev
     cancel-in-progress: true
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
     build:

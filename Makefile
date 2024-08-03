@@ -3,7 +3,7 @@ install:
 	cd src/storeonwheels.client && npm i
 
 start:
-	dotnet run --project=StoreOnWheels.Server/StoreOnWheels.Server.csproj
+	dotnet run --project=src/StoreOnWheels.Server/StoreOnWheels.Server.csproj
 
 test:
 	dotnet test

@@ -9,7 +9,7 @@ export class VendorService {
   async createVendor(vendor: Vendor): Promise<Vendor> {
     try {
       const response = await axios.post("/api/v1/vendors", vendor);
-      const updatedVendor = response.data;
+      const updatedVendor: Vendor = response.data;
       return updatedVendor;
     } catch (error) {
       if (error instanceof AxiosError) {

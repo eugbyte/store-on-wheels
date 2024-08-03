@@ -22,6 +22,7 @@ export class HealthcheckComponent implements OnInit {
     const response: Record<string, string> = (
       await axios.get("api/v1/healthchecks")
     ).data;
+    console.log({ response });
     this.message = response["message"];
     this.wsUrl = hubConnection.baseUrl;
 

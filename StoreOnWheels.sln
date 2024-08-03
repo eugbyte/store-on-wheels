@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		src\StoreOnWheels.Server\.editorconfig = src\StoreOnWheels.Server\.editorconfig
 		.gitignore = .gitignore
+		Makefile = Makefile
 		README.md = README.md
 		store_on_wheels_preview.gif = store_on_wheels_preview.gif
 	EndProjectSection
