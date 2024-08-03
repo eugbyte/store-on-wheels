@@ -22,10 +22,6 @@ public class CustomWebAppFactory<TProgram> : WebApplicationFactory<TProgram> whe
 		builder.UseEnvironment("Development");
 	}
 
-	public new void Dispose() {
-		base.Dispose();
-	}
-
 	// https://tinyurl.com/6ze2sweh
 	private static void RemoveCurrentDb(IServiceCollection services) {
 		ServiceDescriptor? dbContextDescriptor = services
