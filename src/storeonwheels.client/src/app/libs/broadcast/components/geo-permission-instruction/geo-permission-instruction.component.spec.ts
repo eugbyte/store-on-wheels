@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { GeoPermissionInstructionComponent } from "./geo-permission-instruction.component";
 
 describe("GeoPermissionComponent", () => {
@@ -13,7 +12,9 @@ describe("GeoPermissionComponent", () => {
 
     fixture = TestBed.createComponent(GeoPermissionInstructionComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.autoDetectChanges();
+
+    fixture.componentRef.setInput('hero', "prompt");
   });
 
   it("should create", () => {
