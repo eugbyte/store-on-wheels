@@ -35,7 +35,7 @@ public class TestGeohubClient(
 		try {
 			await connection.SendAsync("BroadcastVendorPositionAnonymously", "vendor1", str);
 		} catch (Exception ex) {
-			Logger.WriteLine(ex.Message); 
+			Logger.WriteLine(ex.Message);
 			error = ex;
 		}
 		Assert.Null(error);
