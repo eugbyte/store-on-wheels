@@ -1,14 +1,20 @@
-@if (vendorForm) {
+@if (vendorForm && displayName && description) {
   <form [formGroup]="vendorForm" class="flex flex-col" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="displayName" />
     </mat-form-field>
+    @if (displayName.invalid && (displayName.touched || displayName.dirty)) {
+      <p class="text-red-500 text-sm">Name is required</p>
+    }
 
     <mat-form-field>
       <mat-label>Description</mat-label>
       <input matInput formControlName="description" />
     </mat-form-field>
+    @if (description.invalid && (description.touched || description.dirty)) {
+      <p class="text-red-500 text-sm">Description is required</p>
+    }
 
     <!--workaround to get form submission to work when user press enter on input focus-->
     <!--https://stackoverflow.com/a/477699/6514532-->

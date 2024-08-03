@@ -8,9 +8,7 @@ describe("MessageHubService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: HUB_CONNECTION, useValue: hubConnection },
-      ]
+      providers: [{ provide: HUB_CONNECTION, useValue: hubConnection }],
     });
     service = TestBed.inject(MessageHubService);
   });

@@ -5,6 +5,8 @@
 namespace StoreOnWheels.Server.Migrations {
 	/// <inheritdoc />
 	public partial class InitialVendorDb : Migration {
+		private static readonly string[] columns = ["Id", "Description", "DisplayName"];
+
 		/// <inheritdoc />
 		protected override void Up(MigrationBuilder migrationBuilder) {
 			migrationBuilder.CreateTable(
@@ -20,7 +22,7 @@ namespace StoreOnWheels.Server.Migrations {
 
 			migrationBuilder.InsertData(
 				table: "Vendors",
-				columns: new[] { "Id", "Description", "DisplayName" },
+				columns: columns,
 				values: new object[] { "1", "Some food truck", "FoodTruck 1" });
 
 			migrationBuilder.CreateIndex(

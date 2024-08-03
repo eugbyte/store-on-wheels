@@ -8,3 +8,7 @@ start:
 test:
 	dotnet test
 	cd src/storeonwheels.client && npm run test
+
+format:
+	dotnet format --diagnostics --severity info  
+	cd src/storeonwheels.client && npm run fmt
