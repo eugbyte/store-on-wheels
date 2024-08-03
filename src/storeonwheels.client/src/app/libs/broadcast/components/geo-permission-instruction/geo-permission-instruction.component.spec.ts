@@ -17,7 +17,7 @@ describe("GeoPermissionComponent", () => {
     fixture.autoDetectChanges();
   });
 
-  it("should create", async () => {
+  it("prompt geoPermission should not show instructions", async () => {
     expect(component).toBeTruthy();
     fixture.componentRef.setInput("geoPermission", "prompt");
     await fixture.detectChanges();
@@ -25,7 +25,7 @@ describe("GeoPermissionComponent", () => {
     expect(root.innerText).not.toMatch(instructions);
   });
 
-  it("should create", () => {
+  it("granted geoPermission should show instructions", () => {
     expect(component).toBeTruthy();
     fixture.componentRef.setInput("geoPermission", "granted");
     const root: HTMLElement = fixture.nativeElement;
