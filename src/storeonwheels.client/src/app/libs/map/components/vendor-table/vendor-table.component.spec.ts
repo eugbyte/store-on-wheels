@@ -27,10 +27,14 @@ describe("VendorTableComponent", () => {
 
     fixture = TestBed.createComponent(VendorTableComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput("vendor$", vendors$);
     fixture.detectChanges();
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
+
+    const root: HTMLElement = fixture.nativeElement;
+    expect(root.querySelectorAll("tr").length).toBe(2);
   });
 });
