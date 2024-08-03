@@ -7,7 +7,4 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\storeonwheels.client\browser\</BuildOutputFolder>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="src\app\libs\broadcast\components\" />
-  </ItemGroup>
 </Project>
