@@ -68,7 +68,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     mapboxService.draw(containerId, searchboxId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
-    mapboxService.map.resize();
+    mapboxService.map?.resize();
   }
 
   ngOnDestroy() {

@@ -106,9 +106,9 @@ export class MapboxService {
    * Get the Map object, asserting that it is not null.
    * The mapbox will be null if it not been called with draw()
    */
-  get map(): mapboxgl.Map {
+  get map(): mapboxgl.Map | undefined {
     if (this._map == null) {
-      throw new Error(
+      console.log(
         "map is null. Remember to call draw() to initialize the map."
       );
     }
