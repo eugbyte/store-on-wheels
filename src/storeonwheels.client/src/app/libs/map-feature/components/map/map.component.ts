@@ -105,9 +105,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         `);
 
       marker.setPopup(popup);
-      marker.getElement().addEventListener("click", () => {
-        clickSubject.next({ vendorId, source: "MapComponent" });
-      });
+      marker
+        .getElement()
+        .addEventListener("click", () =>
+          clickSubject.next({ vendorId, source: "MapComponent" })
+        );
     }
 
     const marker = markers.get(vendorId) as Marker;
