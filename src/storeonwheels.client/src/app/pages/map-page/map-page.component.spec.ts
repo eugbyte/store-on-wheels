@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MapPageComponent } from "./map-page.component";
 import {
   HUB_CONNECTION,
@@ -10,7 +10,7 @@ import { Observable, from } from "rxjs";
 import { Mock } from "ts-mocks";
 import { VendorTableComponent } from "~/app/libs/map-feature/components";
 
-fdescribe("MapPageComponent", () => {
+describe("MapPageComponent", () => {
   let component: MapPageComponent;
   let fixture: ComponentFixture<MapPageComponent>;
   let vendors: Vendor[] = [];
@@ -76,7 +76,7 @@ fdescribe("MapPageComponent", () => {
     expect(root.innerText).toContain("© Mapbox");
   });
 
-  it("clicking on vendor table row should display pop up on map", fakeAsync(() => {
+  it("clicking on vendor table row should display pop up on map", () => {
     const root: HTMLElement = fixture.nativeElement;
 
     const rows = Array.from(
@@ -100,5 +100,5 @@ fdescribe("MapPageComponent", () => {
     expect(VendorTableComponent.prototype.onRowClick).toHaveBeenCalledTimes(2);
     // Somehow, the behaviour subject does not work
     // expect(root.querySelector("#custom_popup")).not.toBeNull();
-  }));
+  });
 });
