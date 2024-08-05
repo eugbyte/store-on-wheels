@@ -28,3 +28,8 @@ Test:
 ```
 make test
 ```
+
+# Code architecture
+The folder structure of this project follows the [package by component](https://dzone.com/articles/package-component-and) architecture.
+
+<img src="https://dz2cdn1.dzone.com/storage/temp/14001112-20150308-package-by-component.png" alt="package by component" height="300"/>
