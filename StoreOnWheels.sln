@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D8A79F7B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server.Test.Integration", "tests\StoreOnWheels.Server.Test.Integration\StoreOnWheels.Server.Test.Integration.csproj", "{EF18603D-5B8C-484A-BFE2-201CA6F19879}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{F617DA50-765F-46F6-A2A4-750766D55825}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terraform", "infra\Terraform\Terraform.csproj", "{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,7 @@ Global
 		{0B32994A-9790-48AC-8899-FE7EF79E5A02} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
 		{D3864E6A-99E5-4282-B5EE-AF4DA1481842} = {F0A221BA-10D0-46AA-B6F3-8A881779FA7D}
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879} = {D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}
+		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1} = {F617DA50-765F-46F6-A2A4-750766D55825}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD035BD-C2BF-4757-B355-0C9CB3787FE5}
