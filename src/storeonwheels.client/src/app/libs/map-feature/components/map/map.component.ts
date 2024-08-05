@@ -16,7 +16,7 @@ import {
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-} from "~/app/libs/map/services";
+} from "~/app/libs/map-feature/services";
 import { GeoInfo } from "~/app/libs/shared/models";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -68,7 +68,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     mapboxService.draw(containerId, searchboxId, 103.851959, 1.29027, 12);
     mapboxService.removeCopyrightText();
-    mapboxService.map.resize();
+    mapboxService.map?.resize();
   }
 
   ngOnDestroy() {
@@ -96,7 +96,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       markers.set(vendorId, marker);
 
       const popup = new Popup({ offset: 25 }).setHTML(`
-          <div class="text-black">
+          <div class="text-black" id="custom_popup">
             <p>
               <b>${vendor.displayName}</b>
             </p>
@@ -105,9 +105,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         `);
 
       marker.setPopup(popup);
-      marker.getElement().addEventListener("click", () => {
-        clickSubject.next({ vendorId, source: "MapComponent" });
-      });
+      marker
+        .getElement()
+        .addEventListener("click", () =>
+          clickSubject.next({ vendorId, source: "MapComponent" })
+        );
     }
 
     const marker = markers.get(vendorId) as Marker;
@@ -160,6 +162,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const width = 20;
     const height = 20;
     const el: HTMLDivElement = document.createElement("div");
+    el.id = "custom_marker";
     el.className = "marker";
     el.style.width = `${width}px`;
     el.style.height = `${height}px`;

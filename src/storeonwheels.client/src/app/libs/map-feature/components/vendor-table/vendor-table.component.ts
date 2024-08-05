@@ -11,14 +11,14 @@ import {
   WritableSignal,
   signal,
 } from "@angular/core";
-import { GeoInfo, Vendor } from "~/app/libs/shared/models";
+import { Vendor } from "~/app/libs/shared/models";
 import {
   TimedMap,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-} from "~/app/libs/map/services";
+} from "~/app/libs/map-feature/services";
 import { CommonModule } from "@angular/common";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MatRow, MatTableModule } from "@angular/material/table";
@@ -35,7 +35,7 @@ import { MatRow, MatTableModule } from "@angular/material/table";
   styleUrl: "./vendor-table.component.css",
 })
 export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input({ required: true }) geoInfo$: Observable<GeoInfo> = new Observable();
+  @Input({ required: true }) vendor$: Observable<Vendor> = new Observable();
 
   // The `{ read: ElementRef }` params is required, since MatRow is a Directive, and by default, a Directive will be returned.
   // https://github.com/angular/components/issues/17816#issue-528942343
@@ -53,11 +53,9 @@ export class VendorTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const { geoInfo$, vendorMap, vendors } = this;
+    const { vendor$, vendorMap, vendors } = this;
 
-    geoInfo$.subscribe((info) => {
-      const { vendor } = info;
-
+    vendor$.subscribe((vendor) => {
       vendorMap.set(vendor.id, vendor);
       vendorMap.setTimer(vendor.id, Date.now() + 5000, () => {
         vendorMap.delete(vendor.id);

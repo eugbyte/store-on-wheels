@@ -1,9 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { MapComponent, VendorTableComponent } from "~/app/libs/map/components";
-import { MessageHubService } from "~/app/libs/map/services";
-import { GeoInfo } from "~/app/libs/shared/models";
-import { Observable } from "rxjs";
+import {
+  MapComponent,
+  VendorTableComponent,
+} from "~/app/libs/map-feature/components";
+import { MessageHubService } from "~/app/libs/map-feature/services";
+import { GeoInfo, Vendor } from "~/app/libs/shared/models";
+import { Observable, map } from "rxjs";
 
 @Component({
   selector: "app-map-page",
@@ -13,10 +16,12 @@ import { Observable } from "rxjs";
   styleUrl: "./map-page.component.css",
 })
 export class MapPageComponent implements OnInit {
-  public geoInfo$: Observable<GeoInfo>;
+  geoInfo$: Observable<GeoInfo>;
+  vendor$: Observable<Vendor>;
 
   constructor(private messageHub: MessageHubService) {
     this.geoInfo$ = messageHub.geoInfo$;
+    this.vendor$ = this.geoInfo$.pipe(map((info) => info.vendor));
   }
 
   async ngOnInit() {
