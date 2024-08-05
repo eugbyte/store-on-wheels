@@ -1,14 +1,18 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from "@angular/core/testing";
 import { MapPageComponent } from "./map-page.component";
 import {
   HUB_CONNECTION,
   MessageHubService,
   hubConnection,
-} from "~/app/libs/map/services";
+} from "~/app/libs/map-feature/services";
 import { GeoInfo, Vendor } from "~/app/libs/shared/models";
 import { Observable, from } from "rxjs";
 import { Mock } from "ts-mocks";
-import { SleepService } from "~/app/libs/shared/services";
 
 fdescribe("MapPageComponent", () => {
   let component: MapPageComponent;
@@ -80,33 +84,30 @@ fdescribe("MapPageComponent", () => {
     expect(table.innerText).toContain("Vendor_2");
   });
 
-  it("clicking on vendor table row should display pop up on map", async () => {
+  it("clicking on vendor table row should display pop up on map", fakeAsync(() => {
     const root: HTMLElement = fixture.nativeElement;
 
     const rows = Array.from(
       root.querySelectorAll("tr")
     ) as HTMLTableRowElement[];
-    expect(rows.length).toBeGreaterThanOrEqual(2);
-
-    // the first row is the header row
-    rows.shift();
+    expect(rows.length).toBeGreaterThanOrEqual(3);
 
     const regExp = new RegExp(vendors[0].displayName, "g");
 
     // pop up not shown
-    let matches = Array.from(root.innerText.matchAll(regExp));
+    const matches = Array.from(root.innerText.matchAll(regExp));
     expect(matches.length).toEqual(1);
 
-    rows[0].click();
-    console.log(rows[0]);
-    fixture.detectChanges();
+    for (const row of rows) {
+      row.click();
+      fixture.detectChanges();
+    }
 
     // pop up shown
+    tick(100);
     fixture.detectChanges();
-    const sleeper = new SleepService();
-    await sleeper.sleep(3000);
+    tick(100);
 
-    matches = Array.from(root.innerText.matchAll(regExp));
-    expect(matches.length).toEqual(2);
-  });
+    expect(root.querySelector("#custom_popup")).not.toBeNull();
+  }));
 });

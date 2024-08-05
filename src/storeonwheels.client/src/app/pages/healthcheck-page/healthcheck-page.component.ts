@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { HubConnectionState } from "@microsoft/signalr";
 import axios from "axios";
-import { MessageHubService, hubConnection } from "~/app/libs/map/services";
+import {
+  MessageHubService,
+  hubConnection,
+} from "~/app/libs/map-feature/services";
 
 @Component({
   selector: "app-healthcheck-page",
