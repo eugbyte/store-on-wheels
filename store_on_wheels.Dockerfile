@@ -16,18 +16,29 @@ RUN apt-get -y install nodejs
 FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["StoreOnWheels.Server/StoreOnWheels.Server.csproj", "StoreOnWheels.Server/"]
-COPY ["storeonwheels.client/storeonwheels.client.esproj", "storeonwheels.client/"]
-RUN dotnet restore "./StoreOnWheels.Server/StoreOnWheels.Server.csproj"
-COPY . .
+COPY ["src/storeonwheels.client/*", "storeonwheels.client/"]
+COPY ["src/StoreOnWheels.Server/*", "StoreOnWheels.Server/"]
+WORKDIR "/src/storeonwheels.client"
+RUN npm i
+RUN npm run build
 WORKDIR "/src/StoreOnWheels.Server"
+RUN dotnet restore "./StoreOnWheels.Server.csproj"
 RUN dotnet build "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
+WORKDIR /src
+COPY --from=build src .
+RUN ls
+RUN ls storeonwheels.client
+RUN ls storeonwheels.client/node_modules
+WORKDIR "/src/storeonwheels.client"
+RUN npm i
+WORKDIR "/src/StoreOnWheels.Server"
+RUN ls
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
-WORKDIR /app
 COPY --from=publish /app/publish .
+WORKDIR /app
 ENTRYPOINT ["dotnet", "StoreOnWheels.Server.dll"]

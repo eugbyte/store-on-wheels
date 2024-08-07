@@ -12,3 +12,6 @@ test:
 format:
 	dotnet format --diagnostics --severity info  
 	cd src/storeonwheels.client && npm run fmt
+
+docker:
+	docker build --no-cache --progress=plain --tag=storeonwheels:latest --file=store_on_wheels.Dockerfile .
