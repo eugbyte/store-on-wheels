@@ -14,11 +14,4 @@ format:
 	cd src/storeonwheels.client && npm run fmt
 
 docker:
-	docker build \
-	-f src/StoreOnWheels.Server/StoreOnWheels.Server.csproj \
-	--force-rm -t angularapp1server:dev \
-	--target base  \
-	--build-arg "BUILD_CONFIGURATION=Debug" \
-	--label "com.microsoft.created-by=visual-studio" \
-	--label "com.microsoft.visual-studio.project-name=StoreOnWheels.Server" \
-	.
+	docker build -f src/StoreOnWheels.Server/Dockerfile --progress=plain --force-rm -t storeonwheelsserver  --build-arg "BUILD_CONFIGURATION=Debug" --label "com.microsoft.created-by=visual-studio" --label "com.microsoft.visual-studio.project-name=StoreOnWheels.Server" src
