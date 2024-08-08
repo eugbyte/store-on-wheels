@@ -151,10 +151,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // cannot do marker.getElement().click() as this will cause an infinite loop via the clickSubject
       for (const marker of markers.values()) {
-        marker.getPopup().remove();
+        marker.getPopup()?.remove();
       }
       // display popup
-      marker.getPopup().addTo(map);
+      marker.getPopup()?.addTo(map);
     }
   }
 
