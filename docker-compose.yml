@@ -1,0 +1,14 @@
+services:
+  storeonwheels:
+    image: eugbyte/storeonwheelsserver:latest
+    container_name: storeonwheels.server
+    build: 
+        context: ./src
+        dockerfile: ./StoreOnWheels.Server/Dockerfile
+        labels:
+        - "com.microsoft.created-by=visual-studio"
+        - "com.microsoft.visual-studio.project-name=StoreOnWheels.Server"
+        args:
+        - BUILD_CONFIGURATION=Release
+    ports:
+      - "4000:8080"

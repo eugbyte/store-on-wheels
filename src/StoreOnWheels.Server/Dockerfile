@@ -1,4 +1,5 @@
 #See https://aka.ms/customizecontainer To learn how To customize your debug container And how Visual Studio uses this Dockerfile To build your images For faster debugging.
+# Run docker build from the sln root, with src specfied as the context: https://docs.docker.com/build/building/context/#what-is-a-build-context
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
