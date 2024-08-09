@@ -1,4 +1,4 @@
-# location of dockerfile (https://tinyurl.com/msyc7hkw)
+# Location of dockerfile is relative to the root directory of the docker context (https://tinyurl.com/msyc7hkw)
 **/.classpath
 **/.dockerignore
 **/.env

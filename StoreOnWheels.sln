@@ -15,11 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D8A79F7B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server.Test.Integration", "tests\StoreOnWheels.Server.Test.Integration\StoreOnWheels.Server.Test.Integration.csproj", "{EF18603D-5B8C-484A-BFE2-201CA6F19879}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{F617DA50-765F-46F6-A2A4-750766D55825}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terraform", "infra\Terraform\Terraform.csproj", "{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8783EB47-E470-4232-BAC9-3179AE9CA96F}"
+	ProjectSection(SolutionItems) = preProject
+		src\.dockerignore = src\.dockerignore
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreOnWheels.Server", "src\StoreOnWheels.Server\StoreOnWheels.Server.csproj", "{71F6AF09-07AA-4EC9-883F-F1BCAA8BCABF}"
 EndProject
@@ -35,10 +34,6 @@ Global
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71F6AF09-07AA-4EC9-883F-F1BCAA8BCABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71F6AF09-07AA-4EC9-883F-F1BCAA8BCABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71F6AF09-07AA-4EC9-883F-F1BCAA8BCABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,7 +50,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EF18603D-5B8C-484A-BFE2-201CA6F19879} = {D8A79F7B-84F3-4045-B3ED-FA861DA1A2C8}
-		{AB519B03-7A8D-4DBF-95FE-BC5EB88F39A1} = {F617DA50-765F-46F6-A2A4-750766D55825}
 		{71F6AF09-07AA-4EC9-883F-F1BCAA8BCABF} = {8783EB47-E470-4232-BAC9-3179AE9CA96F}
 		{FD13B11B-D123-4C73-91E8-F0D979265FD9} = {8783EB47-E470-4232-BAC9-3179AE9CA96F}
 	EndGlobalSection
