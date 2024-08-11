@@ -1,6 +1,7 @@
 services:
   storeonwheels:
-    image: eugbyte/storeonwheelsserver:latest
+  # provide default value if env variable not set (https://stackoverflow.com/a/70772707/6514532)
+    image: "${IMAGE:-eugbyte/storeonwheelsserver:latest}"
     container_name: storeonwheels.server
     build: 
         context: ./src

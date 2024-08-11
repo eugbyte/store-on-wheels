@@ -1,3 +1,37 @@
+# Azure Container Registry (ACR)
+resource "azurerm_container_registry" "acr" {
+  name                = "acrStoreonwheelsProdSea"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Basic"
+  admin_enabled       = true
+}
+
+locals {
+  image = "${azurerm_container_registry.acr.login_server}/storeonwheelsserver:latest"
+}
+
+resource "null_resource" "build_docker_image" {
+  provisioner "remote-exec" {
+    inline = [
+      "IMAGE=${local.image}",
+      "cd ../..",
+      "docker compose build"
+    ]
+  }
+  depends_on = [azurerm_container_registry.acr]
+}
+
+resource "null_resource" "push_docker_image" {
+  provisioner "remote-exec" {
+    inline = [
+      "az acr login --name ${azurerm_container_registry.acr.name}",
+      "docker push ${azurerm_container_registry.acr.login_server}/storeonwheels.server",
+    ]
+  }
+  depends_on = [null_resource.build_docker_image]
+}
+
 resource "azurerm_container_app_environment" "env" {
   name                       = "ca-env-storeonwheels-prod-sea"
   location                   = azurerm_resource_group.rg.location

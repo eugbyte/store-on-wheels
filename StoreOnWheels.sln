@@ -27,7 +27,7 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "storeonwheels.client", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{75BF12CF-C87E-4901-97E0-9D3FEF6A40BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terraform", "infra\Terraform\Terraform.csproj", "{3988575E-C793-45DB-8E1A-DE8583C9A1AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terraform", "infra\Terraform\Terraform.csproj", "{3988575E-C793-45DB-8E1A-DE8583C9A1AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
