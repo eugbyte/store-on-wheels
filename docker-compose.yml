@@ -1,0 +1,15 @@
+services:
+  storeonwheels:
+  # provide default value if env variable not set (https://stackoverflow.com/a/70772707/6514532)
+    image: "${IMAGE:-eugbyte/storeonwheelsserver:latest}"
+    container_name: storeonwheels.server
+    build: 
+        context: ./src
+        dockerfile: ./StoreOnWheels.Server/Dockerfile
+        labels:
+        - "com.microsoft.created-by=visual-studio"
+        - "com.microsoft.visual-studio.project-name=StoreOnWheels.Server"
+        args:
+        - BUILD_CONFIGURATION=Release
+    ports:
+      - "4000:8080"

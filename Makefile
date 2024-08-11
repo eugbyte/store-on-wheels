@@ -13,6 +13,7 @@ format:
 	dotnet format --diagnostics --severity info  
 	cd src/storeonwheels.client && npm run fmt
 
+# mimicks the right click docker build in visual studio, simplified in docker-compose.yml
 docker:
 	docker build \
 	--file ./src/StoreOnWheels.Server/Dockerfile \
@@ -22,3 +23,9 @@ docker:
 	--label "com.microsoft.created-by=visual-studio" \
 	--label "com.microsoft.visual-studio.project-name=StoreOnWheels.Server" \
 	src
+
+compose:
+	docker compose rm -fsv && docker compose up -d 
+
+compose-down:
+	docker compose down
