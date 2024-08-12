@@ -8,7 +8,7 @@ import { animate } from "./animate";
 import { Inject, Injectable } from "@angular/core";
 import { MAPBOX_TOKEN } from "./mapbox.service.provider";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
-import { point, rhumbBearing, distance } from "@turf/turf";
+import { point as calcPoint, rhumbBearing as calcRhumbBearing, distance as calcDistance } from "@turf/turf";
 
 /**
  * Create a MapBox with zoom control, rotation control, geolocation control and a search box.
@@ -141,11 +141,11 @@ export class MapboxService {
     const { lng, lat } = marker.getLngLat();
     const { lng: finalLng, lat: finalLat } = destination;
 
-    const from = point([lng, lat]);
-    const to = point([finalLng, finalLat]);
+    const from = calcPoint([lng, lat]);
+    const to = calcPoint([finalLng, finalLat]);
 
-    const bearing = rhumbBearing(from, to);
-    const dist = distance(from, to, { units: "meters" });
+    const bearing = calcRhumbBearing(from, to);
+    const dist = calcDistance(from, to, { units: "meters" });
 
     if (animationDuration == 0) {
       return;

@@ -1,4 +1,4 @@
-import { point, rhumbDestination } from "@turf/turf";
+import { point as calcPoint, rhumbDestination as calcRhumbDestination } from "@turf/turf";
 import type { Marker } from "mapbox-gl";
 
 interface AnimateProps {
@@ -60,8 +60,8 @@ export function animate({
     return;
   }
 
-  const from = point([originlng, originlat]);
-  const to = rhumbDestination(from, speed * (runtime / 1000), bearing, {
+  const from = calcPoint([originlng, originlat]);
+  const to = calcRhumbDestination(from, speed * (runtime / 1000), bearing, {
     units: "meters",
   });
   const [newLng, newLat] = to.geometry.coordinates;
