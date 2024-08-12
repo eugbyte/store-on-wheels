@@ -437,3 +437,30 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Compiled output
+src/*.client/dist
+src/*.client/tmp
+src/*.client/out-tsc
+src/*.client/bazel-out
+
+# Node
+src/*.client/node_modules
+src/*.clientnpm-debug.log
+src/*.clientyarn-error.log
+
+# Miscellaneous
+src/*.client/.angular/cache
+src/*.client/.sass-cache/
+src/*.client/connect.lock
+src/*.client/coverage
+src/*.client/libpeerconnection.log
+src/*.client/testem.log
+src/*.client/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+.nx/cache
+.nx/workspace-data

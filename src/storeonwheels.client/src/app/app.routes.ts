@@ -1,9 +1,5 @@
 import { Routes } from "@angular/router";
-import {
-  MapPageComponent as MapPage,
-  HealthcheckComponent as HealthcheckPage,
-  BroadcastPageComponent as BroadcastPage,
-} from "./pages";
+import { MapPage, BroadcastPage, HealthcheckPage } from "~/app/pages/index";
 
 export const routes: Routes = [
   { path: "map", component: MapPage, title: "Map" },

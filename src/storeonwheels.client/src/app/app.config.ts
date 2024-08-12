@@ -1,5 +1,10 @@
 import { ApplicationConfig, isDevMode } from "@angular/core";
-import { provideRouter, withComponentInputBinding } from "@angular/router";
+import {
+  PreloadAllModules,
+  provideRouter,
+  withComponentInputBinding,
+  withPreloading,
+} from "@angular/router";
 import { routes } from "./app.routes";
 import {
   provideHttpClient,
@@ -10,7 +15,11 @@ import { provideServiceWorker } from "@angular/service-worker";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withPreloading(PreloadAllModules)
+    ),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     provideServiceWorker("ngsw-worker.js", {
