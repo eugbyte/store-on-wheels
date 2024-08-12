@@ -1,4 +1,7 @@
-import { point as calcPoint, rhumbDestination as calcRhumbDestination } from "@turf/turf";
+import {
+  point as calcPoint,
+  rhumbDestination as calcRhumbDestination,
+} from "@turf/turf";
 import type { Marker } from "mapbox-gl";
 
 interface AnimateProps {

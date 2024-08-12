@@ -8,7 +8,11 @@ import { animate } from "./animate";
 import { Inject, Injectable } from "@angular/core";
 import { MAPBOX_TOKEN } from "./mapbox.service.provider";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
-import { point as calcPoint, rhumbBearing as calcRhumbBearing, distance as calcDistance } from "@turf/turf";
+import {
+  point as calcPoint,
+  rhumbBearing as calcRhumbBearing,
+  distance as calcDistance,
+} from "@turf/turf";
 
 /**
  * Create a MapBox with zoom control, rotation control, geolocation control and a search box.
