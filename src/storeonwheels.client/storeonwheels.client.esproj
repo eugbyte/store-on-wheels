@@ -5,11 +5,12 @@
     <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
     <BuildCommand>npm run build</BuildCommand>
     <!-- Allows the build (or compile) script located on package.json to run on Build Solution-->
-    <!--Set to false since build is used for production and not for debugging. The latter uses `npm start` instead-->
+    <!-- Set to false since build is used for production and not for debugging. The latter uses `npm start` instead-->
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Specifies the behavior for the publish target-->
     <PublishCommand>npm run build</PublishCommand>
     <!-- Folder where production build objects will be placed -->
+    <!-- Microsoft.AspNetCore.SpaProxy in the Server Folder will copy the files to wwwroot and serve index.html from there-->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\storeonwheels.client\browser\</BuildOutputFolder>
   </PropertyGroup>
 </Project>
