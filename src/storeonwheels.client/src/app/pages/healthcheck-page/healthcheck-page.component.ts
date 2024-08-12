@@ -13,7 +13,7 @@ import {
   templateUrl: "./healthcheck-page.component.html",
   styleUrl: "./healthcheck-page.component.css",
 })
-export class HealthcheckComponent implements OnInit {
+export default class HealthcheckComponent implements OnInit {
   public message = "";
   title = "healthcheck";
   wsState: HubConnectionState = HubConnectionState.Disconnected;
