@@ -15,7 +15,7 @@ import { Observable, map } from "rxjs";
   templateUrl: "./map-page.component.html",
   styleUrl: "./map-page.component.css",
 })
-export default class MapPageComponent implements OnInit {
+export class MapPageComponent implements OnInit {
   geoInfo$: Observable<GeoInfo>;
   vendor$: Observable<Vendor>;
 

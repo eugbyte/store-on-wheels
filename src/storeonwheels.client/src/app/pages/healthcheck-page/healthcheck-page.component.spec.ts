@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import axios from "axios";
-import { HealthcheckComponent } from "./healthcheck-page.component";
+import { HealthcheckPageComponent } from "./healthcheck-page.component";
 import {
   HUB_CONNECTION,
   MessageHubService,
@@ -8,22 +8,22 @@ import {
 } from "~/app/libs/map-feature/services";
 
 describe("HealthcheckComponent", () => {
-  let component: HealthcheckComponent;
-  let fixture: ComponentFixture<HealthcheckComponent>;
+  let component: HealthcheckPageComponent;
+  let fixture: ComponentFixture<HealthcheckPageComponent>;
 
   beforeEach(async () => {
     const data: Record<string, string> = { message: "Server is running" };
     spyOn(axios, "get").and.resolveTo({ data });
 
     await TestBed.configureTestingModule({
-      imports: [HealthcheckComponent],
+      imports: [HealthcheckPageComponent],
       providers: [
         { provide: HUB_CONNECTION, useValue: hubConnection },
         MessageHubService,
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HealthcheckComponent);
+    fixture = TestBed.createComponent(HealthcheckPageComponent);
     component = fixture.componentInstance;
     fixture.autoDetectChanges();
   });
