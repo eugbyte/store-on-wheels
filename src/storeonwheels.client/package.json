@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "run-script-os",
-    "build": "ng build --optimization",
+    "build": "rm -rf dist && ng build --optimization",
     "watch": "ng build --watch --configuration development",
     "clear": "npx npkill",
     "test": "ng test",

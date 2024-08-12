@@ -7,4 +7,4 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\storeonwheels.client\browser\</BuildOutputFolder>
   </PropertyGroup>
-</Project> 
+</Project>
