@@ -1,7 +1,9 @@
 import { ApplicationConfig, isDevMode } from "@angular/core";
 import {
+  PreloadAllModules,
   provideRouter,
   withComponentInputBinding,
+  withPreloading,
 } from "@angular/router";
 import { routes } from "./app.routes";
 import {
@@ -16,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
+      withPreloading(PreloadAllModules)
     ),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
