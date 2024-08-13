@@ -59,7 +59,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
   templateUrl: "./broadcast-page.component.html",
   styleUrl: "./broadcast-page.component.css",
 })
-export class BroadcastPageComponent implements OnInit, OnDestroy {
+export default class BroadcastPageComponent implements OnInit, OnDestroy {
   private position$: Observable<GeolocationPosition> = new Observable();
   posError: Signal<GeolocationPositionError | undefined> = signal(undefined);
   coordinates: WritableSignal<GeolocationCoordinates | undefined> =
