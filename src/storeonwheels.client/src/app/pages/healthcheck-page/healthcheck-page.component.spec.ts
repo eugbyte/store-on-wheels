@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import axios from "axios";
-import { HealthcheckPageComponent } from "./healthcheck-page.component";
+import HealthcheckPageComponent from "./healthcheck-page.component";
 import {
   HUB_CONNECTION,
   MessageHubService,
