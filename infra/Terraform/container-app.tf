@@ -1,6 +1,7 @@
 # Azure Container Registry (ACR)
 resource "azurerm_container_registry" "acr" {
-  name                = "acrStoreonwheelsProdSea"
+  # acrStoreonwheelsProdSea
+  name                = "acrstoreonwheelsprodsea"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
@@ -12,22 +13,24 @@ locals {
 }
 
 resource "null_resource" "build_docker_image" {
-  provisioner "remote-exec" {
-    inline = [
-      "IMAGE=${local.image}",
-      "cd ../..",
-      "docker compose build"
-    ]
+  provisioner "local-exec" {
+    environment = {
+      "IMAGE" = local.image
+    }
+    command = <<-EOT
+      cd ../..
+      docker compose build
+    EOT
   }
   depends_on = [azurerm_container_registry.acr]
 }
 
 resource "null_resource" "push_docker_image" {
-  provisioner "remote-exec" {
-    inline = [
-      "az acr login --name ${azurerm_container_registry.acr.name}",
-      "docker push ${azurerm_container_registry.acr.login_server}/storeonwheels.server",
-    ]
+  provisioner "local-exec" {
+    command = <<-EOT
+      az acr login --name ${azurerm_container_registry.acr.name}
+      docker push ${azurerm_container_registry.acr.login_server}/storeonwheels.server
+    EOT
   }
   depends_on = [null_resource.build_docker_image]
 }
@@ -47,7 +50,7 @@ resource "azurerm_container_app" "app" {
 
   template {
     container {
-      name   = "storeonwheels.server"
+      name   = local.image
       image  = "nginx:latest"
       cpu    = 0.5
       memory = "0.5Gi"
@@ -57,10 +60,12 @@ resource "azurerm_container_app" "app" {
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
-    target_port                = 80
+    target_port                = 4000
     # ws connection not distributed to message queues yet
     traffic_weight {
       percentage = 100
     }
   }
+
+  depends_on = [null_resource.push_docker_image]
 }
