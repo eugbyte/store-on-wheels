@@ -9,7 +9,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 locals {
-  image = "${azurerm_container_registry.acr.login_server}/storeonwheelsserver:latest"
+  image = "storeonwheelsserver:latest"
 }
 
 resource "null_resource" "build_docker_image" {
@@ -17,10 +17,8 @@ resource "null_resource" "build_docker_image" {
     environment = {
       "IMAGE" = local.image
     }
-    command = <<-EOT
-      cd ../..
-      docker compose build
-    EOT
+    working_dir = "../.."
+    command = "docker compose build"
   }
   depends_on = [azurerm_container_registry.acr]
 }
@@ -29,7 +27,7 @@ resource "null_resource" "push_docker_image" {
   provisioner "local-exec" {
     command = <<-EOT
       az acr login --name ${azurerm_container_registry.acr.name}
-      docker push ${azurerm_container_registry.acr.login_server}/storeonwheels.server
+      docker push "${azurerm_container_registry.acr.login_server}/${local.image}"
     EOT
   }
   depends_on = [null_resource.build_docker_image]
@@ -50,8 +48,8 @@ resource "azurerm_container_app" "app" {
 
   template {
     container {
-      name   = local.image
-      image  = "nginx:latest"
+      name   = "storeonwheelsserver"
+      image  = "${azurerm_container_registry.acr.login_server}/${local.image}"
       cpu    = 0.5
       memory = "0.5Gi"
     }
