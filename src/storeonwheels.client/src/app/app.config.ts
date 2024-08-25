@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
+      // https://dev.to/this-is-angular/optimize-your-angular-apps-user-experience-with-preloading-strategies-3ie7
       withPreloading(PreloadAllModules)
     ),
     provideHttpClient(withInterceptorsFromDi()),

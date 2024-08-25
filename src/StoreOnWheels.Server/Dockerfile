@@ -20,6 +20,7 @@ COPY ["StoreOnWheels.Server/StoreOnWheels.Server.csproj", "StoreOnWheels.Server/
 RUN dotnet restore "./StoreOnWheels.Server/StoreOnWheels.Server.csproj"
 COPY . .
 RUN ls storeonwheels.client
+RUN ls StoreOnWheels.Server
 WORKDIR "/src/StoreOnWheels.Server"
 RUN dotnet build "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
