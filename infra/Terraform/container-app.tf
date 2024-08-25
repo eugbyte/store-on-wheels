@@ -12,7 +12,7 @@ locals {
   image = "storeonwheelsserver"
 }
 
-# https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax#multiple-provisioners
+# [Use multiple provisoners to run multiple commands in local exec](https://tinyurl.com/mrjw6rkf)
 resource "null_resource" "build_docker_image" {
   provisioner "local-exec" {
     environment = {
@@ -27,9 +27,7 @@ resource "null_resource" "build_docker_image" {
   }
 
   provisioner "local-exec" {
-    command = <<EOT
-      docker tag ${local.image} ${azurerm_container_registry.acr.login_server}/${local.image}
-    EOT
+    command = "docker tag ${local.image} ${azurerm_container_registry.acr.login_server}/${local.image}"
   }
 
   provisioner "local-exec" {
