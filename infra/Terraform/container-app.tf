@@ -13,7 +13,11 @@ locals {
 }
 
 # [Use multiple provisoners to run multiple commands in local exec](https://tinyurl.com/mrjw6rkf)
-resource "null_resource" "build_docker_image" {
+resource "null_resource" "publish_docker_image" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
   provisioner "local-exec" {
     environment = {
       "IMAGE" = "${local.image}"
@@ -41,37 +45,60 @@ resource "null_resource" "build_docker_image" {
   depends_on = [azurerm_container_registry.acr]
 }
 
-# resource "azurerm_container_app_environment" "env" {
-#   name                       = "ca-env-storeonwheels-prod-sea"
-#   location                   = azurerm_resource_group.rg.location
-#   resource_group_name        = azurerm_resource_group.rg.name
-#   log_analytics_workspace_id = azurerm_log_analytics_workspace.analytics.id
-# }
+resource "azurerm_container_app_environment" "env" {
+  name                       = "ca-env-storeonwheels-prod-sea"
+  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = azurerm_resource_group.rg.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.analytics.id
 
-# resource "azurerm_container_app" "app" {
-#   name                         = "ca-storeonwheels-prod-sea"
-#   container_app_environment_id = azurerm_container_app_environment.env.id
-#   resource_group_name          = azurerm_resource_group.rg.name
-#   revision_mode                = "Single"
+  depends_on = [null_resource.publish_docker_image]
+}
 
-#   template {
-#     container {
-#       name   = "storeonwheelsserver"
-#       image  = "${azurerm_container_registry.acr.login_server}/${local.image}"
-#       cpu    = 0.5
-#       memory = "1Gi"
-#     }
-#   }
+resource "azurerm_user_assigned_identity" "uami" {
+  name                = "uami-storeonwheels-prod-sea"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
 
-#   ingress {
-#     allow_insecure_connections = false
-#     external_enabled           = true
-#     target_port                = 4000
-#     # ws connection not distributed to message queues yet
-#     traffic_weight {
-#       percentage = 100
-#     }
-#   }
+  depends_on = [null_resource.publish_docker_image]
+}
 
-#   depends_on = [null_resource.push_docker_image]
-# }
+resource "azurerm_role_assignment" "acr_pull" {
+  principal_id   = azurerm_user_assigned_identity.uami.principal_id
+  role_definition_name = "AcrPull"
+  scope          = azurerm_container_registry.acr.id
+}
+
+resource "azurerm_container_app" "app" {
+  name                         = "ca-storeonwheels-prod-sea"
+  container_app_environment_id = azurerm_container_app_environment.env.id
+  resource_group_name          = azurerm_resource_group.rg.name
+  revision_mode                = "Single"
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.uami.id
+    ]
+  }
+
+  # needed for authentication
+  template {
+    container {
+      name   = "storeonwheelsserver"
+      image  = "${azurerm_container_registry.acr.login_server}/${local.image}"
+      cpu    = 0.5
+      memory = "1Gi"
+    }
+  }
+
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 4000
+    # ws connection not distributed to message queues yet
+    traffic_weight {
+      latest_revision = true
+      percentage      = 100
+    }
+  }
+}
