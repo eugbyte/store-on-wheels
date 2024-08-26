@@ -63,9 +63,9 @@ resource "azurerm_user_assigned_identity" "uami" {
 }
 
 resource "azurerm_role_assignment" "acr_pull" {
-  principal_id   = azurerm_user_assigned_identity.uami.principal_id
+  principal_id         = azurerm_user_assigned_identity.uami.principal_id
   role_definition_name = "AcrPull"
-  scope          = azurerm_container_registry.acr.id
+  scope                = azurerm_container_registry.acr.id
 }
 
 resource "azurerm_container_app" "app" {
@@ -74,14 +74,21 @@ resource "azurerm_container_app" "app" {
   resource_group_name          = azurerm_resource_group.rg.name
   revision_mode                = "Single"
 
+  # needed for authentication when pulling from private ACR
+  registry {
+    server   = azurerm_container_registry.acr.login_server
+    identity = azurerm_user_assigned_identity.uami.id
+  }
+
+  # needed for container app to access other Microsoft Entra protected resources
+  # https://learn.microsoft.com/en-us/azure/container-apps/managed-identity?tabs=portal%2Cdotnet
   identity {
-    type = "UserAssigned"
+    type = "SystemAssigned, UserAssigned"
     identity_ids = [
       azurerm_user_assigned_identity.uami.id
     ]
   }
 
-  # needed for authentication
   template {
     container {
       name   = "storeonwheelsserver"
