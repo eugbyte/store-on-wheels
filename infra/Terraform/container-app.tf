@@ -74,7 +74,8 @@ resource "azurerm_container_app" "app" {
   resource_group_name          = azurerm_resource_group.rg.name
   revision_mode                = "Single"
 
-  # needed for authentication when pulling from private ACR
+  # needed for authentication when pulling from private ACR 
+  # https://azureway.cloud/azure-container-apps-creating-using-terraform-part-1/
   registry {
     server   = azurerm_container_registry.acr.login_server
     identity = azurerm_user_assigned_identity.uami.id
@@ -83,7 +84,7 @@ resource "azurerm_container_app" "app" {
   # needed for container app to access other Microsoft Entra protected resources
   # https://learn.microsoft.com/en-us/azure/container-apps/managed-identity?tabs=portal%2Cdotnet
   identity {
-    type = "SystemAssigned, UserAssigned"
+    type = "UserAssigned"
     identity_ids = [
       azurerm_user_assigned_identity.uami.id
     ]
