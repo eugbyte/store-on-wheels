@@ -3,11 +3,11 @@ using StoreOnWheels.Server.Libs.Shared.Models;
 
 namespace StoreOnWheels.Server.Libs.Shared.Configs;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) {
+public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration Configuration) : DbContext(options) {
 	public DbSet<Vendor> Vendors { get; set; }
 
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-		base.OnConfiguring(optionsBuilder);
+	protected override void OnConfiguring(DbContextOptionsBuilder options) {
+		base.OnConfiguring(options);
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -21,4 +21,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
 		modelBuilder.Entity<Vendor>().HasData(vendor);
 	}
+
 }

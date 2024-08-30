@@ -10,7 +10,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 // register DB
 string? dbConnStr = builder.Configuration.GetConnectionString("WebApiDatabase");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(dbConnStr));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(dbConnStr));
 
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
