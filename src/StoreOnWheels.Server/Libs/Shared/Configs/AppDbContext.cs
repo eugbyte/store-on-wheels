@@ -3,7 +3,7 @@ using StoreOnWheels.Server.Libs.Shared.Models;
 
 namespace StoreOnWheels.Server.Libs.Shared.Configs;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration Configuration) : DbContext(options) {
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) {
 	public DbSet<Vendor> Vendors { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options) {
