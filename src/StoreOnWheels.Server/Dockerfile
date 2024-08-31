@@ -2,8 +2,6 @@
 # Run docker build from the sln root, with src specfied as the context: https://docs.docker.com/build/building/context/#what-is-a-build-context
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
-WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
