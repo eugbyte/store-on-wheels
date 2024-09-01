@@ -22,7 +22,7 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=False
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS run_time
 WORKDIR /app
 #RUN groupadd -r user && useradd -r -g user user
 #USER user # - have to remove user, due to lack of write permission for the Sqlite db file.
