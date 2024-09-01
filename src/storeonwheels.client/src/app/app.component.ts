@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FooterNavComponent } from "./libs/shared/components";
+import { FooterNavComponent } from "./libs/shared-module";
 import { RouterModule } from "@angular/router";
 import {
   HUB_CONNECTION,
   MessageHubService,
   hubConnection,
-} from "./libs/map-feature/services";
+} from "./libs/map-module";
 import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({

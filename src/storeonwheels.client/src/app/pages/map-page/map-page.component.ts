@@ -3,9 +3,9 @@ import { Component, OnInit } from "@angular/core";
 import {
   MapComponent,
   VendorTableComponent,
-} from "~/app/libs/map-feature/components";
-import { MessageHubService } from "~/app/libs/map-feature/services";
-import { GeoInfo, Vendor } from "~/app/libs/shared/models";
+  MessageHubService,
+} from "~/app/libs/map-module";
+import { GeoInfo, Vendor } from "~/app/libs/shared-module";
 import { Observable, map } from "rxjs";
 
 @Component({

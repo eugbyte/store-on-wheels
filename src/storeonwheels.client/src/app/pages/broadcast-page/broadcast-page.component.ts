@@ -25,19 +25,21 @@ import { Observable } from "rxjs";
 import {
   GeoPermissionInstructionComponent,
   VendorFormComponent,
-} from "~/app/libs/broadcast-feature/components";
-import {
   GeoPermission,
   GeolocateService,
   VendorService,
-} from "~/app/libs/broadcast-feature/services";
+} from "~/app/libs/broadcast-module";
 import {
   MessageHubService,
   WsState,
   hubConnection,
-} from "~/app/libs/map-feature/services";
-import { GeoInfo, Vendor, VendorForm } from "~/app/libs/shared/models";
-import { SleepService } from "~/app/libs/shared/services";
+} from "~/app/libs/map-module";
+import {
+  GeoInfo,
+  Vendor,
+  VendorForm,
+  SleepService,
+} from "~/app/libs/shared-module";
 import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({

@@ -464,3 +464,7 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+# Sqlite transient file
+**/StoreOnWheels.db-shm
+**/StoreOnWheels.db-wal

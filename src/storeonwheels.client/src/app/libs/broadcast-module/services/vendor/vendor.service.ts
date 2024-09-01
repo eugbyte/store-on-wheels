@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Vendor } from "~/app/libs/shared/models";
+import { Vendor } from "~/app/libs/shared-module";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 @Injectable({

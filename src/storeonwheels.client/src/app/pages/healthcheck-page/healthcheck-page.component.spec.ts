@@ -5,7 +5,7 @@ import {
   HUB_CONNECTION,
   MessageHubService,
   hubConnection,
-} from "~/app/libs/map-feature/services";
+} from "~/app/libs/map-module";
 
 describe("HealthcheckComponent", () => {
   let component: HealthcheckPageComponent;
