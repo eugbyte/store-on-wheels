@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { VendorTableComponent } from "./vendor-table.component";
-import { Vendor } from "~/app/libs/shared/models";
+import { Vendor } from "~/app/libs/shared-module";
 import { Observable, from } from "rxjs";
 
 describe("VendorTableComponent", () => {

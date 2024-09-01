@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { GeoInfo } from "~/app/libs/shared/models";
+import { GeoInfo } from "~/app/libs/shared-module";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HUB_CONNECTION, WsState } from "./message-hub.provider";
 

@@ -16,8 +16,8 @@ import {
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-} from "~/app/libs/map-feature/services";
-import { GeoInfo } from "~/app/libs/shared/models";
+} from "~/app/libs/map-module/services";
+import { GeoInfo } from "~/app/libs/shared-module";
 import { LngLat, Marker, Popup } from "mapbox-gl";
 import { BehaviorSubject, Observable } from "rxjs";
 

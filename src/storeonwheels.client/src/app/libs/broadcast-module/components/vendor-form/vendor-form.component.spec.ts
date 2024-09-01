@@ -5,7 +5,7 @@ import {
 } from "@angular/core/testing";
 import { VendorFormComponent } from "./vendor-form.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { VendorForm } from "~/app/libs/shared/models";
+import { VendorForm } from "~/app/libs/shared-module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("VendorFormComponent", () => {

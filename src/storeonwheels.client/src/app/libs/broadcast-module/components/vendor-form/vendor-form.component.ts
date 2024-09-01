@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, output } from "@angular/core";
-import { VendorForm } from "~/app/libs/shared/models";
+import { VendorForm } from "~/app/libs/shared-module";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
