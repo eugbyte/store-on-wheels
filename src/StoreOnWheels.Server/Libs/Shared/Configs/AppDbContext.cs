@@ -7,7 +7,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 	public DbSet<Vendor> Vendors { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options) {
-		base.OnConfiguring(options);
+		base.OnConfiguring(options);	
+		
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {

@@ -10,7 +10,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 // register DB
 string? dbConnStr = builder.Configuration.GetConnectionString("WebApiDatabase");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(dbConnStr));
+builder.Services.AddDbContext<AppDbContext>((options) => options.UseSqlite(dbConnStr));
 
 // Add cache
 builder.Services.AddSingleton(new LRUCache<string, Vendor>(capacity: 200, evictCount: 10));
@@ -28,6 +28,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
+app.CreateSqliteDbFile<AppDbContext>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
