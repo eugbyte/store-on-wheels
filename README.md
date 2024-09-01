@@ -29,6 +29,11 @@ Test:
 make test
 ```
 
+Docker:
+```
+docker compose up -d
+```
+
 # Code architecture
 The folder structure of this project follows the [package by component](https://dzone.com/articles/package-component-and) architecture.
 
