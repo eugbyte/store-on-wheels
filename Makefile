@@ -29,3 +29,8 @@ compose:
 
 compose-down:
 	docker compose down
+
+clean-sqlite:
+	rm -f src/StoreOnWheels.Server/StoreOnWheels.db
+	cd src/StoreOnWheels.Server && dotnet tool restore
+	cd src/StoreOnWheels.Server && dotnet ef database update # creates the StoreOnWheels.db, which was docker ignored. \

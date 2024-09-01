@@ -1,11 +1,5 @@
 #See https://aka.ms/customizecontainer To learn how To customize your debug container And how Visual Studio uses this Dockerfile To build your images For faster debugging.
-# Run docker build from the sln root, with src specfied as the context: https://docs.docker.com/build/building/context/#what-is-a-build-context
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+# Run docker build from the sln root, with ./src specfied as the context: https://docs.docker.com/build/building/context/#what-is-a-build-context
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS with_node
 RUN apt-get update
@@ -28,7 +22,11 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=False
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS run_time
 WORKDIR /app
+#RUN groupadd -r user && useradd -r -g user user
+#USER user # - have to remove user, due to lack of write permission for the Sqlite db file.
 COPY --from=publish /app/publish .
+EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["dotnet", "StoreOnWheels.Server.dll"]
