@@ -28,6 +28,7 @@ RUN dotnet publish "./StoreOnWheels.Server.csproj" -c $BUILD_CONFIGURATION -o /a
 
 FROM base AS final
 WORKDIR /app
-USER user # - have to remove user, due to lack of write permission for the Sqlite db file.
+#RUN groupadd -r user && useradd -r -g user user
+#USER user # - have to remove user, due to lack of write permission for the Sqlite db file.
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "StoreOnWheels.Server.dll"]

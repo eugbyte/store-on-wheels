@@ -29,9 +29,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
-app.CreateSqliteDbFile<AppDbContext>();
-
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
