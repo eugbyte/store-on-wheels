@@ -46,7 +46,8 @@ jobs:
                   npm run test-ci
             - name: Regenerate Sqlite Db file
               run: |
-                  cd src/storeonwheels.server
+                  ls
+                  cd src/StoreOnWheels.Server
                   rm -f storeonwheels.db
                   dotnet tool restore
                   dotnet ef database update
