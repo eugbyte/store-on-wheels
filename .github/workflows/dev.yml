@@ -59,13 +59,18 @@ jobs:
               with:
                 node-version: '20.x'
             - name: Regnerate Sqlite DB
+              run: make renegerate-sqlite
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version: 1.5.0
+            - name: Terraform validate and plan
               run: |
-                  cd src/StoreOnWheels.Server
-                  rm -f storeonwheels.db
-                  dotnet tool restore
-                  dotnet ef database update
-            - name: Publish .NET with Terraform
-              run: |
-                  cd infra/Terraform
+                  cd infra/Terraform 
+                  terraform init
+                  terraform validate
                   terraform plan
-                  terraform apply
+            # Apply step can be skipped for pull requests
+            - name: Terraform apply
+              if: github.ref == 'refs/heads/main'
+              run: cd infra/Terraform && terraform apply -auto-approve
