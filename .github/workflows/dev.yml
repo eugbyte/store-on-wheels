@@ -14,7 +14,6 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
             - name: Checkout current branch
               uses: actions/checkout@v4
@@ -44,9 +43,22 @@ jobs:
               run: |
                   cd src/storeonwheels.client
                   npm run test-ci
-            - name: Regenerate Sqlite Db file
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Checkout current branch
+              uses: actions/checkout@v4
+            - name: Setup .NET 8x
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: '8.x'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20.x'
+            - name: Publish .NET with Terraform
               run: |
-                  cd src/StoreOnWheels.Server
-                  rm -f storeonwheels.db
-                  dotnet tool restore
-                  dotnet ef database update
+                  cd infra/Terraform
+                  npm run build
