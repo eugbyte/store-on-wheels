@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HubConnectionState } from "@microsoft/signalr";
 import axios from "axios";
-import { Observable, of } from "rxjs";
 import { MessageHubService, hubConnection } from "~/app/libs/map-module";
 
 @Component({
