@@ -60,6 +60,10 @@ jobs:
                 node-version: '20.x'
             - name: Regnerate Sqlite DB
               run: make renegerate-sqlite
+            - name: Login With Azure
+              uses: azure/login@v2
+              with:
+                creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }} 
             - name: Set up Terraform
               uses: hashicorp/setup-terraform@v3
             - name: Terraform validate and plan
