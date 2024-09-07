@@ -61,9 +61,7 @@ jobs:
             - name: Regnerate Sqlite DB
               run: make renegerate-sqlite
             - name: Set up Terraform
-              uses: hashicorp/setup-terraform@v2
-              with:
-                terraform_version: 1.5.0
+              uses: hashicorp/setup-terraform@v3
             - name: Terraform validate and plan
               run: |
                   cd infra/Terraform 
