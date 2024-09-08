@@ -60,12 +60,15 @@ jobs:
                 node-version: '20.x'
             - name: Regnerate Sqlite DB
               run: make renegerate-sqlite
-            - name: Login With Azure
-              run: az login \
-                --service-principal \
-                --username ${{ secrets.AZURE_USERNAME }} \
-                --password ${{ secrets.AZURE_PASSWORD }} \
-                --tenant ${{ secrets.AZURE_TENANT }}           
+            - name: Install azure cli
+              uses: azure/cli@v2
+              with:
+                azcliversion: latest
+                inlineScript: az login \
+                    --service-principal \
+                    --username ${{ secrets.AZURE_USERNAME }} \
+                    --password ${{ secrets.AZURE_PASSWORD }} \
+                    --tenant ${{ secrets.AZURE_TENANT }}       
             - name: Set up Terraform
               uses: hashicorp/setup-terraform@v3
             - name: Terraform validate and plan
