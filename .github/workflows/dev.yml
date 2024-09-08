@@ -74,6 +74,7 @@ jobs:
               uses: hashicorp/setup-terraform@v3
             - name: Terraform validate and plan
               run: |
+                  az --version
                   cd infra/Terraform 
                   terraform init
                   terraform validate
