@@ -73,12 +73,16 @@ jobs:
             - name: Set up Terraform
               uses: hashicorp/setup-terraform@v3
             - name: Terraform validate and plan
-              run: |
-                  az --version
-                  cd infra/Terraform 
-                  terraform init
-                  terraform validate
-                  terraform plan
+              uses: azure/cli@v2
+              with:
+                azcliversion: latest
+                inlineScript: |              
+                    az --version
+                    az login
+                    cd infra/Terraform 
+                    terraform init
+                    terraform validate
+                    terraform plan
             # Apply step can be skipped for pull requests
             - name: Terraform apply
               if: github.ref == 'refs/heads/main'
