@@ -67,14 +67,11 @@ jobs:
               with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             - name: Terraform validate and plan
-              uses: azure/cli@v2
-              with:
-                azcliversion: latest
-                inlineScript: |              
-                    cd infra/Terraform 
-                    terraform init
-                    terraform validate
-                    terraform plan
+              run: |              
+                  cd infra/Terraform 
+                  terraform init
+                  terraform validate
+                  terraform plan
             # Apply step can be skipped for pull requests
             - name: Terraform apply
               if: github.ref == 'refs/heads/main'
