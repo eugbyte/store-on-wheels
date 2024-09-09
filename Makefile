@@ -33,4 +33,7 @@ compose-down:
 renegerate-sqlite:
 	rm -f src/StoreOnWheels.Server/StoreOnWheels.db
 	cd src/StoreOnWheels.Server && dotnet tool restore
-	cd src/StoreOnWheels.Server && dotnet ef database update # creates the StoreOnWheels.db, which was docker ignored. \
+	cd src/StoreOnWheels.Server && dotnet ef database update # creates the StoreOnWheels.db, which was docker ignored. 
+
+create-service-principal:
+	az ad sp create-for-rbac --name "StoreOnWheels" --role contributor --scopes subscriptions/$(AZURE_SUBSCRIPTION_ID)

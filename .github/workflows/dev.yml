@@ -67,7 +67,8 @@ jobs:
               with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             - name: Terraform validate and plan
-              run: |              
+              run: |       
+                  az --version    
                   cd infra/Terraform 
                   terraform init
                   terraform validate
