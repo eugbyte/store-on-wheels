@@ -66,9 +66,10 @@ jobs:
               uses: azure/login@v2
               with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
+            - name: Validate Azure CLI can be used
+              run: az --version
             - name: Terraform validate and plan
               run: |       
-                  az --version    
                   cd infra/Terraform 
                   terraform init
                   terraform validate
