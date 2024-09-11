@@ -7,6 +7,11 @@ through the locations so save on delivery cost, stopping at common collection po
 1 <sub>I have submitted the latter idea (delivery essentials to elderly) to [Build for Good 2024](https://www.build.gov.sg/) but it was rejected.
 Regardless, I think it is still an idea worth exploring.</sub>
 
+## Live demo
+[Store on Wheels](https://store-on-wheels.herokuapp.com/).
+
+The loading time may be slow as the container app is on a free tier and subjected to cold starts.
+
 ## Preview
 `make start`
 

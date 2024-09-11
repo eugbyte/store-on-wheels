@@ -102,10 +102,10 @@ resource "azurerm_container_app" "app" {
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
-    target_port                = 4000
-    # ws connection not distributed to message queues yet
+    target_port                = 8080
     traffic_weight {
       latest_revision = true
+      # ws connection not distributed to message queues yet, so it has to be 100%
       percentage      = 100
     }
   }
