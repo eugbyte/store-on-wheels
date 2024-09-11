@@ -12,7 +12,7 @@ Regardless, I think it is still an idea worth exploring.</sub>
 
 The loading time may be slow as the container app is on a free tier and subjected to cold starts.
 
-## Preview
+## Preview locally
 `make start`
 
 ![Preview](store_on_wheels_preview.gif)
