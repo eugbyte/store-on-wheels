@@ -14,7 +14,6 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
             - name: Checkout current branch
               uses: actions/checkout@v4
@@ -44,9 +43,38 @@ jobs:
               run: |
                   cd src/storeonwheels.client
                   npm run test-ci
-            - name: Regenerate Sqlite Db file
-              run: |
-                  cd src/StoreOnWheels.Server
-                  rm -f storeonwheels.db
-                  dotnet tool restore
-                  dotnet ef database update
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Checkout current branch
+              uses: actions/checkout@v4
+            - name: Setup .NET 8x
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: '8.x'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20.x'
+            - name: Regnerate Sqlite DB
+              run: make renegerate-sqlite
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v3
+            - name: Azure Login
+              uses: azure/login@v2
+              with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+            - name: Validate Azure CLI can be used
+              run: az --version
+            - name: Terraform validate and plan
+              run: |       
+                  cd infra/Terraform 
+                  terraform init
+                  terraform validate
+                  terraform plan
+            # Apply step can be skipped for pull requests
+            - name: Terraform apply
+              if: github.ref == 'refs/heads/main'
+              run: cd infra/Terraform && terraform apply -auto-approve
