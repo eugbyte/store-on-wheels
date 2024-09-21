@@ -79,7 +79,7 @@ jobs:
                   cd infra/Terraform 
                   terraform init
                   terraform validate
-                  # terraform plan
+                  terraform plan
             # Apply step can be skipped for pull requests
             - name: Terraform apply
               if: github.ref == 'refs/heads/main'
