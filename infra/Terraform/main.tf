@@ -6,12 +6,12 @@ terraform {
     }
   }
   # comment out when needing to initialize the storage account for the first time to start the .tfstate
-  backend "azurerm" {
-    resource_group_name  = "rg-storeonwheels-prod-sea"
-    storage_account_name = "ststoreonwheelsprodsea"
-    container_name       = "stc-storeonwheels-prod-sea"
-    key                  = "terraform.tfstate"
-  }
+  # backend "azurerm" {
+  #   resource_group_name  = "rg-storeonwheels-prod-sea"
+  #   storage_account_name = "ststoreonwheelsprodsea"
+  #   container_name       = "stc-storeonwheels-prod-sea"
+  #   key                  = "terraform.tfstate"
+  # }
 }
 
 provider "azurerm" {
