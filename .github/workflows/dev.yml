@@ -78,11 +78,14 @@ jobs:
                   azcliversion: latest
                   inlineScript: |
                     az --version
-            - name: Terraform validate and plan
+            - name: Terraform validate
               run: |       
                   cd infra/Terraform 
                   terraform init
                   terraform validate
+            - name: Terraform plan
+              run: |       
+                  cd infra/Terraform 
                   terraform plan
             # Apply step can be skipped for pull requests
             - name: Terraform apply
