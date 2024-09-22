@@ -8,9 +8,9 @@ through the locations so save on delivery cost, stopping at common collection po
 Regardless, I think it is still an idea worth exploring.</sub>
 
 ## Live demo
-[Store on Wheels website](https://ca-storeonwheels-prod-sea.wittymushroom-fed3288b.southeastasia.azurecontainerapps.io)
+[Store on Wheels website](https://ca-storeonwheels-prod-sea--mqygmr1.wittymushroom-fed3288b.southeastasia.azurecontainerapps.io)
 
-The loading time may be slow as the container app is on a free tier and subjected to cold starts.
+The loading time may be slow as the container app is on the cheapest tier and subjected to cold starts.
 
 ## Preview locally
 `make start`

@@ -106,7 +106,7 @@ resource "azurerm_container_app" "app" {
     traffic_weight {
       latest_revision = true
       # ws connection not distributed to message queues yet, so it has to be 100%
-      percentage      = 100
+      percentage = 100
     }
   }
 }

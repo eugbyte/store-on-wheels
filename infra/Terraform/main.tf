@@ -5,6 +5,13 @@ terraform {
       version = "=3.52.0"
     }
   }
+  # comment out when needing to initialize the storage account for the first time to start the .tfstate
+  backend "azurerm" {
+    resource_group_name  = "rg-storeonwheels-prod-sea"
+    storage_account_name = "ststoreonwheelsprodsea"
+    container_name       = "stc-storeonwheels-prod-sea"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -16,6 +23,7 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-storeonwheels-prod-sea"
   location = "Southeast Asia"
 }
+
 resource "azurerm_log_analytics_workspace" "analytics" {
   name                = "log-storeonwheels-prod-sea"
   location            = azurerm_resource_group.rg.location
