@@ -77,7 +77,7 @@ jobs:
               with:
                   azcliversion: latest
                   inlineScript: |
-                    az --version
+                    terraform validate
             - name: Terraform validate
               run: |       
                   cd infra/Terraform 
