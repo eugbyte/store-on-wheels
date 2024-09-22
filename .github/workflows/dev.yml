@@ -77,7 +77,7 @@ jobs:
               with:
                   azcliversion: latest
                   inlineScript: |
-                    terraform validate
+                    az account show
             - name: Terraform validate
               run: |       
                   cd infra/Terraform 
