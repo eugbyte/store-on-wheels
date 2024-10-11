@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
 
-namespace StoreOnWheels.Server.Test.Integration.Controllers.Vendors;
+namespace StoreOnWheels.Server.Test.Integration.Controllers;
 
 public class TestVendorsController(
 	CustomWebAppFactory<Program> factory,

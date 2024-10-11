@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Xunit.Abstractions;
 
-namespace StoreOnWheels.Server.Test.Integration.Controllers.Geohubs;
+namespace StoreOnWheels.Server.Test.Integration.Services;
 
 public class TestMockPositionEmitter(
 	CustomWebAppFactory<Program> factory,

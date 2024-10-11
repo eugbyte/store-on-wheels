@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Net;
 
-namespace StoreOnWheels.Server.Test.Integration.Controllers.Healthchecks;
+namespace StoreOnWheels.Server.Test.Integration.Controllers;
 
 public class TestHealthcheckController(
 	WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>> {

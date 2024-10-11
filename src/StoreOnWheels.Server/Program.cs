@@ -1,9 +1,11 @@
 using Caching;
 using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Controllers.Geohubs;
-using StoreOnWheels.Server.Libs.Shared.Configs;
+using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Controllers;
+using StoreOnWheels.Server.Domains.Interfaces;
 using StoreOnWheels.Server.Libs.Shared.Models;
-using StoreOnWheels.Server.Libs.Vendors;
+using StoreOnWheels.Server.Services;
+using StoreOnWheels.Server.Services.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();

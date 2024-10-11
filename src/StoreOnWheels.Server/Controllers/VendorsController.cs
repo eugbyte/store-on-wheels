@@ -1,9 +1,9 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.Mvc;
+using StoreOnWheels.Server.Domains.Interfaces;
 using StoreOnWheels.Server.Libs.Shared.Models;
-using StoreOnWheels.Server.Libs.Vendors;
 
-namespace StoreOnWheels.Server.Controllers.Vendors;
+namespace StoreOnWheels.Server.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace StoreOnWheels.Server.Libs.Shared.Configs;
+namespace StoreOnWheels.Server.Configs;
 /// <summary>
 /// Deprecated. Sql migration to run in a separate script in CI/CD pipeline.
 /// </summary>
