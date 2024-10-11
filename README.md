@@ -40,8 +40,4 @@ docker compose up -d
 ```
 
 # Code architecture
-The folder structure of this project follows the [package by component](https://dzone.com/articles/package-component-and) architecture.
-
-<img src="https://dz2cdn1.dzone.com/storage/temp/14001112-20150308-package-by-component.png" alt="package by component" height="300"/>
-
-Components should not have any dependency between each other, unless it is through a `shared` component.
+Backend: Uses [src and tests folder for projects](https://learn.microsoft.com/en-us/dotnet/core/porting/project-structure), and MVC folder structure for individual project.
