@@ -1,8 +1,8 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
-using StoreOnWheels.Server.Domains.Interfaces;
-using StoreOnWheels.Server.Domains.Models;
+using StoreOnWheels.Server.Libs.Domains.Interfaces;
+using StoreOnWheels.Server.Libs.Domains.Models;
 
 namespace StoreOnWheels.Server.Controllers;
 
