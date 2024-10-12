@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import BroadcastPageComponent from "./broadcast-page.component";
 import axios from "axios";
-import { HUB_CONNECTION, hubConnection } from "~/app/libs/map-module";
+import { HUB_CONNECTION, hubConnection } from "~/app/shared/services";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("BroadcastPageComponent", () => {

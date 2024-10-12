@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 
 import { TickerCache } from "./ticker-cache.service";
-import { SleepService } from "~/app/libs/shared-module";
+import { SleepService } from "~/app/shared/services";
 
 describe("TimeoutCacheService", () => {
   let cache: TickerCache<string, number>;

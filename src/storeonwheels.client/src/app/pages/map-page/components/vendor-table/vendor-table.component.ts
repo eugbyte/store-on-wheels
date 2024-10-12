@@ -11,14 +11,14 @@ import {
   WritableSignal,
   signal,
 } from "@angular/core";
-import { Vendor } from "~/app/libs/shared-module";
+import { Vendor } from "~/app/shared/models";
 import {
   TimedMap,
   CLICK_SUBJECT,
   ClickProps,
   clickSubject as _clickSubject,
   timedMapFactory,
-} from "~/app/libs/map-module/services";
+} from "~/app/pages/map-page/services";
 import { CommonModule } from "@angular/common";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MatRow, MatTableModule } from "@angular/material/table";

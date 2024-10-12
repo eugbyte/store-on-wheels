@@ -65,8 +65,6 @@ export class BaseGeolocateService {
       throw new Error("browser does not supprt geolocation");
     }
 
-    console.log({ enableHighAccuracy, timeout, maximumAge });
-
     const promise = new Promise<GeolocationPositionError | null>((resolve) => {
       const _onSuccess = (position: GeolocationPosition) => {
         onSuccess(position);

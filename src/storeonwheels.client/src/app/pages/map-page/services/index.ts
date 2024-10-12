@@ -1,5 +1,3 @@
-export * from "./message-hub/message-hub.service";
-export * from "./message-hub/message-hub.provider";
 export * from "./mapbox/mapbox.service";
 export * from "./mapbox/mapbox.service.provider";
 export * from "./timed-cache/ticker-cache.service";
