@@ -45,8 +45,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Libs\Services\EntityServices\" />
-  </ItemGroup>
 </Project>

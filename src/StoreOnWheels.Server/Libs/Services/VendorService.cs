@@ -3,7 +3,7 @@ using StoreOnWheels.Server.Libs.Configs;
 using StoreOnWheels.Server.Libs.Domains.Interfaces;
 using StoreOnWheels.Server.Libs.Domains.Models;
 
-namespace StoreOnWheels.Server.Libs.Services.EntityServices;
+namespace StoreOnWheels.Server.Libs.Services;
 
 public class VendorService(AppDbContext db) : IVendorService {
 	public async Task<Vendor?> Get(string vendorId) => await db.Vendors.FindAsync(vendorId);
