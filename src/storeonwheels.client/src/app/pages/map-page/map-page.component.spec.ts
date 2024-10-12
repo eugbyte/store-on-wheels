@@ -4,11 +4,11 @@ import {
   HUB_CONNECTION,
   MessageHubService,
   hubConnection,
-  VendorTableComponent,
-} from "~/app/libs/map-module";
-import { GeoInfo, Vendor } from "~/app/libs/shared-module";
+} from "~/app/shared/services";
+import { GeoInfo, Vendor } from "~/app/shared/models";
 import { Observable, from } from "rxjs";
 import { Mock } from "ts-mocks";
+import { VendorTableComponent } from "./components";
 
 describe("MapPageComponent", () => {
   let component: MapPageComponent;
