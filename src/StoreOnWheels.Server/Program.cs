@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StoreOnWheels.Server.Configs;
 using StoreOnWheels.Server.Controllers;
 using StoreOnWheels.Server.Domains.Interfaces;
-using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Domains.Models;
 using StoreOnWheels.Server.Services;
 using StoreOnWheels.Server.Services.BackgroundServices;
 
