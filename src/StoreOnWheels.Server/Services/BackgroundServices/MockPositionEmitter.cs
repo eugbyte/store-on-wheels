@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using StoreOnWheels.Server.Controllers;
-using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Domains.Models;
 
 namespace StoreOnWheels.Server.Services.BackgroundServices;
 

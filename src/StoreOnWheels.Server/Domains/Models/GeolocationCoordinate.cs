@@ -1,4 +1,4 @@
-﻿namespace StoreOnWheels.Server.Libs.Shared.Models;
+﻿namespace StoreOnWheels.Server.Domains.Models;
 
 public class GeolocationCoordinate {
 	public float Latitude { get; set; }

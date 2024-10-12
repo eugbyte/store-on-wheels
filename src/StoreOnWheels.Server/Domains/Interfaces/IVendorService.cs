@@ -1,4 +1,4 @@
-﻿using StoreOnWheels.Server.Libs.Shared.Models;
+﻿using StoreOnWheels.Server.Domains.Models;
 
 namespace StoreOnWheels.Server.Domains.Interfaces;
 
