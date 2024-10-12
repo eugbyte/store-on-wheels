@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { MapComponent, VendorTableComponent } from "./components";
-import { MessageHubService } from "./services";
-import { GeoInfo, Vendor } from "~/app/libs/shared-module";
+import { MessageHubService } from "~/app/shared/services";
+import { GeoInfo, Vendor } from "~/app/shared/models";
 import { Observable, map } from "rxjs";
 
 @Component({
