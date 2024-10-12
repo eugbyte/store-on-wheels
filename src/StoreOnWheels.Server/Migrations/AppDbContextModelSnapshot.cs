@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StoreOnWheels.Server.Libs.Shared.Configs;
+using StoreOnWheels.Server.Configs;
+
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations
-{
-    [DbContext(typeof(AppDbContext))]
+namespace StoreOnWheels.Server.Migrations {
+	[DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

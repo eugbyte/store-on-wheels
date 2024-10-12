@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StoreOnWheels.Server.Libs.Shared.Configs;
+using StoreOnWheels.Server.Configs;
+
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations
-{
-    [DbContext(typeof(AppDbContext))]
+namespace StoreOnWheels.Server.Migrations {
+	[DbContext(typeof(AppDbContext))]
     [Migration("20240830092612_UseSqlite")]
     partial class UseSqlite
     {

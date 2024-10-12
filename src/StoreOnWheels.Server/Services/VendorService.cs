@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Libs.Shared.Configs;
+using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Domains.Interfaces;
 using StoreOnWheels.Server.Libs.Shared.Models;
 
-namespace StoreOnWheels.Server.Libs.Vendors;
+namespace StoreOnWheels.Server.Services;
 
 public class VendorService(AppDbContext db) : IVendorService {
 	public async Task<Vendor?> Get(string vendorId) => await db.Vendors.FindAsync(vendorId);

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using StoreOnWheels.Server.Libs.Shared.Models;
 using Xunit.Abstractions;
 
-namespace StoreOnWheels.Server.Test.Integration.Controllers.Geohubs;
+namespace StoreOnWheels.Server.Test.Integration.Controllers;
 
 public class TestGeohubClient(
 	CustomWebAppFactory<Program> factory,

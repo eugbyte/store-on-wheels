@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace StoreOnWheels.Server.Controllers.HealthChecks;
+namespace StoreOnWheels.Server.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
