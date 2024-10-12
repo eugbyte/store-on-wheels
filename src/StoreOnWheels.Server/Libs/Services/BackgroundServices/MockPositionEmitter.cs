@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using StoreOnWheels.Server.Controllers;
-using StoreOnWheels.Server.Domains.Models;
+using StoreOnWheels.Server.Libs.Domains.Models;
 
-namespace StoreOnWheels.Server.Services.BackgroundServices;
+namespace StoreOnWheels.Server.Libs.Services.BackgroundServices;
 
 public class MockPositionEmitter(
 	IHubContext<GeohubsClient> hubContext) : BackgroundService {

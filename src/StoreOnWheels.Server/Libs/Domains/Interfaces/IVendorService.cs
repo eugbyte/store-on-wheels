@@ -1,6 +1,6 @@
-﻿using StoreOnWheels.Server.Domains.Models;
+﻿using StoreOnWheels.Server.Libs.Domains.Models;
 
-namespace StoreOnWheels.Server.Domains.Interfaces;
+namespace StoreOnWheels.Server.Libs.Domains.Interfaces;
 
 public interface IVendorService {
 	Task<Vendor?> Get(string vendorId);

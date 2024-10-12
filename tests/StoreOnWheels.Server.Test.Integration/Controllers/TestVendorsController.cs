@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using StoreOnWheels.Server.Domains.Models;
+using StoreOnWheels.Server.Libs.Domains.Models;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
