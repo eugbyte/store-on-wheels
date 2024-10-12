@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
-using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Domains.Models;
 using Xunit.Abstractions;
 
 namespace StoreOnWheels.Server.Test.Integration.Controllers;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreOnWheels.Server.Configs;
 using StoreOnWheels.Server.Domains.Interfaces;
-using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Domains.Models;
 
 namespace StoreOnWheels.Server.Services;
 

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace StoreOnWheels.Server.Libs.Shared.Models;
+namespace StoreOnWheels.Server.Domains.Models;
 
 public class GeolocationPosition {
 	public string VendorId { get; set; } = "";

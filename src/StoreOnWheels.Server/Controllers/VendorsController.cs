@@ -1,7 +1,7 @@
 ﻿using Caching;
 using Microsoft.AspNetCore.Mvc;
 using StoreOnWheels.Server.Domains.Interfaces;
-using StoreOnWheels.Server.Libs.Shared.Models;
+using StoreOnWheels.Server.Domains.Models;
 
 namespace StoreOnWheels.Server.Controllers;
 
