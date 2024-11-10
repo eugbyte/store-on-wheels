@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StoreOnWheels.Server.Libs.Configs;
+using StoreOnWheels.Server.Configs;
+
 
 
 #nullable disable
