@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations {
+namespace StoreOnWheels.Server.Data.Migrations {
 	/// <inheritdoc />
 	public partial class UseSqlite : Migration {
 		/// <inheritdoc />
