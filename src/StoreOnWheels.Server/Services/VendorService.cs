@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Data;
 using StoreOnWheels.Server.Domains.Interfaces;
 using StoreOnWheels.Server.Domains.Models;
 

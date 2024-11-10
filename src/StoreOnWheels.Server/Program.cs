@@ -1,7 +1,7 @@
 using Caching;
 using Microsoft.EntityFrameworkCore;
-using StoreOnWheels.Server.Configs;
 using StoreOnWheels.Server.Controllers;
+using StoreOnWheels.Server.Data;
 using StoreOnWheels.Server.Domains.Interfaces;
 using StoreOnWheels.Server.Domains.Models;
 using StoreOnWheels.Server.Services;

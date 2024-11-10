@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StoreOnWheels.Server.Configs;
+using StoreOnWheels.Server.Data;
 
 
 
 #nullable disable
 
-namespace StoreOnWheels.Server.Migrations {
+namespace StoreOnWheels.Server.Data.Migrations {
 	[DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
